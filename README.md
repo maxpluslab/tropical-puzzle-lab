@@ -34,7 +34,7 @@ Progress is saved in your browser. **Copy report line** gives a line like `puzzl
 
 Working:
 
-- Gallery with one card per puzzle (rev2, four min-convention ones and the rational rat1 and rat2), each playable in relief or flat mode.
+- Gallery with one card per puzzle (rev2, four min-convention ones, the rational rat1 and rat2, and the corrugated cor1), each playable in relief or flat mode.
 - Seeded scrambles, with direct links such as `?puzzle=rev2&seed=123`.
 - Moving, turning and nudging pieces.
 - Overlap colouring and tolerance-based completion (including roof continuity for relief).
