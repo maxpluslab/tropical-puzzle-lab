@@ -43,6 +43,7 @@ Working:
 - An optional solution outline whose use is recorded.
 - Optional sticky-edges and wall-match assists, also recorded.
 - An experimental 1–5 difficulty rating on each card, computed from the pieces' shapes (Leinster–Cobbold diversity of their intrinsic volumes); the "How is this calculated?" link explains it.
+- A page on [the mathematics behind the puzzles](https://maxpluslab.github.io/tropical-puzzle-lab/?page=math): tropical arithmetic, polynomials and their graphs, rational functions and 27 corrugated, with interactive figures. It shows the solution to 6 intro.
 
 Planned: more puzzles and parametric families, an explode/illustration mode, session export, mobile input, automated solvers and difficulty studies. Difficulty is a research question; the rating above is a first heuristic, not a validated measure.
 

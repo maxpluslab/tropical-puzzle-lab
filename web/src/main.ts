@@ -12,6 +12,8 @@ if (puzzleId && /^[a-z0-9][a-z0-9-]*$/.test(puzzleId)) {
 } else if (params.get('page') === 'difficulty') {
   // Loaded on demand so KaTeX is only fetched for this page.
   void import('./difficulty/page').then((page) => page.renderDifficultyPage(root));
+} else if (params.get('page') === 'math') {
+  void import('./math/page').then((page) => page.renderMathPage(root));
 } else {
   void renderGallery(root);
 }
