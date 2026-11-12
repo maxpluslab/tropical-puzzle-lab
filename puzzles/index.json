@@ -14,6 +14,36 @@
   },
   "puzzles": [
     {
+      "id": "cor1",
+      "construction": "cor1",
+      "revision": 1,
+      "name": "27 corrugated",
+      "description": "Twenty-seven pieces under a corrugated roof whose ridges and valleys look alike. Fill the square tray so the roof forms one continuous surface.",
+      "variant": "relief",
+      "pieceCount": 27,
+      "path": "cor1/puzzle.json",
+      "difficulty": {
+        "diversity": 3.998651,
+        "x": 0.115333,
+        "rating": 5
+      }
+    },
+    {
+      "id": "cor1-flat",
+      "construction": "cor1",
+      "revision": 1,
+      "name": "27 corrugated (flat)",
+      "description": "The 27 corrugated footprints with the relief removed. Fill the square tray; heights give no clues.",
+      "variant": "tiling",
+      "pieceCount": 27,
+      "path": "cor1-flat/puzzle.json",
+      "difficulty": {
+        "diversity": 4.09575,
+        "x": 0.119067,
+        "rating": 5
+      }
+    },
+    {
       "id": "new1",
       "construction": "new1",
       "revision": 1,

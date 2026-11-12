@@ -9,7 +9,7 @@ from tropical_puzzle_lab.geometry import area, centroid
 from tropical_puzzle_lab.tropical import Term, refine, regions, tropical_value
 
 PUZZLES = Path(__file__).resolve().parents[2] / "puzzles"
-RECIPES = ["rat1", "rat2"]
+RECIPES = ["rat1", "rat2", "cor1"]
 
 
 @pytest.fixture(scope="module", params=RECIPES)
@@ -79,11 +79,12 @@ def test_cells_tile_the_domain(construction):
     assert sum(area(cell) for cell in construction.cells) == (2 * construction.domain) ** 2
 
 
-def test_rat2_meets_its_print_limits():
-    c = Construction(load_recipe(PUZZLES / "rat2" / "recipe.json"))
+@pytest.mark.parametrize(("name", "fewest", "most"), [("rat2", 20, 24), ("cor1", 27, 27)])
+def test_the_larger_puzzles_meet_their_print_limits(name, fewest, most):
+    c = Construction(load_recipe(PUZZLES / name / "recipe.json"))
     tray = float(2 * c.domain * c.xy) ** 2
     polygons = [[(float(x), float(y)) for x, y in piece] for piece in c.pieces]
-    assert 20 <= len(polygons) <= 24
+    assert fewest <= len(polygons) <= most
     areas = [float(area(piece)) / tray for piece in c.pieces]
     assert min(areas) >= 0.012 and max(areas) <= 0.15
     for poly in polygons:
@@ -96,6 +97,26 @@ def test_rat2_meets_its_print_limits():
             assert math.degrees(angle) >= 20
     tilts = [math.degrees(math.atan(float(c.roof.scale) * math.hypot(t.a, t.b) / float(c.xy))) for t in c.terms]
     assert max(tilts) <= 30
+
+
+def test_cor1_is_corrugated():
+    """Its valleys stand at one height and its ridges at another.
+
+    The sawtooth's lines are the creases that meet the top wall, which the wedge does not reach
+    (it runs along the bottom wall). Valleys and ridges alternate
+    along it, and the roof is as high at one valley as at the next, and at one ridge as at the next:
+    that is what makes the walls on those lines look alike.
+    """
+    recipe = load_recipe(PUZZLES / "cor1" / "recipe.json")
+    c = Construction(recipe)
+    numerator, denominator = terms_of(recipe, "numerator"), terms_of(recipe, "denominator")
+    top = c.domain
+    lines = sorted({v[0] for cell in c.cells for v in cell if v[1] == top and abs(v[0]) < c.domain})
+    assert len(lines) == 4
+    floor = [tropical_value(numerator, (x, top)) - tropical_value(denominator, (x, top)) for x in lines]
+    assert floor[0] == floor[2] and floor[1] == floor[3]
+    # In mm: well clear of the 1.75 mm step the player forgives.
+    assert float(c.roof.scale * abs(floor[0] - floor[1])) > 6.0
 
 
 def test_committed_puzzles_are_current(recipe, construction):

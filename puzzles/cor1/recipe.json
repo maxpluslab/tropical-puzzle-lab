@@ -1,0 +1,172 @@
+{
+  "formatVersion": 1,
+  "family": "tropical-rational",
+  "convention": "max",
+  "id": "cor1",
+  "revision": 1,
+  "pieceCount": 27,
+  "domain": "4",
+  "xyMmPerUnit": "18",
+  "minThicknessMm": "8",
+  "reliefMm": "35",
+  "trayRimMm": "7",
+  "numerator": [
+    {
+      "id": "A",
+      "a": 3,
+      "b": 0,
+      "c": "12"
+    },
+    {
+      "id": "B",
+      "a": 3,
+      "b": 2,
+      "c": "82/5"
+    },
+    {
+      "id": "C",
+      "a": 3,
+      "b": 4,
+      "c": "87/5"
+    },
+    {
+      "id": "D",
+      "a": 3,
+      "b": 6,
+      "c": "76/5"
+    },
+    {
+      "id": "E",
+      "a": 3,
+      "b": 8,
+      "c": "10"
+    },
+    {
+      "id": "F",
+      "a": 12,
+      "b": 0,
+      "c": "488/51"
+    },
+    {
+      "id": "G",
+      "a": 12,
+      "b": 2,
+      "c": "3562/255"
+    },
+    {
+      "id": "H",
+      "a": 12,
+      "b": 4,
+      "c": "3817/255"
+    },
+    {
+      "id": "I",
+      "a": 12,
+      "b": 6,
+      "c": "3256/255"
+    },
+    {
+      "id": "J",
+      "a": 12,
+      "b": 8,
+      "c": "386/51"
+    },
+    {
+      "id": "K",
+      "a": 25,
+      "b": 0,
+      "c": "-4412/153"
+    },
+    {
+      "id": "L",
+      "a": 25,
+      "b": 2,
+      "c": "-18694/765"
+    },
+    {
+      "id": "M",
+      "a": 25,
+      "b": 4,
+      "c": "-17929/765"
+    },
+    {
+      "id": "N",
+      "a": 25,
+      "b": 6,
+      "c": "-19612/765"
+    },
+    {
+      "id": "O",
+      "a": 25,
+      "b": 8,
+      "c": "-4718/153"
+    }
+  ],
+  "denominator": [
+    {
+      "id": "a",
+      "a": 0,
+      "b": 0,
+      "c": "0"
+    },
+    {
+      "id": "b",
+      "a": 7,
+      "b": 0,
+      "c": "5012/459"
+    },
+    {
+      "id": "c",
+      "a": 18,
+      "b": 0,
+      "c": "-416/51"
+    },
+    {
+      "id": "d",
+      "a": 19,
+      "b": -6,
+      "c": "-1538/51"
+    }
+  ],
+  "variants": [
+    {
+      "id": "cor1",
+      "variant": "relief",
+      "name": "27 corrugated",
+      "description": "Twenty-seven pieces under a corrugated roof whose ridges and valleys look alike. Fill the square tray so the roof forms one continuous surface.",
+      "notes": [
+        "Tropical rational function P ⊘ Q = P − Q (max convention) over x, y in [-4, 4]; each piece is a cell of the common refinement of P and Q.",
+        "Corrugated roof: a sawtooth across the tray whose valleys stand at one height and whose ridges stand at another, on a gentle convex slope, with one wedge along a wall.",
+        "Built by generator/scripts/corrugated.py to be hard for a search with its roofs on. Exploratory puzzle under evaluation."
+      ]
+    },
+    {
+      "id": "cor1-flat",
+      "variant": "tiling",
+      "name": "27 corrugated (flat)",
+      "description": "The 27 corrugated footprints with the relief removed. Fill the square tray; heights give no clues.",
+      "flatThicknessMm": "12",
+      "notes": [
+        "Tropical rational function P ⊘ Q = P − Q (max convention) over x, y in [-4, 4]; each piece is a cell of the common refinement of P and Q.",
+        "Roof relief removed: every piece has the same uniform thickness."
+      ]
+    }
+  ],
+  "validation": {
+    "contactNoise": 1e-06,
+    "overlapDepth": 0.006,
+    "outsideDepth": 0.006,
+    "areaError": 0.012,
+    "roofMismatch": 0.05,
+    "edgeAngleDeg": 3,
+    "edgeMinOverlap": 0.02
+  },
+  "scramble": {
+    "algorithm": "v1",
+    "defaultSeed": 20261111
+  },
+  "source": {
+    "rational": "Max[12+3 x+0 y,82/5+3 x+2 y,87/5+3 x+4 y,76/5+3 x+6 y,10+3 x+8 y,488/51+12 x+0 y,3562/255+12 x+2 y,3817/255+12 x+4 y,3256/255+12 x+6 y,386/51+12 x+8 y,-4412/153+25 x+0 y,-18694/765+25 x+2 y,-17929/765+25 x+4 y,-19612/765+25 x+6 y,-4718/153+25 x+8 y] - Max[0+0 x+0 y,5012/459+7 x+0 y,-416/51+18 x+0 y,-1538/51+19 x+-6 y]",
+    "search": "generator/scripts/corrugated.py --seed 3 --trials 500 --bases 4 --extras 1 2 --min-rows 4 --teeth 4 5 --steepness 2 3 4 5 6 7 8 --max-pieces 34, base 2, trial 8"
+  }
+}
