@@ -52,6 +52,7 @@ There are three concerns, connected only by JSON:
      - `scramble.ts`: the seeded v1 scramble.
    - `src/sessions/` handles localStorage sessions, undo/redo and the report line.
    - `src/player/` does the Three.js rendering and input; `src/gallery/` is the gallery.
+   - `src/math/` is the mathematics page (`?page=math`). `tropical.ts` recomputes cells in floating point (pure, and `tests/math.test.ts` checks them against every puzzle's `puzzle.json`); `figures.ts` draws SVG, `linker.ts` links terms, regions and the 3D view, and `relief.ts` draws a function's graph as relief pieces.
    - Routing is by query string (`?puzzle=<id>&seed=<n>`) with the fixed Vite base `/tropical-puzzle-lab/`, so links survive reloads on Pages.
    - `window.tpl` exposes `getPoses`, `setPoses`, `evaluate` and `session` for manual testing.
 
@@ -74,6 +75,7 @@ There are three concerns, connected only by JSON:
   - It compares piece shapes only: it must never consult `reference` or poses.
   - Every query increments `session.wallMatches` and updates `session.wallMatchTightestMm`, which the report line shows as `assist=…`.
 - **The reference assembly is never shown** at load or in thumbnails. "Show solution" sets `session.revealed`, which is sticky and goes into the report.
+  - The mathematics page is the one agreed exception: it draws the cells of 6 intro (`new5`) openly, with a warning at the top. Any other gallery puzzle's cells (there, 27 corrugated) stay behind a cover the reader opens; the rational example is not a gallery puzzle. Don't draw another puzzle's cells openly.
 - **The scramble algorithm is versioned.** Changing `scramble.ts` changes every seed's layout, so give it a new version name. Changing geometry changes `geometryHash`, which makes saved sessions incompatible; that is intended.
 - **rev2 uses the ideal polygons** (no 0.15 mm print inset). Heights are measured from the piece underside, while the source adds a 3 mm tray floor. Tolerances in `recipe.json` are first guesses, documented as experimental.
 - **Attribution text in the README** needs the collaborators' agreement before it is filled in.
