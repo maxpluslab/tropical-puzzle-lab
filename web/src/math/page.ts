@@ -135,7 +135,10 @@ function arithmeticSection(): string {
     <p>So ${tex('3 \\oplus 5 = 3')} and ${tex('3 \\odot 5 = 8')}. Both operations are commutative and associative, and ${tex('\\odot')} distributes over ${tex('\\oplus')}:
     for example, ${tex('1 \\odot (3 \\oplus 5) = 1 \\odot 3 \\oplus 1 \\odot 5 = 4')}.
     The tropical zero is ${tex('\\infty')}, since ${tex('a \\oplus \\infty = a')}, and the tropical one is ${tex('0')}, since ${tex('a \\odot 0 = a')}.
-    Tropical division ${tex('a \\oslash b = a - b')} always works, but there is no tropical subtraction: no ${tex('b')} gives ${tex('3 \\oplus b = \\infty')}, since ${tex('\\min(3, b) \\le 3')}.</p>
+    Unlike ordinary addition, ${tex('\\oplus')} is <b>idempotent</b>: ${tex('a \\oplus a = a')}. It also forgets: ${tex('3 \\oplus b = 3')} for every ${tex('b \\ge 3')},
+    so the sum does not tell you ${tex('b')}, and a minimum cannot be undone. So there is no tropical subtraction: no ${tex('b')} gives ${tex('3 \\oplus b = \\infty')}, since ${tex('\\min(3, b) \\le 3')}.
+    Tropical multiplication, on the other hand, is ordinary addition, which ordinary subtraction undoes, so tropical division ${tex('a \\oslash b = a - b')} always works
+    as long as ${tex('b')} is not the tropical zero: every number ${tex('a')} has the tropical inverse ${tex('-a')}, but ${tex('\\infty')} has none, just as 0 has no reciprocal.</p>
     <p>Everything works equally well with the maximum in place of the minimum and ${tex('-\\infty')} as zero; negating every number turns one convention into the other.
     <i>6 intro</i> and the 9- and 16-piece puzzles use the minimum; <i>Rev 2</i> and the rational puzzles use the maximum. Try both:</p>
     <div class="calc" data-calc>
@@ -267,6 +270,41 @@ function rationalExample() {
   return { cells, pOutlines, qOutlines };
 }
 
+/** The ramp max(0, x) − max(0, x − 1): the simplest quotient with both a valley and a ridge. */
+const RAMP_P: Term[] = [{ id: 'A', a: 0, b: 0, c: 0 }, { id: 'B', a: 1, b: 0, c: 0 }];
+const RAMP_Q: Term[] = [{ id: 'a', a: 0, b: 0, c: 0 }, { id: 'b', a: 1, b: 0, c: -1 }];
+
+function rampFigure(): string {
+  const [lo, hi] = [-2, 3];
+  const pPieces = intervals(RAMP_P, 'max', lo, hi);
+  const qPieces = intervals(RAMP_Q, 'max', lo, hi);
+  const valleys = pPieces.slice(1).map((p) => p.from);
+  const ridges = qPieces.slice(1).map((q) => q.from);
+  // The text and the formula for F below are written for these corners.
+  if (valleys.join() !== '0' || ridges.join() !== '1') throw new Error(`ramp: corners ${valleys.join()} / ${ridges.join()}`);
+  const breaks = [...valleys, ...ridges].sort((x, y) => x - y);
+  const edges = [lo, ...breaks, hi];
+  const band = edges.slice(0, -1).map((from, i) => {
+    const mid = (from + edges[i + 1]) / 2;
+    const p = pPieces.find((piece) => mid >= piece.from && mid <= piece.to)!.id;
+    const q = qPieces.find((piece) => mid >= piece.from && mid <= piece.to)!.id;
+    return { id: p + q, from, to: edges[i + 1], rel: [p, q] };
+  });
+  if (band.map((b) => b.id).join() !== 'Aa,Ba,Bb') throw new Error(`ramp: pieces ${band.map((b) => b.id).join()}`);
+  const graph = graphSvg({
+    lo, hi, fn: (x) => evaluate(RAMP_P, 'max', x, 0) - evaluate(RAMP_Q, 'max', x, 0), breaks, band,
+    ticks: [-2, -1, 0, 1, 2, 3], yRange: [-1, 2],
+    marks: [...valleys.map((x) => ({ x, label: 'valley', className: 'valley' })), ...ridges.map((x) => ({ x, label: 'ridge', className: 'ridge' }))],
+    title: 'Graph of the ramp max(0, x) − max(0, x − 1)',
+  });
+  return `
+    <div class="linked" data-link="ramp">
+      ${math(`\\begin{aligned} P &= ${tropical(RAMP_P)} = ${classical(RAMP_P, 'max', 2, false)} \\\\ Q &= ${tropical(RAMP_Q)} = ${classical(RAMP_Q, 'max', 2, false)} \\end{aligned}`)}
+      ${math(`F = P \\oslash Q = \\begin{cases} ${link('Aa', '0')} & x \\le 0, \\\\ ${link('Ba', 'x')} & 0 \\le x \\le 1, \\\\ ${link('Bb', '1')} & x \\ge 1. \\end{cases}`)}
+      ${figure(graph, 'The graph of F = P − Q. Hover or tap a term, a piece of F or a strip below the graph.')}
+    </div>`;
+}
+
 function rationalSection(): string {
   const { cells, pOutlines, qOutlines } = rationalExample();
   const h = EXAMPLE_HALF;
@@ -281,10 +319,17 @@ function rationalSection(): string {
   if (missing.join() !== 'Bb,Ca') throw new Error(`rational example: missing cells ${missing.join()}`);
   return `
     <h2 id="rational">5. Tropical rational functions</h2>
-    <p>A <b>tropical rational function</b> is a tropical quotient of two tropical polynomials, ${tex('F = P \\oslash Q = P - Q')}.
-    The rational puzzles use the maximum, so ${tex('P')} is convex and ${tex('-Q')} is concave, and the graph of ${tex('F')} has both kinds of crease:
-    <span class="valley-text">valleys</span> along the curve of ${tex('P')} and <span class="ridge-text">ridges</span> along the curve of ${tex('Q')}.</p>
-    <p>Overlaying the regions of ${tex('P')} and ${tex('Q')} cuts the square into <b>cells</b>, which become the pieces.
+    <p>We cannot subtract tropically, but <a href="#arithmetic">as we saw</a> we can always divide, so one tropical polynomial can be divided by another.
+    A <b>tropical rational function</b> is such a quotient, ${tex('F = P \\oslash Q = P - Q')}.</p>
+    <p>This matters for the geometry. The rational puzzles use the maximum, and a maximum of affine functions is convex, so the graph of a tropical polynomial
+    is a bowl and all its creases are valleys (with the minimum it would be a roof with only ridges). Subtracting ${tex('Q')} turns the creases of ${tex('Q')} upside down,
+    so the graph of ${tex('F')} has both kinds: <span class="valley-text">valleys</span> at the corners of ${tex('P')} and <span class="ridge-text">ridges</span> at the corners of ${tex('Q')}.
+    The simplest example is a ramp in one variable:</p>
+    ${rampFigure()}
+    <p>The two terms of ${tex('P')} tie at ${tex('x = 0')}, where the graph bends upwards, and those of ${tex('Q')} tie at ${tex('x = 1')}, where it bends downwards.
+    No maximum of lines has a ridge, so the ramp is not a tropical polynomial; only the quotient can make it.</p>
+    <p>In two variables the creases of ${tex('F')} lie along the tropical curves: valleys along the curve of ${tex('P')} and ridges along the curve of ${tex('Q')}.
+    Overlaying the regions of ${tex('P')} and ${tex('Q')} cuts the square into <b>cells</b>, which become the pieces.
     On each cell one term ${tex('p')} of ${tex('P')} and one term ${tex('q')} of ${tex('Q')} are the largest, so ${tex('F = p - q')} there; we name the cell ${tex('pq')}.
     In this small example, which is not a gallery puzzle, ${tex('P')} and ${tex('Q')} have three terms each, so each curve is three rays from a point:</p>
     <div class="linked" data-link="rational">
@@ -461,6 +506,7 @@ function bindAll(root: HTMLElement, introPuzzle: TropicalPuzzle, corrugatedPuzzl
   bindCalculator(root);
   const d = intro(introPuzzle);
   new Linker(root.querySelector<HTMLElement>('[data-link="one"]')!);
+  new Linker(root.querySelector<HTMLElement>('[data-link="ramp"]')!);
   bindExample(root, 'intro', d.cells, d.scale, (active) => {
     const cell = d.cells.find((c) => c.id === active);
     return cell
