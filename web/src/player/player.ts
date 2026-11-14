@@ -207,9 +207,10 @@ class Player {
             <span class="result" data-ui="wallMatchResult"></span>
           </div>` : ''}
           <dl class="facts">
-            <dt>Puzzle</dt><dd>${escapeHtml(p.id)} · rev ${p.revision}</dd>
+            <dt>Puzzle</dt><dd>${escapeHtml(p.code)} · ${escapeHtml(p.id)} · rev ${p.revision}</dd>
             <dt>Seed</dt><dd data-ui="seed"></dd>
             <dt>Time</dt><dd data-ui="time"></dd>
+            ${p.printables ? `<dt>Print</dt><dd><a href="${escapeHtml(p.printables)}" target="_blank" rel="noopener">${escapeHtml(p.code)} on Printables</a></dd>` : ''}
           </dl>
           <button data-ui="copyReport" type="button" class="wide">Copy report line</button>
         </aside>

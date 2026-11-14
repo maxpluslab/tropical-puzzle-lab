@@ -68,6 +68,7 @@ export async function renderGallery(root: HTMLElement): Promise<void> {
         Fill the square tray with every piece. Pieces can be moved and turned, but not flipped, and nothing snaps into place.</p>
         <p>New to tropical geometry? <a href="${base}?page=math">The mathematics behind the puzzles</a> explains, with interactive examples, how a tropical polynomial becomes a puzzle.</p>
         <p>Every puzzle can be played in relief or flat, with the heights removed. Choose a mode on the card or switch inside the puzzle; each mode keeps its own progress.</p>
+        <p>Prefer pieces in your hand? <a href="${base}?page=print">Make a physical puzzle</a>: 3D-print files for every puzzle, and ready-made ones for a few.</p>
       </header>
       <div class="filter" role="group" aria-label="Open puzzles in">
         <span class="filter-label">Open in</span>
@@ -76,6 +77,7 @@ export async function renderGallery(root: HTMLElement): Promise<void> {
       <div class="cards" data-cards><p class="loading">Loading puzzles…</p></div>
       <footer class="foot">An experimental tool for studying puzzle construction and difficulty.
         <a href="${base}?page=math">The mathematics</a> ·
+        <a href="${base}?page=print">Make a physical puzzle</a> ·
         <a href="https://github.com/maxpluslab/tropical-puzzle-lab">Source on GitHub</a></footer>
     </div>`;
   const cards = root.querySelector<HTMLElement>('[data-cards]')!;

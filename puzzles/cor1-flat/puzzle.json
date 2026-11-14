@@ -2,8 +2,9 @@
   "formatVersion": 1,
   "id": "cor1-flat",
   "revision": 1,
-  "name": "27 corrugated (flat)",
-  "description": "The 27 corrugated footprints with the relief removed. Fill the square tray; heights give no clues.",
+  "name": "Corrugated 27a",
+  "code": "Corrugated 27a-f",
+  "description": "The Corrugated 27a footprints with the relief removed. Fill the square tray; heights give no clues.",
   "variant": "tiling",
   "geometry": {
     "model": "planar",
@@ -818,7 +819,7 @@
   },
   "provenance": {
     "recipe": "puzzles/cor1/recipe.json",
-    "recipeHash": "6e89d960d8928c21d70ffb2ac26a6079708c28cbd542c41b088a0c785df686d6",
+    "recipeHash": "d953f6aa0daf279fe76a086447a43844760de4a33898e980360d259da95d3b11",
     "generator": "tropical-puzzle-lab 0.1.0",
     "source": {
       "rational": "Max[12+3 x+0 y,82/5+3 x+2 y,87/5+3 x+4 y,76/5+3 x+6 y,10+3 x+8 y,488/51+12 x+0 y,3562/255+12 x+2 y,3817/255+12 x+4 y,3256/255+12 x+6 y,386/51+12 x+8 y,-4412/153+25 x+0 y,-18694/765+25 x+2 y,-17929/765+25 x+4 y,-19612/765+25 x+6 y,-4718/153+25 x+8 y] - Max[0+0 x+0 y,5012/459+7 x+0 y,-416/51+18 x+0 y,-1538/51+19 x+-6 y]",

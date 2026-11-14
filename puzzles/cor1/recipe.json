@@ -4,6 +4,7 @@
   "convention": "max",
   "id": "cor1",
   "revision": 1,
+  "name": { "shape": "Corrugated", "letter": "a" },
   "pieceCount": 27,
   "domain": "4",
   "xyMmPerUnit": "18",
@@ -132,7 +133,6 @@
     {
       "id": "cor1",
       "variant": "relief",
-      "name": "27 corrugated",
       "description": "Twenty-seven pieces under a corrugated roof whose ridges and valleys look alike. Fill the square tray so the roof forms one continuous surface.",
       "notes": [
         "Tropical rational function P ⊘ Q = P − Q (max convention) over x, y in [-4, 4]; each piece is a cell of the common refinement of P and Q.",
@@ -143,8 +143,7 @@
     {
       "id": "cor1-flat",
       "variant": "tiling",
-      "name": "27 corrugated (flat)",
-      "description": "The 27 corrugated footprints with the relief removed. Fill the square tray; heights give no clues.",
+      "description": "The Corrugated 27a footprints with the relief removed. Fill the square tray; heights give no clues.",
       "flatThicknessMm": "12",
       "notes": [
         "Tropical rational function P ⊘ Q = P − Q (max convention) over x, y in [-4, 4]; each piece is a cell of the common refinement of P and Q.",

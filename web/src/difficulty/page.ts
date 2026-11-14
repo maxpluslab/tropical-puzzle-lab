@@ -53,7 +53,7 @@ function mappingRows(config: DifficultyConfig): string {
 function puzzleRows(index: PuzzleIndex): string {
   return index.puzzles
     .map((e) => `<tr>
-      <td><a href="${base}?puzzle=${encodeURIComponent(e.id)}">${escapeHtml(e.name)}</a></td>
+      <td><a href="${base}?puzzle=${encodeURIComponent(e.id)}">${escapeHtml(e.code)}</a></td>
       <td>${e.variant === 'relief' ? 'relief' : 'flat tiling'}</td>
       <td class="num">${e.pieceCount}</td>
       <td class="num">${e.difficulty.diversity.toFixed(3)}</td>

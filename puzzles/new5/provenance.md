@@ -6,4 +6,4 @@
 
 **Physical scale.** X = 24·(x + 4) and Y = 24·(y + 4) mm, giving a 144 mm square tray, the same size as rev2. Roof heights, tray rim, flat thickness and tolerances are copied from rev2.
 
-**Status.** An introductory puzzle ("6 intro") with six large pieces, meant as a gentle first puzzle.
+**Status.** An introductory puzzle, named Hill 6a (originally "6 intro"), with six large pieces, meant as a gentle first puzzle.

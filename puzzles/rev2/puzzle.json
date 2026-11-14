@@ -2,7 +2,8 @@
   "formatVersion": 1,
   "id": "rev2",
   "revision": 1,
-  "name": "Rev 2",
+  "name": "Bowl 9a",
+  "code": "Bowl 9a-r",
   "description": "Nine pieces with sloped tops. Fill the square tray so the roof forms one continuous surface.",
   "variant": "relief",
   "geometry": {
@@ -393,7 +394,7 @@
   },
   "provenance": {
     "recipe": "puzzles/rev2/recipe.json",
-    "recipeHash": "f19195eea4e043fb8d34f71b7faf2b8b1ba37ee4aaa977e2a0cea866a6b96d4a",
+    "recipeHash": "d5d0346f8f8e401c531938ab60bda8ef7b4de3e240516d3a156dbba409225da8",
     "generator": "tropical-puzzle-lab 0.1.0",
     "source": {
       "archive": "tropical-puzzle-rev2.zip (2026-09-28), extracted to puzzles/rev2/source/",

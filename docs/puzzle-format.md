@@ -18,6 +18,7 @@
 | --- | --- |
 | `id` | Construction id |
 | `revision` | Integer revision of the construction |
+| `name` | `{shape, letter}`, from which the generator builds the display name and codes (see [Names](#names)) |
 | `pieceCount` | Expected number of pieces |
 | `convention` | Optional. `"max"` (default) or `"min"`: each piece is where its term attains the max or the min, and the relief roof is the graph of that max or min |
 | `domain` | Half-width of the square domain, decimal string |
@@ -26,7 +27,7 @@
 | `minThicknessMm`, `reliefMm` | Roof scaling: height = min + relief·(F − Fmin)/(Fmax − Fmin) |
 | `trayRimMm` | Height of the tray walls (display only) |
 | `terms[]` | `{id, a, b, c}`: integer slopes, with `c` as a decimal or fraction string (`"109/50"`). Evaluated exactly |
-| `variants[]` | `{id, variant: "relief" \| "tiling", name, description, notes[], flatThicknessMm?}` |
+| `variants[]` | `{id, variant: "relief" \| "tiling", description, notes[], flatThicknessMm?, printables?}`. `printables` is the URL of the variant's published print listing (`https://www.printables.com/model/<number>-…`; see [printables.md](printables.md)) |
 | `validation` | Tolerances, copied into each puzzle (see [puzzle-rules.md](puzzle-rules.md)) |
 | `scramble` | `{algorithm, defaultSeed}` |
 | `source` | Pointers into `source/` |
@@ -42,11 +43,27 @@ A tropical rational function F = P ⊘ Q, which is P − Q classically, replaces
 
 The pieces are the two-dimensional cells of the common refinement: the cell of P's term p intersected with the cell of Q's term q, in numerator-major order. On that cell F is the affine function p − q, so the piece's id is `p.id + q.id` (for example `Bc`). Its slopes may be zero or negative. In max convention P's tropical curve becomes valleys of the roof and Q's becomes ridges.
 
+### Names
+
+A construction is named `<Shape> <pieces><letter>`, for example **Hill 16b**, and each variant has a code with `-r` (relief) or `-f` (flat) added: **Hill 16b-r**, **Hill 16b-f**. The recipe stores only `shape` and `letter`; the piece count comes from the construction. The generator builds the strings (`tropical_puzzle_lab/naming.py`) and rejects anything that breaks these rules:
+
+| Shape | Roof | Function |
+| --- | --- | --- |
+| `Bowl` | convex, creases are valleys | max-convention polynomial |
+| `Hill` | concave, rises to ridges | min-convention polynomial |
+| `Terrain` | ridges and valleys | rational P ⊘ Q |
+| `Corrugated` | repeated ridges and valleys that look alike | rational P ⊘ Q |
+
+- Every construction gets a letter from the start, even when it is the only one of its shape and size, so a published name never changes.
+- Letters are one lower-case letter, given in the order constructions are added within a shape and piece count, and are never reused, even after a construction is retired. `tpl-export` fails if two recipes claim the same name.
+- A revision of a construction keeps its name and increments `revision`. A new letter means a new function.
+- Use the code in print listings, file names and conversation; the gallery and player show the name with the mode beside it. The ids (`new2`, `new2-flat`) are unchanged: they key URLs and saved sessions, and are not names.
+
 ## Puzzle definition (`puzzle.json`, formatVersion 1)
 
 | Field group | Contents |
 | --- | --- |
-| Identity | `formatVersion`, `id`, `revision`, `name`, `description`, `variant` |
+| Identity | `formatVersion`, `id`, `revision`, `name` (shared by both variants, e.g. `Hill 16b`), `code` (this variant, e.g. `Hill 16b-r`), `description`, `variant`, and `printables` when the variant has a print listing |
 | Geometry | `geometry.model = "planar"`, `units = "mm"`, `spanMm`, `target: {type: "polygon", vertices}` (convex, CCW), `trayRimMm`. Relief variants also have `reliefMm` and `minThicknessMm` |
 | Pieces | `pieces[]`: `{id, polygon, roof}` for relief, `{id, polygon, thickness}` for tiling. `polygon` is convex and CCW, in mm, relative to the piece origin (its area centroid). `roof` is the top plane z = z0 + gx·u + gy·v in local coordinates, in mm above the underside |
 | Reference | `reference.poses[]`: `{id, x, y, theta}`. Used for construction checks and the explicit reveal only; completion never compares against it |
@@ -74,7 +91,7 @@ The **v1 scramble** is a seeded mulberry32 PRNG (`web/src/geometry/scramble.ts`)
 | Field | Contents |
 | --- | --- |
 | `difficulty` | The rating parameters `{method, u, q, direction, thresholds}`, copied from the configuration block at the top of `generator/src/tropical_puzzle_lab/difficulty.py`. The explanation page (`?page=difficulty`) reads them from here |
-| `puzzles[]` | `{id, construction, revision, name, description, variant, pieceCount, path, difficulty}`, where `construction` is the recipe id the variant was built from (the gallery shows one card per construction), and `difficulty` is `{diversity, x, rating}`: the Leinster–Cobbold diversity D, x = (D − 1)/(n − 1), and the 1–5 rating. D and x are rounded to 6 decimals |
+| `puzzles[]` | `{id, construction, revision, name, code, description, variant, pieceCount, path, difficulty, printables?}`, where `construction` is the recipe id the variant was built from (the gallery shows one card per construction), and `difficulty` is `{diversity, x, rating}`: the Leinster–Cobbold diversity D, x = (D − 1)/(n − 1), and the 1–5 rating. D and x are rounded to 6 decimals |
 
 The rating is computed by `tpl-export` from each piece's solid (its footprint extruded to its roof or thickness). To change it, edit the configuration block and rerun `tpl-export`.
 

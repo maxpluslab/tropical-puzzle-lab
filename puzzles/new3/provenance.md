@@ -6,4 +6,4 @@
 
 **Physical scale.** X = 24·(x + 4) and Y = 24·(y + 4) mm, giving a 144 mm square tray, the same size as rev2. Roof heights, tray rim, flat thickness and tolerances are copied from rev2.
 
-**Status.** This is an exploratory puzzle ("9 easy"), still under evaluation.
+**Status.** This is an exploratory puzzle, named Hill 9a (originally "9 easy"), still under evaluation.
