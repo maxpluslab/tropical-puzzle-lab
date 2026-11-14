@@ -4,6 +4,7 @@
   "convention": "max",
   "id": "rat2",
   "revision": 1,
+  "name": { "shape": "Terrain", "letter": "a" },
   "pieceCount": 20,
   "domain": "4",
   "xyMmPerUnit": "18",
@@ -32,7 +33,6 @@
     {
       "id": "rat2",
       "variant": "relief",
-      "name": "20 rational",
       "description": "Twenty pieces whose roofs form peaks, pits and saddles. Fill the square tray so the roof forms one continuous surface.",
       "notes": [
         "Tropical rational function P ⊘ Q = P − Q (max convention) over x, y in [-4, 4]; each piece is a cell of the common refinement of P and Q.",
@@ -43,8 +43,7 @@
     {
       "id": "rat2-flat",
       "variant": "tiling",
-      "name": "20 rational (flat)",
-      "description": "The 20 rational footprints with the relief removed. Fill the square tray; heights give no clues.",
+      "description": "The Terrain 20a footprints with the relief removed. Fill the square tray; heights give no clues.",
       "flatThicknessMm": "12",
       "notes": [
         "Tropical rational function P ⊘ Q = P − Q (max convention) over x, y in [-4, 4]; each piece is a cell of the common refinement of P and Q.",

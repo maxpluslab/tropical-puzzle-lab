@@ -2,8 +2,9 @@
   "formatVersion": 1,
   "id": "rat1-flat",
   "revision": 1,
-  "name": "11 rational (flat)",
-  "description": "The 11 rational footprints with the relief removed. Fill the square tray; heights give no clues.",
+  "name": "Terrain 11a",
+  "code": "Terrain 11a-f",
+  "description": "The Terrain 11a footprints with the relief removed. Fill the square tray; heights give no clues.",
   "variant": "tiling",
   "geometry": {
     "model": "planar",
@@ -378,7 +379,7 @@
   },
   "provenance": {
     "recipe": "puzzles/rat1/recipe.json",
-    "recipeHash": "9516adc7b5eec3114cfe30687c9457dcac35402da624376686e1cd57631f48e8",
+    "recipeHash": "0ad84e4ee03aa2842068eb7777ab2176a7a28354cdab35a73d030052519b4f54",
     "generator": "tropical-puzzle-lab 0.1.0",
     "source": {
       "rational": "Max[12/5+x+3 y,-11/20+3 x+3 y,12/5+x+y,13/20+x] - Max[-3/5+3 x,9/10+y,57/20+x+y,43/20+3 x+y]",

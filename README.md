@@ -34,7 +34,7 @@ Progress is saved in your browser. **Copy report line** gives a line like `puzzl
 
 Working:
 
-- Gallery with one card per puzzle (rev2, four min-convention ones, the rational rat1 and rat2, and the corrugated cor1), each playable in relief or flat mode.
+- Gallery with one card per puzzle (Bowl 9a, Hill 6a, 9a, 9b, 16a and 16b, Terrain 11a and 20a, and Corrugated 27a), each playable in relief or flat mode. Names follow the convention in [docs/puzzle-format.md](docs/puzzle-format.md#names).
 - Seeded scrambles, with direct links such as `?puzzle=rev2&seed=123`.
 - Moving, turning and nudging pieces.
 - Overlap colouring and tolerance-based completion (including roof continuity for relief).
@@ -43,17 +43,19 @@ Working:
 - An optional solution outline whose use is recorded.
 - Optional sticky-edges and wall-match assists, also recorded.
 - An experimental 1–5 difficulty rating on each card, computed from the pieces' shapes (Leinster–Cobbold diversity of their intrinsic volumes); the "How is this calculated?" link explains it.
-- A page on [the mathematics behind the puzzles](https://maxpluslab.github.io/tropical-puzzle-lab/?page=math): tropical arithmetic, polynomials and their graphs, rational functions and 27 corrugated, with interactive figures. It shows the solution to 6 intro.
+- A page on [the mathematics behind the puzzles](https://maxpluslab.github.io/tropical-puzzle-lab/?page=math): tropical arithmetic, polynomials and their graphs, rational functions and Corrugated 27a, with interactive figures. It shows the solution to Hill 6a.
 
 Planned: more puzzles and parametric families, an explode/illustration mode, session export, mobile input, automated solvers and difficulty studies. Difficulty is a research question; the rating above is a first heuristic, not a validated measure.
 
 ## Printing
 
+Published print listings and their conventions: [docs/printables.md](docs/printables.md).
+
 `tpl-stl <puzzle id>` writes binary STL files for every piece, the tray and a `SETTINGS.txt` into `print/<puzzle id>/` (gitignored; regenerate them whenever you need them):
 
 ```sh
-tpl-stl new2                 # relief pieces of 16 hard
-tpl-stl new2-flat            # the same footprints at uniform thickness
+tpl-stl new2                 # relief pieces of Hill 16b (Hill 16b-r)
+tpl-stl new2-flat            # the same footprints at uniform thickness (Hill 16b-f)
 tpl-stl new2 --xy-inset 0.2 --orientation underside-down
 ```
 

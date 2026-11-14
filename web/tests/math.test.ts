@@ -70,7 +70,7 @@ describe('one-variable example', () => {
   });
 });
 
-describe('6 intro', () => {
+describe('Hill 6a', () => {
   const t = load('new5').tropical;
 
   it('prints its coefficients as exact decimals', () => {
@@ -79,7 +79,7 @@ describe('6 intro', () => {
   });
 });
 
-describe('27 corrugated', () => {
+describe('Corrugated 27a', () => {
   const t = load('cor1').tropical;
   const numerator = parseTerms(t.numerator!);
 

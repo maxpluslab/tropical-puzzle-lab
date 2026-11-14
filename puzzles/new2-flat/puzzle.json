@@ -2,8 +2,9 @@
   "formatVersion": 1,
   "id": "new2-flat",
   "revision": 1,
-  "name": "16 hard (flat)",
-  "description": "The 16 hard footprints with the relief removed. Fill the square tray; heights give no clues.",
+  "name": "Hill 16b",
+  "code": "Hill 16b-f",
+  "description": "The Hill 16b footprints with the relief removed. Fill the square tray; heights give no clues.",
   "variant": "tiling",
   "geometry": {
     "model": "planar",
@@ -578,7 +579,7 @@
   },
   "provenance": {
     "recipe": "puzzles/new2/recipe.json",
-    "recipeHash": "e5cdf58b6fc18241ed9ba82333748d66c22f85b48d02b1682cd5edfcedccffe3",
+    "recipeHash": "64c42b9bf20bcd316a17b4ae432cadaa32d8ebb4f6c06db72cfae6b7369d1e80",
     "generator": "tropical-puzzle-lab 0.1.0",
     "source": {
       "polynomial": "Min[103/50+x+y,141/25+2 x+y,503/50+3 x+y,1731/100+4 x+y,529/100+x+2 y,427/50+2 x+2 y,342/25+3 x+2 y,2033/100+4 x+2 y,533/50+x+3 y,1373/100+2 x+3 y,1833/100+3 x+3 y,2511/100+4 x+3 y,357/20+x+4 y,2009/100+2 x+4 y,633/25+3 x+4 y,1647/50+4 x+4 y]"

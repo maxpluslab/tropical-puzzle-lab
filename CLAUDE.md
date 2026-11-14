@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project
 
-Tropical Puzzle Lab is a public repository for building tropical geometry puzzles and playing them in the browser. Scope, agreed rules and research direction are in `docs/project.md` (the original proposal). The implemented rules and tolerances are in `docs/puzzle-rules.md`, and the file formats in `docs/puzzle-format.md`. Read the relevant one before changing behaviour. Everything committed here is public.
+Tropical Puzzle Lab is a public repository for building tropical geometry puzzles and playing them in the browser. Scope, agreed rules and research direction are in `docs/project.md` (the original proposal). The implemented rules and tolerances are in `docs/puzzle-rules.md`, and the file formats in `docs/puzzle-format.md`. Printables listings follow `docs/printables.md`, with each listing's text in `puzzles/<id>/printables.md`. Read the relevant one before changing behaviour. Everything committed here is public.
 
 ## Commands
 
@@ -80,7 +80,8 @@ There are three concerns, connected only by JSON:
   - It compares piece shapes only: it must never consult `reference` or poses.
   - Every query increments `session.wallMatches` and updates `session.wallMatchTightestMm`, which the report line shows as `assist=…`.
 - **The reference assembly is never shown** at load or in thumbnails. "Show solution" sets `session.revealed`, which is sticky and goes into the report.
-  - The mathematics page is the one agreed exception: it draws the cells of 6 intro (`new5`) openly, with a warning at the top. Any other gallery puzzle's cells (there, 27 corrugated) stay behind a cover the reader opens; the rational example is not a gallery puzzle. Don't draw another puzzle's cells openly.
+  - The mathematics page is the one agreed exception: it draws the cells of Hill 6a (`new5`) openly, with a warning at the top. Any other gallery puzzle's cells (there, Corrugated 27a) stay behind a cover the reader opens; the rational example is not a gallery puzzle. Don't draw another puzzle's cells openly.
+- **Names are generated, and a published name never changes.** A recipe's `name` is `{shape, letter}`; `naming.py` builds `Hill 16b` and the codes `Hill 16b-r` / `-f` (rules in `docs/puzzle-format.md`). Never reuse a letter or rename a construction; a new function gets the next letter. Ids are separate and also never change.
 - **The scramble algorithm is versioned.** Changing `scramble.ts` changes every seed's layout, so give it a new version name. Changing geometry changes `geometryHash`, which makes saved sessions incompatible; that is intended.
 - **rev2 uses the ideal polygons** (no 0.15 mm print inset). Heights are measured from the piece underside, while the source adds a 3 mm tray floor. Tolerances in `recipe.json` are first guesses, documented as experimental.
 - **Attribution text in the README** needs the collaborators' agreement before it is filled in.

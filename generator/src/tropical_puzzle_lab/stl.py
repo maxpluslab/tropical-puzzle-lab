@@ -183,7 +183,7 @@ def export_print(puzzle: dict, out_dir: Path, xy_inset: float = DEFAULT_XY_INSET
     written.append(path)
     max_tilt = max(tilt_deg(p) for p in puzzle["pieces"])
     settings = "\n".join([
-        f"Puzzle: {puzzle['id']} ({puzzle['name']}), revision {puzzle['revision']}, {len(puzzle['pieces'])} pieces",
+        f"Puzzle: {puzzle['code']} ({puzzle['id']}), revision {puzzle['revision']}, {len(puzzle['pieces'])} pieces",
         f"Recipe hash: {puzzle['provenance']['recipeHash']}",
         f"Geometry hash: {puzzle['geometryHash']}",
         "Units: mm. Import at 100% scale.",

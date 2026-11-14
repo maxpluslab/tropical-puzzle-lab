@@ -2,7 +2,8 @@
   "formatVersion": 1,
   "id": "new5",
   "revision": 1,
-  "name": "6 intro",
+  "name": "Hill 6a",
+  "code": "Hill 6a-r",
   "description": "Six large pieces with sloped tops: a gentle first puzzle. Fill the square tray so the roof forms one continuous surface.",
   "variant": "relief",
   "geometry": {
@@ -269,7 +270,7 @@
   },
   "provenance": {
     "recipe": "puzzles/new5/recipe.json",
-    "recipeHash": "aa73d860cee33d18b854237f443fd6f879c4a9e014f2dc6a7553d443432ef2fd",
+    "recipeHash": "05b0778c4574b55279daa574f68bb8080521aa64648247d78077c863b415fb6f",
     "generator": "tropical-puzzle-lab 0.1.0",
     "source": {
       "polynomial": "Min[67/25+x+y,591/100+2 x+y,21/2+3 x+y,849/100+2 x+2 y,673/50+3 x+2 y,933/50+3 x+3 y]"

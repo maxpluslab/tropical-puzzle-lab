@@ -5,7 +5,7 @@ import { escapeHtml } from '../player/player';
 import { browserStore, loadSession } from '../sessions/session';
 import { bindDifficulty, difficultyHtml, fetchIndex } from '../difficulty/rating';
 import { constructions, MODES, puzzleHref } from './modes';
-import type { Puzzle, Variant, Vec2 } from '../types';
+import type { Puzzle, PuzzleIndexEntry, Variant, Vec2 } from '../types';
 
 const base = import.meta.env.BASE_URL;
 
@@ -50,6 +50,12 @@ function savedMode(): Variant {
   } catch {
     return 'relief';
   }
+}
+
+/** Link to the variant's print listing; it sits above the card's stretched title link. */
+function printLink(entry: PuzzleIndexEntry): string {
+  if (!entry.printables) return '';
+  return `<a class="print-link" href="${escapeHtml(entry.printables)}" target="_blank" rel="noopener" title="3D-print this puzzle (Printables)">Print it</a>`;
 }
 
 function progress(puzzle: Puzzle): string {
@@ -114,7 +120,7 @@ export async function renderGallery(root: HTMLElement): Promise<void> {
               ${present.map(([m, label]) => `
                 <li data-mode="${m}">
                   <a class="mode-link" href="${puzzleHref(modes[m]!.id)}">${label}</a>
-                  ${difficultyHtml(modes[m]!.difficulty)}${progress(puzzles.get(modes[m]!.id)!)}
+                  ${difficultyHtml(modes[m]!.difficulty)}${progress(puzzles.get(modes[m]!.id)!)}${printLink(modes[m]!)}
                 </li>`).join('')}
             </ul>
           </div>
