@@ -13,7 +13,26 @@ Each puzzle variant published on [Printables](https://www.printables.com/) has i
 - **No spoilers:** never use a photo or render of the solved puzzle as the cover, in keeping with the rule that the reference assembly is never shown.
 - **Credits:** no personal attribution until the collaborators have agreed the text (see the README).
 - **After publishing:** add the listing's URL to the variant in `recipe.json` as `"printables"` and rerun `tpl-export`. It then appears on the website's [Make a physical puzzle](https://maxpluslab.github.io/tropical-puzzle-lab/?page=print) page (`?page=print`), and the player lists it under *Print*. Print settings on that page (`web/src/print/page.ts`) should match the listings. Record the URL at the top of `puzzles/<id>/printables.md` too.
+- **Collection:** add every listing to the collection [Tropical Geometry Puzzles by MaxPlusLab](https://www.printables.com/@Igor_2829688/collections/3919682) (below).
 - **Files:** upload the contents of `print/<id>/` except `SETTINGS.txt`, which is a generator report rather than instructions.
+
+## Collection
+
+Published: https://www.printables.com/@Igor_2829688/collections/3919682
+
+**Name** (at most 40 characters): Tropical Geometry Puzzles by MaxPlusLab
+
+**Description:**
+
+3D-printable tiling puzzles built from tropical geometry, by [MaxPlusLab](https://github.com/maxpluslab).
+
+Each piece is a region where one plane is the largest (or smallest) of a set of planes, so the pieces are convex and the cuts between them form a tropical curve. In the relief puzzles, each piece's sloped top is its own plane. The puzzle is solved when the pieces fill the square tray and every pair of neighbours meets at the same height, so the tops join into one continuous roof: a hill, a landscape of peaks and pits, or a corrugated sheet.
+
+All puzzles share the same 144 mm tray design, print without supports, and can be played free in your browser first, with a flat mode where the heights are removed: https://maxpluslab.github.io/tropical-puzzle-lab/
+
+Puzzle names give the roof shape, the number of pieces and a letter, plus -r for relief or -f for flat: Hill 16b-r is a 16-piece hill in relief.
+
+Every puzzle on the website can be printed, not just the ones in this collection. The generator and instructions are open source (MIT): https://github.com/maxpluslab/tropical-puzzle-lab
 
 ## Template
 
@@ -53,5 +72,5 @@ a project of [MaxPlusLab](https://github.com/maxpluslab) that builds puzzles fro
 
 **Tip:** <one hint that doesn't give the solution away>
 
-More from [MaxPlusLab](https://github.com/maxpluslab) · Source and generator (MIT): https://github.com/maxpluslab/tropical-puzzle-lab
+All our puzzles: [Tropical Geometry Puzzles by MaxPlusLab](https://www.printables.com/@Igor_2829688/collections/3919682) · More from [MaxPlusLab](https://github.com/maxpluslab) · Source and generator (MIT): https://github.com/maxpluslab/tropical-puzzle-lab
 ```

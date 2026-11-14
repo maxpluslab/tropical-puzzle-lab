@@ -24,3 +24,11 @@ describe('print page', () => {
     expect(printPageHtml(index)).toContain('.venv\\Scripts\\activate');
   });
 });
+
+describe('print page collection', () => {
+  it('links the Printables collection', async () => {
+    const { COLLECTION } = await import('../src/print/page');
+    expect(COLLECTION).toMatch(/^https:\/\/www\.printables\.com\/@[^/]+\/collections\/\d+$/);
+    expect(printPageHtml(index)).toContain(`href="${COLLECTION}"`);
+  });
+});

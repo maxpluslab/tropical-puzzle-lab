@@ -41,4 +41,4 @@ In most relief puzzles the heights tell you which pieces belong together. This o
 
 **Tip:** an edge that matches at one end may not match at the other. Check both ends of every edge before you commit to a neighbour.
 
-More from [MaxPlusLab](https://github.com/maxpluslab) · Source and generator (MIT): https://github.com/maxpluslab/tropical-puzzle-lab
+All our puzzles: [Tropical Geometry Puzzles by MaxPlusLab](https://www.printables.com/@Igor_2829688/collections/3919682) · More from [MaxPlusLab](https://github.com/maxpluslab) · Source and generator (MIT): https://github.com/maxpluslab/tropical-puzzle-lab

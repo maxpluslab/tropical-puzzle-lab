@@ -7,6 +7,8 @@ import type { PuzzleIndex, PuzzleIndexEntry } from '../types';
 
 const base = import.meta.env.BASE_URL;
 const REPO = 'https://github.com/maxpluslab/tropical-puzzle-lab';
+/** All published listings (docs/printables.md). */
+export const COLLECTION = 'https://www.printables.com/@Igor_2829688/collections/3919682';
 
 const playHref = (e: PuzzleIndexEntry): string => `${base}?puzzle=${encodeURIComponent(e.id)}`;
 const external = (href: string, text: string): string =>
@@ -48,7 +50,7 @@ export function printPageHtml(index: PuzzleIndex): string {
 
     <h2>Ready to print</h2>
     ${listed.length
-      ? `<p>These have been printed and are published on Printables, with STL files and print notes:</p>
+      ? `<p>These have been printed and are published on Printables, with STL files and print notes, and gathered in the collection ${external(COLLECTION, 'Tropical Geometry Puzzles by MaxPlusLab')}:</p>
         <div class="table-wrap"><table class="data">
           <thead><tr><th>Puzzle</th><th class="num">Pieces</th><th>Difficulty</th><th>Files</th></tr></thead>
           <tbody>${publishedRows(listed)}</tbody>

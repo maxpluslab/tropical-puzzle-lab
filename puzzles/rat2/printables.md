@@ -41,4 +41,4 @@ Unlike a hill or a bowl, the roof both rises and falls, so you can't sort the pi
 
 **Tip:** around a peak every top slopes away, and around a pit every top slopes in. Find those pieces first.
 
-More from [MaxPlusLab](https://github.com/maxpluslab) · Source and generator (MIT): https://github.com/maxpluslab/tropical-puzzle-lab
+All our puzzles: [Tropical Geometry Puzzles by MaxPlusLab](https://www.printables.com/@Igor_2829688/collections/3919682) · More from [MaxPlusLab](https://github.com/maxpluslab) · Source and generator (MIT): https://github.com/maxpluslab/tropical-puzzle-lab

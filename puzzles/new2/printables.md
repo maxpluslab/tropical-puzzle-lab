@@ -41,4 +41,4 @@ Many outlines look alike, and the heights along each edge are your best clue. In
 
 **Tip:** start with the steepest pieces. They belong at the high edges of the hill.
 
-More from [MaxPlusLab](https://github.com/maxpluslab) · Source and generator (MIT): https://github.com/maxpluslab/tropical-puzzle-lab
+All our puzzles: [Tropical Geometry Puzzles by MaxPlusLab](https://www.printables.com/@Igor_2829688/collections/3919682) · More from [MaxPlusLab](https://github.com/maxpluslab) · Source and generator (MIT): https://github.com/maxpluslab/tropical-puzzle-lab
