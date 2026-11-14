@@ -12,7 +12,7 @@ Relief variant only; the flat variant (Hill 16b-f) is not listed yet. Convention
 
 **Description:**
 
-Hill 16b-r is a 3D-printable puzzle from [Tropical Puzzle Lab](https://maxpluslab.github.io/tropical-puzzle-lab/), a project of [MaxPlusLab](https://github.com/maxpluslab) that builds puzzles from tropical geometry. There are 16 convex pieces, 16 to 43 mm tall, each with a sloped flat top, and a 144 mm square tray.
+Hill 16b-r is a 3D-printable puzzle from [Tropical Puzzle Lab](https://maxpluslab.github.io/tropical-puzzle-lab/), a project of [MaxPlusLab](https://github.com/maxpluslab) that builds puzzles from tropical geometry. There are 16 convex pieces, each with a sloped flat top, and a 144 mm square tray. The pieces are 8 to 43 mm thick.
 
 The puzzle is solved when two things are true:
 1. the pieces fill the tray with no gaps, and

@@ -655,7 +655,7 @@
   },
   "provenance": {
     "recipe": "puzzles/rat2/recipe.json",
-    "recipeHash": "7e9f4e7b8d4fe1f124408b84253cbd2baa93ff8d20844795244a5b3f734bc9b6",
+    "recipeHash": "0bebe0c02597276bd2e4fcf8f1d7d2b9b7ada0a8d22b33707bc7af7ed39f5d61",
     "generator": "tropical-puzzle-lab 0.1.0",
     "source": {
       "rational": "Max[27/20+y,-21/5+4 y,71/20+3 x,47/20+x,13/10+4 x,-31/20+3 y,33/10+2 x+2 y] - Max[-21/10+4 x+y,37/10+2 x+2 y,47/10+x+y,9/5,-21/20+3 x+4 y,16/5+2 x+y,27/10+2 y]",

@@ -18,7 +18,7 @@
 | Largest piece, share of tray | ≤ 15% | 13.7% |
 | Middle 50% of vertex heights spans | ≥ 10 mm | 10.2 mm |
 
-**Hardness.** Candidates meeting the limits were ranked by the number of interior roof features, then by wall ambiguity. rat2 has 3 peaks, 2 pits and 3 saddles, tied for the most. Wall ambiguity, the mean number of other pieces with a compatible wall at ±2 mm, is 4.65 over all walls, against 3.06 for new2 and 1.81 for rat1. Lower diversity also rates harder, but this measure is close to new2 (x = 0.248 against 0.233), so both rate 4 of 5. How hard it is in play is untested.
+**Hardness.** Candidates meeting the limits were ranked by the number of interior roof features, then by wall ambiguity. rat2 has 3 peaks, 2 pits and 3 saddles, tied for the most. Wall ambiguity, the mean number of other pieces with a compatible wall at ±2 mm, is 4.65 over all walls, against 3.06 for new2 and 1.81 for rat1. Lower diversity also rates harder, but this measure is close to new2 (x = 0.248 against 0.233), so both rate 5 of 5. How hard it is in play is untested.
 
 **Physical scale.** X = 18·x and Y = 18·y mm, giving a 144 mm square tray. Roof heights, tray rim, flat thickness and tolerances are copied from rat1.
 
