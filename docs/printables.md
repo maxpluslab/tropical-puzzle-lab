@@ -12,7 +12,7 @@ Each puzzle variant published on [Printables](https://www.printables.com/) has i
 - **Printing:** quote only settings that were actually printed, and say which printer. The figures (piece sizes, overhang, inset, tray size) come from `tpl-stl`'s `SETTINGS.txt` and the STL files; don't estimate them. Piece thickness comes from the roofs in `puzzle.json`, not from the STLs: those are roof-down, so their bounding boxes are not heights in the tray. Don't claim a fit test that wasn't done.
 - **No spoilers:** never use a photo or render of the solved puzzle as the cover, in keeping with the rule that the reference assembly is never shown.
 - **Credits:** no personal attribution until the collaborators have agreed the text (see the README).
-- **After publishing:** add the listing's URL to the variant in `recipe.json` as `"printables"` and rerun `tpl-export`. The gallery card then shows **Print it** beside that mode, and the player lists it under *Print*. Record the URL at the top of `puzzles/<id>/printables.md` too.
+- **After publishing:** add the listing's URL to the variant in `recipe.json` as `"printables"` and rerun `tpl-export`. It then appears on the website's [Make a physical puzzle](https://maxpluslab.github.io/tropical-puzzle-lab/?page=print) page (`?page=print`), and the player lists it under *Print*. Print settings on that page (`web/src/print/page.ts`) should match the listings. Record the URL at the top of `puzzles/<id>/printables.md` too.
 - **Files:** upload the contents of `print/<id>/` except `SETTINGS.txt`, which is a generator report rather than instructions.
 
 ## Template

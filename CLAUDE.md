@@ -53,6 +53,7 @@ There are three concerns, connected only by JSON:
    - `src/sessions/` handles localStorage sessions, undo/redo and the report line.
    - `src/player/` does the Three.js rendering and input; `src/gallery/` is the gallery.
    - `src/math/` is the mathematics page (`?page=math`). `tropical.ts` recomputes cells in floating point (pure, and `tests/math.test.ts` checks them against every puzzle's `puzzle.json`); `figures.ts` draws SVG, `linker.ts` links terms, regions and the 3D view, and `relief.ts` draws a function's graph as relief pieces.
+   - `src/print/` is the print page (`?page=print`): published Printables listings (variants with `printables` in `index.json`), `tpl-stl` instructions and our print settings. It is the only place the gallery mentions printing.
    - Routing is by query string (`?puzzle=<id>&seed=<n>`) with the fixed Vite base `/tropical-puzzle-lab/`, so links survive reloads on Pages.
    - `window.tpl` exposes `getPoses`, `setPoses`, `evaluate` and `session` for manual testing.
 

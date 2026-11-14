@@ -44,12 +44,13 @@ Working:
 - Optional sticky-edges and wall-match assists, also recorded.
 - An experimental 1–5 difficulty rating on each card, computed from the pieces' shapes (Leinster–Cobbold diversity of their intrinsic volumes); the "How is this calculated?" link explains it.
 - A page on [the mathematics behind the puzzles](https://maxpluslab.github.io/tropical-puzzle-lab/?page=math): tropical arithmetic, polynomials and their graphs, rational functions and Corrugated 27a, with interactive figures. It shows the solution to Hill 6a.
+- A page on [making a physical puzzle](https://maxpluslab.github.io/tropical-puzzle-lab/?page=print): generating STL files for any puzzle, the print settings we used, and links to the puzzles published on Printables.
 
 Planned: more puzzles and parametric families, an explode/illustration mode, session export, mobile input, automated solvers and difficulty studies. Difficulty is a research question; the rating above is a first heuristic, not a validated measure.
 
 ## Printing
 
-Published print listings and their conventions: [docs/printables.md](docs/printables.md).
+For players, the website's [Make a physical puzzle](https://maxpluslab.github.io/tropical-puzzle-lab/?page=print) page covers the same ground and links the published listings; their text and conventions are in [docs/printables.md](docs/printables.md).
 
 `tpl-stl <puzzle id>` writes binary STL files for every piece, the tray and a `SETTINGS.txt` into `print/<puzzle id>/` (gitignored; regenerate them whenever you need them):
 
