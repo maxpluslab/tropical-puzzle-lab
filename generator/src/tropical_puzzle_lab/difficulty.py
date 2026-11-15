@@ -42,7 +42,7 @@ RATING_DIRECTION = "lower-diversity-is-harder"
 
 #: Four increasing cut points on x = (D - 1) / (n - 1). k = number of cut points <= x
 #: (0..4); the rating is 5 - k for lower-diversity-is-harder, else 1 + k.
-#: Calibrated (2026-11) on the gallery so 6 intro rates 1 and the hardest puzzles rate 5;
+#: Calibrated (2026-11) on the gallery so Hill 6a (new5) rates 1 and the hardest puzzles rate 5;
 #: current x values run from 0.23 to 0.70.
 RATING_THRESHOLDS = (0.25, 0.30, 0.45, 0.62)
 

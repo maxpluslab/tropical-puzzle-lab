@@ -2,8 +2,9 @@
   "formatVersion": 1,
   "id": "new1-flat",
   "revision": 1,
-  "name": "16 easy (flat)",
-  "description": "The 16 easy footprints with the relief removed. Fill the square tray; heights give no clues.",
+  "name": "Hill 16a",
+  "code": "Hill 16a-f",
+  "description": "The Hill 16a footprints with the relief removed. Fill the square tray; heights give no clues.",
   "variant": "tiling",
   "geometry": {
     "model": "planar",
@@ -578,7 +579,7 @@
   },
   "provenance": {
     "recipe": "puzzles/new1/recipe.json",
-    "recipeHash": "ac9079b9d35a7103bb0e0a5a8cc39be96991a9f2828ed0203075de853795ec07",
+    "recipeHash": "8fb1745d52605e9ee6903a355797ae2d67ccb168aa770728917ba90d4323bf4c",
     "generator": "tropical-puzzle-lab 0.1.0",
     "source": {
       "polynomial": "Min[68/25+x+y,32/5+2 x+y,527/50+3 x+y,921/50+4 x+y,301/50+x+2 y,91/10+2 x+2 y,351/25+3 x+2 y,107/5+4 x+2 y,103/10+x+3 y,14+2 x+3 y,498/25+3 x+3 y,131/5+4 x+3 y,443/25+x+4 y,22+2 x+4 y,1337/50+3 x+4 y,839/25+4 x+4 y]"

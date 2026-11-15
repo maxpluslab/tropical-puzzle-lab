@@ -2,8 +2,9 @@
   "formatVersion": 1,
   "id": "rev2-flat",
   "revision": 1,
-  "name": "Rev 2 (flat)",
-  "description": "The rev2 footprints with the relief removed. Fill the square tray; heights give no clues.",
+  "name": "Bowl 9a",
+  "code": "Bowl 9a-f",
+  "description": "The Bowl 9a footprints with the relief removed. Fill the square tray; heights give no clues.",
   "variant": "tiling",
   "geometry": {
     "model": "planar",
@@ -354,7 +355,7 @@
   },
   "provenance": {
     "recipe": "puzzles/rev2/recipe.json",
-    "recipeHash": "f19195eea4e043fb8d34f71b7faf2b8b1ba37ee4aaa977e2a0cea866a6b96d4a",
+    "recipeHash": "d5d0346f8f8e401c531938ab60bda8ef7b4de3e240516d3a156dbba409225da8",
     "generator": "tropical-puzzle-lab 0.1.0",
     "source": {
       "archive": "tropical-puzzle-rev2.zip (2026-09-28), extracted to puzzles/rev2/source/",

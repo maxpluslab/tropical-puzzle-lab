@@ -1,6 +1,6 @@
-// The mathematics behind the puzzles. The 6 intro and 27 corrugated examples are read from their
-// generated puzzle.json, so the page cannot drift from the puzzles. Only 6 intro is drawn openly:
-// drawing a puzzle's cells shows its solution, so the 27 corrugated figures stay covered until the
+// The mathematics behind the puzzles. The Hill 6a and Corrugated 27a examples are read from their
+// generated puzzle.json, so the page cannot drift from the puzzles. Only Hill 6a is drawn openly:
+// drawing a puzzle's cells shows its solution, so the Corrugated 27a figures stay covered until the
 // reader asks for them, and the rational example is a small function that is not in the gallery.
 import katex from 'katex';
 import 'katex/dist/katex.min.css';
@@ -110,7 +110,7 @@ const words = (n: number): string =>
 
 const href = (id: string) => `${base}?puzzle=${encodeURIComponent(id)}`;
 
-/** Everything the 6 intro sections need. */
+/** Everything the Hill 6a sections need. */
 function intro(puzzle: TropicalPuzzle) {
   const t = puzzle.tropical;
   const terms = parseTerms(t.terms!);
@@ -137,7 +137,7 @@ function arithmeticSection(): string {
     The tropical zero is ${tex('\\infty')}, since ${tex('a \\oplus \\infty = a')}, and the tropical one is ${tex('0')}, since ${tex('a \\odot 0 = a')}.
     Tropical division ${tex('a \\oslash b = a - b')} always works, but there is no tropical subtraction: no ${tex('b')} gives ${tex('3 \\oplus b = \\infty')}, since ${tex('\\min(3, b) \\le 3')}.</p>
     <p>Everything works equally well with the maximum in place of the minimum and ${tex('-\\infty')} as zero; negating every number turns one convention into the other.
-    <i>6 intro</i> and the 9- and 16-piece puzzles use the minimum; <i>Rev 2</i> and the rational puzzles use the maximum. Try both:</p>
+    The Hill puzzles use the minimum; <i>Bowl 9a</i> and the Terrain and Corrugated puzzles use the maximum. Try both:</p>
     <div class="calc" data-calc>
       <label>${tex('a')} <input type="number" step="any" value="3" data-calc-a></label>
       <label>${tex('b')} <input type="number" step="any" value="5" data-calc-b></label>
@@ -249,7 +249,7 @@ function puzzleSection(d: ReturnType<typeof intro>, puzzle: TropicalPuzzle): str
     <p>where ${tex('F_{\\min}')} and ${tex('F_{\\max}')} are the extremes of F on the square, so pieces are ${num(s.minThicknessMm, 0)} to ${num(s.minThicknessMm + s.reliefMm, 0)} mm thick.
     Since F is continuous, neighbouring roofs meet all along their shared edges, and a relief puzzle is solved only when the pieces fill the tray
     <i>and</i> their roofs form one continuous surface. In the <b>flat</b> variant all pieces have the same thickness and only the outlines matter.</p>
-    <p>Puzzles using the maximum, such as <a href="${href('rev2')}">Rev 2</a>, are the other way up: a maximum of planes is convex, so the graph is a bowl whose creases are all valleys.</p>
+    <p>Puzzles using the maximum, such as <a href="${href('rev2')}">Bowl 9a</a>, are the other way up: a maximum of planes is convex, so the graph is a bowl whose creases are all valleys.</p>
     <p class="cta"><a href="${href('new5')}">Play ${escapeHtml(puzzle.name)}</a> or try it <a href="${href('new5-flat')}">flat</a>.</p>`;
 }
 
@@ -298,10 +298,10 @@ function rationalSection(): string {
     </div>
     <p>Of the nine possible cells, only ${words(cells.length)} occur. ${tex('Bb')} would need ${tex('x \\ge 1')}, where ${tex('-1 + x')} is largest in ${tex('P')},
     and ${tex('x \\le -1')}, where ${tex('y')} is largest in ${tex('Q')}; likewise ${tex('Ca')} would need both ${tex('y \\ge 1')} and ${tex('y \\le -1')}.
-    The gallery's <a href="${href('rat1')}">11 rational</a> and <a href="${href('rat2')}">20 rational</a> are built the same way from larger ${tex('P')} and ${tex('Q')}.</p>`;
+    The gallery's <a href="${href('rat1')}">Terrain 11a</a> and <a href="${href('rat2')}">Terrain 20a</a> are built the same way from larger ${tex('P')} and ${tex('Q')}.</p>`;
 }
 
-/** The 27 corrugated function, split as P = Px(x) ⊙ Py(y) (tests/math.test.ts checks the factoring). */
+/** The Corrugated 27a function, split as P = Px(x) ⊙ Py(y) (tests/math.test.ts checks the factoring). */
 function corrugated(puzzle: TropicalPuzzle) {
   const t = puzzle.tropical;
   const numerator = parseTerms(t.numerator!);
@@ -366,7 +366,7 @@ function corrugatedSection(puzzle: TropicalPuzzle): string {
       { polygons: polynomialCells(d.numerator, 'max', d.region).map((c) => c.polygon), className: 'valley' },
       { polygons: polynomialCells(d.denominator, 'max', d.region).map((c) => c.polygon), className: 'ridge' },
     ],
-    title: 'Cells of 27 corrugated',
+    title: 'Cells of Corrugated 27a',
   });
   const spread = (values: number[]) => Math.max(...values) - Math.min(...values) < 1e-6;
   const list = (ids: string[]) => ids.length > 1 ? `${ids.slice(0, -1).join(', ')} and ${ids.at(-1)}` : ids[0];
@@ -419,9 +419,9 @@ function content(introPuzzle: TropicalPuzzle, corrugatedPuzzle: TropicalPuzzle):
   const d = intro(introPuzzle);
   return `
     <p>Here we introduce the mathematics behind the puzzles: tropical arithmetic, tropical polynomials and their graphs,
-    how a polynomial becomes a puzzle, and tropical rational functions, ending with the 27 corrugated puzzle.</p>
+    how a polynomial becomes a puzzle, and tropical rational functions, ending with the Corrugated 27a puzzle.</p>
     <p class="spoiler-note">This page shows the solution to ${escapeHtml(introPuzzle.name)}, so you may want to <a href="${href('new5')}">solve it first</a>.
-    The figures for 27 corrugated stay covered until you open them.</p>
+    The figures for Corrugated 27a stay covered until you open them.</p>
     ${arithmeticSection()}
     ${oneVariableSection()}
     ${twoVariableSection(d, introPuzzle.name)}

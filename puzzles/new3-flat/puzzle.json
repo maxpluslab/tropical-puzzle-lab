@@ -2,8 +2,9 @@
   "formatVersion": 1,
   "id": "new3-flat",
   "revision": 1,
-  "name": "9 easy (flat)",
-  "description": "The 9 easy footprints with the relief removed. Fill the square tray; heights give no clues.",
+  "name": "Hill 9a",
+  "code": "Hill 9a-f",
+  "description": "The Hill 9a footprints with the relief removed. Fill the square tray; heights give no clues.",
   "variant": "tiling",
   "geometry": {
     "model": "planar",
@@ -342,7 +343,7 @@
   },
   "provenance": {
     "recipe": "puzzles/new3/recipe.json",
-    "recipeHash": "9bbacf8d380863c0cbfc75deca471fe793fbfb5d6e6907e9d0e600f88eb88f5c",
+    "recipeHash": "3360e2aac7d7d7b34c7fc2e5f542cfdf57c8a2612663d76b20576abc935a63a8",
     "generator": "tropical-puzzle-lab 0.1.0",
     "source": {
       "polynomial": "Min[179/50+x+y,33/5+2 x+y,51/5+3 x+y,152/25+x+2 y,207/25+2 x+2 y,333/25+3 x+2 y,258/25+x+3 y,717/50+2 x+3 y,471/25+3 x+3 y]"

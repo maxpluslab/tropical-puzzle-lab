@@ -9,6 +9,7 @@ from pathlib import Path
 from . import __version__
 from .difficulty import config as difficulty_config, puzzle_difficulty
 from .geometry import Polygon, area, centroid, intersect, square
+from .naming import construction_name, variant_code
 from .tropical import RoofTransform, Term, refine, regions, roof_transform
 
 FORMAT_VERSION = 1
@@ -86,6 +87,17 @@ class Construction:
                     assert self.height(self.terms[i], v) == self.height(self.terms[j], v), "roof discontinuity"
 
 
+PRINTABLES = "https://www.printables.com/model/"
+
+
+def printables_url(variant: dict) -> str:
+    """The variant's published print listing (see docs/printables.md)."""
+    url = variant["printables"]
+    if not (isinstance(url, str) and url.startswith(PRINTABLES) and url[len(PRINTABLES):].split("-")[0].isdigit()):
+        raise ValueError(f"{variant['id']}: printables must be a {PRINTABLES}<number>-... URL, not {url!r}")
+    return url
+
+
 def _pt(p) -> list[float]:
     return [float(p[0]), float(p[1])]
 
@@ -122,11 +134,13 @@ def build_puzzle(recipe: dict, variant: dict, construction: Construction | None 
         validation.pop("roofMismatch", None)
 
     source = recipe["source"]
+    name = construction_name(recipe, len(pieces))
     puzzle = {
         "formatVersion": FORMAT_VERSION,
         "id": variant["id"],
         "revision": recipe["revision"],
-        "name": variant["name"],
+        "name": name,
+        "code": variant_code(name, variant["variant"]),
         "description": variant["description"],
         "variant": variant["variant"],
         "geometry": geometry,
@@ -148,6 +162,8 @@ def build_puzzle(recipe: dict, variant: dict, construction: Construction | None 
             "xyMmPerUnit": recipe["xyMmPerUnit"],
         },
     }
+    if "printables" in variant:
+        puzzle["printables"] = printables_url(variant)
     if is_rational(recipe):
         puzzle["tropical"]["numerator"] = recipe["numerator"]
         puzzle["tropical"]["denominator"] = recipe["denominator"]
@@ -188,6 +204,7 @@ def build_index(puzzles_dir: Path) -> dict:
             "construction": Path(p["provenance"]["recipe"]).parent.name,
             "revision": p["revision"],
             "name": p["name"],
+            "code": p["code"],
             "description": p["description"],
             "variant": p["variant"],
             "pieceCount": len(p["pieces"]),
@@ -195,6 +212,14 @@ def build_index(puzzles_dir: Path) -> dict:
             # Rounded so the committed index does not depend on the last bits of the platform's libm.
             "difficulty": {"diversity": round(d.diversity, 6), "x": round(d.x, 6), "rating": d.rating},
         })
+        if "printables" in p:
+            entries[-1]["printables"] = p["printables"]
+    # A letter belongs to one construction: two recipes may not claim the same shape, count and letter.
+    owners: dict[str, str] = {}
+    for e in entries:
+        other = owners.setdefault(e["name"], e["construction"])
+        if other != e["construction"]:
+            raise ValueError(f"{e['construction']} and {other} are both named {e['name']}; give one a new letter")
     order = {"relief": 0, "tiling": 1}
     entries.sort(key=lambda e: (e["construction"], order.get(e["variant"], 9), e["id"]))
     return {"formatVersion": FORMAT_VERSION, "difficulty": difficulty_config(), "puzzles": entries}

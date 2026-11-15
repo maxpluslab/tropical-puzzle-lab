@@ -41,7 +41,12 @@ export interface Puzzle {
   formatVersion: 1;
   id: string;
   revision: number;
+  /** Construction name shared by both variants, e.g. `Hill 16b`. */
   name: string;
+  /** This variant's code, e.g. `Hill 16b-r` (relief) or `Hill 16b-f` (flat). */
+  code: string;
+  /** Published print listing on Printables, when there is one. */
+  printables?: string;
   description: string;
   variant: Variant;
   geometry: {
@@ -67,7 +72,12 @@ export interface PuzzleIndexEntry {
   /** Recipe id; the variants of one construction share footprints and are shown as modes of one puzzle. */
   construction: string;
   revision: number;
+  /** Construction name shared by both variants, e.g. `Hill 16b`. */
   name: string;
+  /** This variant's code, e.g. `Hill 16b-r` (relief) or `Hill 16b-f` (flat). */
+  code: string;
+  /** Published print listing on Printables, when there is one. */
+  printables?: string;
   description: string;
   variant: Variant;
   pieceCount: number;

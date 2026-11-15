@@ -4,6 +4,7 @@
   "convention": "min",
   "id": "new3",
   "revision": 1,
+  "name": { "shape": "Hill", "letter": "a" },
   "pieceCount": 9,
   "domain": "3",
   "center": ["-4", "-4"],
@@ -26,7 +27,6 @@
     {
       "id": "new3",
       "variant": "relief",
-      "name": "9 easy",
       "description": "Nine pieces with sloped tops. Fill the square tray so the roof forms one continuous surface.",
       "notes": [
         "Min-convention tropical polynomial over x, y in [-7, -1]; each piece is the region where one term attains the minimum.",
@@ -36,8 +36,7 @@
     {
       "id": "new3-flat",
       "variant": "tiling",
-      "name": "9 easy (flat)",
-      "description": "The 9 easy footprints with the relief removed. Fill the square tray; heights give no clues.",
+      "description": "The Hill 9a footprints with the relief removed. Fill the square tray; heights give no clues.",
       "flatThicknessMm": "12",
       "notes": [
         "Min-convention tropical polynomial over x, y in [-7, -1]; each piece is the region where one term attains the minimum.",

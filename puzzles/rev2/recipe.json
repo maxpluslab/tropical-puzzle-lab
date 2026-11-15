@@ -3,6 +3,7 @@
   "family": "tropical-max-affine",
   "id": "rev2",
   "revision": 1,
+  "name": { "shape": "Bowl", "letter": "a" },
   "pieceCount": 9,
   "domain": "3.2",
   "xyMmPerUnit": "22.5",
@@ -24,7 +25,6 @@
     {
       "id": "rev2",
       "variant": "relief",
-      "name": "Rev 2",
       "description": "Nine pieces with sloped tops. Fill the square tray so the roof forms one continuous surface.",
       "notes": [
         "Ideal polygons from the tropical polynomial; the 0.15 mm print inset is not applied.",
@@ -34,8 +34,7 @@
     {
       "id": "rev2-flat",
       "variant": "tiling",
-      "name": "Rev 2 (flat)",
-      "description": "The rev2 footprints with the relief removed. Fill the square tray; heights give no clues.",
+      "description": "The Bowl 9a footprints with the relief removed. Fill the square tray; heights give no clues.",
       "flatThicknessMm": "12",
       "notes": [
         "Ideal polygons from the tropical polynomial; the 0.15 mm print inset is not applied.",

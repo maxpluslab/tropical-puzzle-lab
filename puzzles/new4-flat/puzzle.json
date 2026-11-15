@@ -2,8 +2,9 @@
   "formatVersion": 1,
   "id": "new4-flat",
   "revision": 1,
-  "name": "9 hard (flat)",
-  "description": "The 9 hard footprints with the relief removed. Fill the square tray; heights give no clues.",
+  "name": "Hill 9b",
+  "code": "Hill 9b-f",
+  "description": "The Hill 9b footprints with the relief removed. Fill the square tray; heights give no clues.",
   "variant": "tiling",
   "geometry": {
     "model": "planar",
@@ -342,7 +343,7 @@
   },
   "provenance": {
     "recipe": "puzzles/new4/recipe.json",
-    "recipeHash": "05bee0778063d7aa0f38f08fc88ba995cc159e57a201cb151b6e0fec1c4e3ae0",
+    "recipeHash": "ea73098e426b3f6cfa12a18df7d01cfbfa8b849b6f6d64dbbb7df5e6304262a5",
     "generator": "tropical-puzzle-lab 0.1.0",
     "source": {
       "polynomial": "Min[251/100+x+y,138/25+2 x+y,1061/100+3 x+y,289/50+x+2 y,829/100+2 x+2 y,659/50+3 x+2 y,274/25+x+3 y,1373/100+2 x+3 y,18+3 x+3 y]"

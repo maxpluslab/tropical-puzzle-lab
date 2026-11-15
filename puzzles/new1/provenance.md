@@ -6,4 +6,4 @@
 
 **Physical scale.** X = 18·(x + 5) and Y = 18·(y + 5) mm, giving a 144 mm square tray, the same size as rev2. Roof heights, tray rim, flat thickness and tolerances are copied from rev2.
 
-**Status.** This is an exploratory puzzle ("16 easy"), still under evaluation.
+**Status.** This is an exploratory puzzle, named Hill 16a (originally "16 easy"), still under evaluation.

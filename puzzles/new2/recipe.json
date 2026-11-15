@@ -4,6 +4,7 @@
   "convention": "min",
   "id": "new2",
   "revision": 1,
+  "name": { "shape": "Hill", "letter": "b" },
   "pieceCount": 16,
   "domain": "4",
   "center": ["-5", "-5"],
@@ -33,7 +34,7 @@
     {
       "id": "new2",
       "variant": "relief",
-      "name": "16 hard",
+      "printables": "https://www.printables.com/model/1914257-tropical-puzzle-hill-16b-r-16-piece-relief-tiling",
       "description": "Sixteen pieces with sloped tops. Fill the square tray so the roof forms one continuous surface.",
       "notes": [
         "Min-convention tropical polynomial over x, y in [-9, -1]; each piece is the region where one term attains the minimum.",
@@ -43,8 +44,7 @@
     {
       "id": "new2-flat",
       "variant": "tiling",
-      "name": "16 hard (flat)",
-      "description": "The 16 hard footprints with the relief removed. Fill the square tray; heights give no clues.",
+      "description": "The Hill 16b footprints with the relief removed. Fill the square tray; heights give no clues.",
       "flatThicknessMm": "12",
       "notes": [
         "Min-convention tropical polynomial over x, y in [-9, -1]; each piece is the region where one term attains the minimum.",
