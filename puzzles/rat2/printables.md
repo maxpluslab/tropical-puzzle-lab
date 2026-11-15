@@ -18,7 +18,7 @@ The puzzle is solved when two things are true:
 1. the pieces fill the tray with no gaps, and
 2. every pair of neighbouring pieces meets at the same height along their shared edge, so the tops form one unbroken landscape with three peaks, two pits and three saddles.
 
-Unlike a hill or a bowl, the roof both rises and falls, so you can't sort the pieces simply by height. In the online version it has the highest difficulty rating (5 of 5).
+Unlike a hill or a bowl, the roof both rises and falls, so you can't sort the pieces simply by height. Without the heights, a computer search needs over 100,000 tries to find every assembly.
 
 **The mathematics.** The roof is the graph of a tropical rational function F = P ⊘ Q, which is P − Q in ordinary arithmetic. P and Q are each the largest of seven planes. Each piece is a region where one plane of P and one plane of Q are both the largest, so its top is the difference of those two planes. P's tropical curve turns into the valleys of the roof and Q's into the ridges; where they cross, you get peaks, pits and saddles.
 

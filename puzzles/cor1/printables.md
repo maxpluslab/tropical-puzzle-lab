@@ -18,7 +18,7 @@ The puzzle is solved when two things are true:
 1. the pieces fill the tray with no gaps, and
 2. every pair of neighbouring pieces meets at the same height along their shared edge, so the tops form one unbroken corrugated roof of ridges and valleys.
 
-In most relief puzzles the heights tell you which pieces belong together. This one was designed so that they help as little as possible: every valley line has the same height profile, and so does every ridge line, so many edges match many others. No two pieces have the same outline, and a computer search finds only one solution. It is our largest puzzle and has the highest difficulty rating online (5 of 5).
+In most relief puzzles the heights tell you which pieces belong together. This one was designed so that they help as little as possible: every valley line has the same height profile, and so does every ridge line, so many edges match many others. No two pieces have the same outline, and a computer search finds only one solution. It is our largest puzzle, and even with the heights a computer search needs about 1,500 tries to rule out every other assembly, where each of our other relief puzzles needs under 100.
 
 **The mathematics.** The roof is the graph of a tropical rational function F = P ⊘ Q, which is P − Q in ordinary arithmetic. P is the largest of fifteen planes and Q the largest of four. Each piece is a region where one plane of P and one plane of Q are both the largest, so its top is the difference of those two planes. P's tropical curve turns into the valleys of the roof and Q's into the ridges. The mathematics page explains how the corrugation is built, with the figures that give the solution away kept behind a cover.
 

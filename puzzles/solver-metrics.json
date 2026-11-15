@@ -1,0 +1,194 @@
+{
+  "formatVersion": 1,
+  "solver": {
+    "id": "rust.contact_dfs",
+    "version": "0.1.0",
+    "repository": "https://github.com/maxpluslab/tiling-solvers",
+    "commit": "2c2cd7c5d491e1f454d429435d40b1e635ab256a",
+    "seed": 20261109,
+    "nodeLimit": 1500000,
+    "assumptions": []
+  },
+  "puzzles": {
+    "cor1": {
+      "geometryHash": "78efff393692b812602735262414c51f99283649055de578ec070a3c7497c0e1",
+      "mode": "relief",
+      "pieces": 27,
+      "nodes": 1529,
+      "backtracks": 357,
+      "firstNodes": 581,
+      "solutions": 1,
+      "exhaustive": true
+    },
+    "cor1-flat": {
+      "geometryHash": "049804fdb45e2f37430c7616cd461063ac9d71eedc67e963f2c77ac1ce95bcf5",
+      "mode": "footprint",
+      "pieces": 27,
+      "nodes": 1500000,
+      "backtracks": 1426301,
+      "firstNodes": null,
+      "solutions": 0,
+      "exhaustive": false
+    },
+    "new1": {
+      "geometryHash": "aca54e06186bcecf28e618580f22ee080a3019f32322121d3848305200d83437",
+      "mode": "relief",
+      "pieces": 16,
+      "nodes": 68,
+      "backtracks": 43,
+      "firstNodes": 25,
+      "solutions": 1,
+      "exhaustive": true
+    },
+    "new1-flat": {
+      "geometryHash": "ae39042ff2d2f2a108aed7d0e08138b84171d5f6d7dd8af38a922402fb24eded",
+      "mode": "footprint",
+      "pieces": 16,
+      "nodes": 1064878,
+      "backtracks": 935271,
+      "firstNodes": 803543,
+      "solutions": 1,
+      "exhaustive": true
+    },
+    "new2": {
+      "geometryHash": "27f66cb4de8390c31be5e78d64d3ca4bd4db2dd37187acf7a9f39c630cd0236d",
+      "mode": "relief",
+      "pieces": 16,
+      "nodes": 68,
+      "backtracks": 43,
+      "firstNodes": 40,
+      "solutions": 1,
+      "exhaustive": true
+    },
+    "new2-flat": {
+      "geometryHash": "8213c7bbd3d6f0f31ef393013f4a55c0b7f741b64318c80c308a29a8ecb3cc09",
+      "mode": "footprint",
+      "pieces": 16,
+      "nodes": 909750,
+      "backtracks": 820554,
+      "firstNodes": 392912,
+      "solutions": 1,
+      "exhaustive": true
+    },
+    "new3": {
+      "geometryHash": "adad00a1e9896ab0c87e5fdac0eab3eb4554f56f73cda103c0558087cfd56212",
+      "mode": "relief",
+      "pieces": 9,
+      "nodes": 44,
+      "backtracks": 27,
+      "firstNodes": 10,
+      "solutions": 1,
+      "exhaustive": true
+    },
+    "new3-flat": {
+      "geometryHash": "60679aece595a9cbae5e0d888f153b0fc674f5a0e05cdf2f6c5be531064d1c1b",
+      "mode": "footprint",
+      "pieces": 9,
+      "nodes": 6104,
+      "backtracks": 5355,
+      "firstNodes": 135,
+      "solutions": 1,
+      "exhaustive": true
+    },
+    "new4": {
+      "geometryHash": "232a0c31a6b15fbb06565d36dc0a6b97611815b1b77561d86671ebbd7695a25d",
+      "mode": "relief",
+      "pieces": 9,
+      "nodes": 45,
+      "backtracks": 26,
+      "firstNodes": 34,
+      "solutions": 1,
+      "exhaustive": true
+    },
+    "new4-flat": {
+      "geometryHash": "cdef8a3777943864f1225d3d9c4778d7bd5fd8c4e18bcebf55c4336ef62aefef",
+      "mode": "footprint",
+      "pieces": 9,
+      "nodes": 510,
+      "backtracks": 462,
+      "firstNodes": 377,
+      "solutions": 1,
+      "exhaustive": true
+    },
+    "new5": {
+      "geometryHash": "754f8fc1f37b130d44fde65fc85c66f0913264f64f6bfe8ac6f15e17ec05f9bc",
+      "mode": "relief",
+      "pieces": 6,
+      "nodes": 26,
+      "backtracks": 16,
+      "firstNodes": 11,
+      "solutions": 1,
+      "exhaustive": true
+    },
+    "new5-flat": {
+      "geometryHash": "7e0a0b140e6b303e7f104fac7d8a67f74b7bd1b364a8a5131512ba649c996101",
+      "mode": "footprint",
+      "pieces": 6,
+      "nodes": 90,
+      "backtracks": 70,
+      "firstNodes": 55,
+      "solutions": 1,
+      "exhaustive": true
+    },
+    "rat1": {
+      "geometryHash": "e91d5fba6e065bd5063286f3b2b3d22511aa0ffe7ce62706494f55972e8cd04a",
+      "mode": "relief",
+      "pieces": 11,
+      "nodes": 90,
+      "backtracks": 52,
+      "firstNodes": 15,
+      "solutions": 1,
+      "exhaustive": true
+    },
+    "rat1-flat": {
+      "geometryHash": "fac3e2c7d4d285e0061bf9aa317b8cafb52299a7e06b7a2e1976535a8b479b1d",
+      "mode": "footprint",
+      "pieces": 11,
+      "nodes": 17425,
+      "backtracks": 13436,
+      "firstNodes": 334,
+      "solutions": 101,
+      "exhaustive": true
+    },
+    "rat2": {
+      "geometryHash": "e04fdc109a7c76ccd7b966af949ff7218bae47a4140cfd61013504fa8d4e013b",
+      "mode": "relief",
+      "pieces": 20,
+      "nodes": 94,
+      "backtracks": 49,
+      "firstNodes": 93,
+      "solutions": 1,
+      "exhaustive": true
+    },
+    "rat2-flat": {
+      "geometryHash": "fa6e7a9ae160b7887e911042f1260e942790d2537ef75912c86751abc88b46fa",
+      "mode": "footprint",
+      "pieces": 20,
+      "nodes": 128230,
+      "backtracks": 109786,
+      "firstNodes": 5555,
+      "solutions": 2,
+      "exhaustive": true
+    },
+    "rev2": {
+      "geometryHash": "96192e2a2eaacbd09c73761150a0373c7aa46bdbbbe876fa01d7761b04b5fcbc",
+      "mode": "relief",
+      "pieces": 9,
+      "nodes": 26,
+      "backtracks": 13,
+      "firstNodes": 15,
+      "solutions": 1,
+      "exhaustive": true
+    },
+    "rev2-flat": {
+      "geometryHash": "c5b5216b0fcc1031c9a09243d60eb99d4fc3a29c754e906214c8b875f4693cc4",
+      "mode": "footprint",
+      "pieces": 9,
+      "nodes": 45,
+      "backtracks": 25,
+      "firstNodes": 30,
+      "solutions": 1,
+      "exhaustive": true
+    }
+  }
+}

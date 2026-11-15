@@ -1,4 +1,4 @@
-// Difficulty pips with a "How is this calculated?" link. The link appears on hover, while the
+// Difficulty pips with a link to how it is calculated. The link appears on hover, while the
 // widget has keyboard focus, or after a tap/click on the pips (hover does not exist on touch screens).
 import type { DifficultyRating, PuzzleIndex } from '../types';
 
@@ -15,7 +15,7 @@ export function difficultyHtml(d: DifficultyRating, placement: 'above' | 'below'
     <button type="button" class="difficulty-pill" aria-expanded="false">
       <span class="difficulty-label">Difficulty</span>${pips(d.rating)}<span class="visually-hidden">${d.rating} of 5</span>
     </button>
-    <span class="difficulty-pop"><a href="${DIFFICULTY_PAGE}">How is this calculated?</a></span>
+    <span class="difficulty-pop"><a href="${DIFFICULTY_PAGE}">Rated by computer search effort: how?</a></span>
   </span>`;
 }
 

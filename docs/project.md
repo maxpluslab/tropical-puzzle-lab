@@ -217,6 +217,6 @@ The public release should preserve construction reproducibility and make experim
 
 Future questions include whether difficulty depends on the number of plausible placements, branching and backtracking, near-symmetry, boundary clues, or the need to use tropical structure such as balancing conditions. These are hypotheses to investigate, not established predictors.
 
-Human difficulty and automated solver effort should initially be measured separately. Human performance includes perception and interaction costs; solver effort depends on representation, heuristics, and the search algorithm. A later classifier should state which population, interface rules, and outcome it predicts.
+Human difficulty and automated solver effort should initially be measured separately. Human performance includes perception and interaction costs; solver effort depends on representation, heuristics, and the search algorithm. A later classifier should state which population, interface rules, and outcome it predicts. The gallery's rating (since 2026-11) is solver effort only: the node count of the exhaustive search in [tiling-solvers](https://github.com/maxpluslab/tiling-solvers), committed in `puzzles/solver-metrics.json`. It is not yet compared with human solve times.
 
 The immediate objective is simpler: make rev2 playable, let collaborators try it, and use those observations to guide the next construction.

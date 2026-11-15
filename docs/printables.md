@@ -50,7 +50,7 @@ a project of [MaxPlusLab](https://github.com/maxpluslab) that builds puzzles fro
 
 <When the puzzle is solved.>
 
-<What makes it hard; the online difficulty rating.>
+<What makes it hard. Don't quote the online rating's number: it can change, and a published listing would then contradict it.>
 
 **The mathematics.** <The function, what a piece is, what the roof or seams look like.>
 

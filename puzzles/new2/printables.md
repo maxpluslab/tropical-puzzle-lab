@@ -18,7 +18,7 @@ The puzzle is solved when two things are true:
 1. the pieces fill the tray with no gaps, and
 2. every pair of neighbouring pieces meets at the same height along their shared edge, so the tops form one unbroken roof that rises to ridges.
 
-Many outlines look alike, and the heights along each edge are your best clue. In the online version it has the highest difficulty rating (5 of 5).
+Many outlines look alike, and the heights along each edge are your best clue. Without the heights, a computer search needs nearly a million tries to be sure of the solution.
 
 **The mathematics.** The roof is the graph of the min-convention tropical polynomial F(x, y) = min over (a, b) ∈ {1,…,4}² of (cₐᵦ + a·x + b·y), the smallest of 16 planes. Each piece is the region where one plane is the lowest. Because F is a minimum of planes, it is concave, so the finished roof is a faceted hill. The lines between pieces form a tropical curve.
 
