@@ -4,7 +4,7 @@
     "id": "rust.contact_dfs",
     "version": "0.1.0",
     "repository": "https://github.com/maxpluslab/tiling-solvers",
-    "commit": "2c2cd7c5d491e1f454d429435d40b1e635ab256a",
+    "commit": "5b482e0d72830f51751ebc45d6b1a376ea366023",
     "seed": 20261109,
     "nodeLimit": 1500000,
     "assumptions": []
@@ -129,6 +129,106 @@
       "firstNodes": 55,
       "solutions": 1,
       "exhaustive": true
+    },
+    "plt1": {
+      "geometryHash": "92ce0a714cda54a221b7aab75486e1b7009bbf02e0458c10362ee593251b76da",
+      "mode": "relief",
+      "pieces": 32,
+      "nodes": 21973,
+      "backtracks": 14739,
+      "firstNodes": 6992,
+      "solutions": 1,
+      "exhaustive": true
+    },
+    "plt1-flat": {
+      "geometryHash": "64342514b40766c9e376475df38414363056395dd11c21d9518befca5cd2706b",
+      "mode": "footprint",
+      "pieces": 32,
+      "nodes": 1500000,
+      "backtracks": 940579,
+      "firstNodes": 4099,
+      "solutions": 54725,
+      "exhaustive": false
+    },
+    "plt2": {
+      "geometryHash": "921417de793eed6e68bc437b4a45a9fa5faf720c390612765f4a7e06e379d78a",
+      "mode": "relief",
+      "pieces": 32,
+      "nodes": 18490,
+      "backtracks": 11670,
+      "firstNodes": 18422,
+      "solutions": 1,
+      "exhaustive": true
+    },
+    "plt2-flat": {
+      "geometryHash": "af59624c1881366053bd874428d31a022ed0f2222b0d74f2ec12651660ceeb93",
+      "mode": "footprint",
+      "pieces": 32,
+      "nodes": 1500000,
+      "backtracks": 932151,
+      "firstNodes": 87,
+      "solutions": 59724,
+      "exhaustive": false
+    },
+    "plt3": {
+      "geometryHash": "5d4d8605b04149e41a7e8f74a06f9c186810e229ea9bdf52f93ca4b7a3190bab",
+      "mode": "relief",
+      "pieces": 32,
+      "nodes": 11611,
+      "backtracks": 7949,
+      "firstNodes": 1033,
+      "solutions": 1,
+      "exhaustive": true
+    },
+    "plt3-flat": {
+      "geometryHash": "8786ba1570b1d31f5cdeb933ee42ffb894bac9015c325943909b869dde6bf01b",
+      "mode": "footprint",
+      "pieces": 32,
+      "nodes": 1500000,
+      "backtracks": 1110831,
+      "firstNodes": 96862,
+      "solutions": 26998,
+      "exhaustive": false
+    },
+    "plt4": {
+      "geometryHash": "3b19adeafecc09ee3bdb6086c9351bfaf5fc9b95a179ec03c067265d5af0e6bb",
+      "mode": "relief",
+      "pieces": 32,
+      "nodes": 10787,
+      "backtracks": 6319,
+      "firstNodes": 1943,
+      "solutions": 1,
+      "exhaustive": true
+    },
+    "plt4-flat": {
+      "geometryHash": "23d0e692697cc2e381affe075b2cec934fc5c366f9d94957ea44d6b9b95a0050",
+      "mode": "footprint",
+      "pieces": 32,
+      "nodes": 1500000,
+      "backtracks": 853249,
+      "firstNodes": 4538,
+      "solutions": 81443,
+      "exhaustive": false
+    },
+    "plt5": {
+      "geometryHash": "38f74ab7259c2d46ff31c63a37966ad2e15e7f84a4f199ac6544ac103d0eb734",
+      "mode": "relief",
+      "pieces": 24,
+      "nodes": 7488,
+      "backtracks": 5049,
+      "firstNodes": 1042,
+      "solutions": 1,
+      "exhaustive": true
+    },
+    "plt5-flat": {
+      "geometryHash": "da08bd0e075304d78b958ad939120ed824196104cf8c56dd716d45f8f98310cf",
+      "mode": "footprint",
+      "pieces": 24,
+      "nodes": 1500000,
+      "backtracks": 777380,
+      "firstNodes": 28,
+      "solutions": 95344,
+      "exhaustive": false
     },
     "rat1": {
       "geometryHash": "e91d5fba6e065bd5063286f3b2b3d22511aa0ffe7ce62706494f55972e8cd04a",

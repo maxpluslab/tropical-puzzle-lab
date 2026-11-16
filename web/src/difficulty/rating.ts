@@ -9,6 +9,30 @@ export function pips(rating: number): string {
   return `<span class="pips" aria-hidden="true">${[1, 2, 3, 4, 5].map((i) => `<i${i <= rating ? ' class="on"' : ''}></i>`).join('')}</span>`;
 }
 
+/** A count as a reader reads it, thousands set off by thin spaces: 54 725. */
+export function formatCount(n: number): string {
+  return n.toLocaleString('en-GB').replace(/,/g, ' ');
+}
+
+/** Assemblies found: exact for a finished search, a lower bound (≥) for one that stopped after finding some, otherwise unknown. */
+export function assemblies(d: DifficultyRating): string {
+  if (d.exhaustive) return formatCount(d.solutions);
+  return d.solutions > 0 ? `≥ ${formatCount(d.solutions)}` : '?';
+}
+
+/**
+ * A note for puzzles with more than one assembly: any of them completes the puzzle. Empty for one.
+ * A search stopped at its node limit has found at least that many, so the count gets "≥".
+ */
+export function solutionsHtml(d: DifficultyRating): string {
+  if (d.solutions <= 1) return '';
+  const count = `${d.exhaustive ? '' : '≥ '}${formatCount(d.solutions)}`;
+  const title = d.exhaustive
+    ? `The search found ${count} different assemblies; any of them completes the puzzle.`
+    : `The search found ${count} different assemblies before it stopped, and there may be more; any of them completes the puzzle.`;
+  return `<span class="solutions" title="${title}">${count} solutions</span>`;
+}
+
 /** `placement` is where the link pops up relative to the pips. */
 export function difficultyHtml(d: DifficultyRating, placement: 'above' | 'below' = 'above'): string {
   return `<span class="difficulty difficulty-${placement}" data-difficulty>
@@ -45,6 +69,6 @@ export async function fetchIndex(): Promise<PuzzleIndex> {
 
 /** Fill a placeholder with a rating whose link pops up below it. */
 export function showDifficulty(root: HTMLElement, slot: HTMLElement, d: DifficultyRating): void {
-  slot.innerHTML = difficultyHtml(d, 'below');
+  slot.innerHTML = difficultyHtml(d, 'below') + solutionsHtml(d);
   bindDifficulty(root);
 }

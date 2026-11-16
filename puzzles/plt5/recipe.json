@@ -1,0 +1,586 @@
+{
+  "formatVersion": 1,
+  "family": "lifted",
+  "id": "plt5",
+  "revision": 1,
+  "name": {
+    "shape": "Pleat",
+    "letter": "e"
+  },
+  "pieceCount": 24,
+  "domain": "4",
+  "xyMmPerUnit": "18",
+  "minThicknessMm": "8",
+  "reliefMm": "12",
+  "trayRimMm": "7",
+  "cells": [
+    {
+      "id": "A0l",
+      "vertices": [
+        [
+          "-4",
+          "-4"
+        ],
+        [
+          "-17/8",
+          "-4"
+        ],
+        [
+          "-17/8",
+          "-7/6"
+        ]
+      ],
+      "roof": {
+        "a": "-8/15",
+        "b": "6/17",
+        "c": "71/255"
+      }
+    },
+    {
+      "id": "A0u",
+      "vertices": [
+        [
+          "-4",
+          "-4"
+        ],
+        [
+          "-17/8",
+          "-7/6"
+        ],
+        [
+          "-4",
+          "-7/6"
+        ]
+      ],
+      "roof": {
+        "a": "8/15",
+        "b": "-6/17",
+        "c": "439/255"
+      }
+    },
+    {
+      "id": "B0l",
+      "vertices": [
+        [
+          "-17/8",
+          "-4"
+        ],
+        [
+          "1",
+          "-4"
+        ],
+        [
+          "1",
+          "-7/6"
+        ]
+      ],
+      "roof": {
+        "a": "0",
+        "b": "0",
+        "c": "0"
+      }
+    },
+    {
+      "id": "B0u",
+      "vertices": [
+        [
+          "-17/8",
+          "-4"
+        ],
+        [
+          "1",
+          "-7/6"
+        ],
+        [
+          "-17/8",
+          "-7/6"
+        ]
+      ],
+      "roof": {
+        "a": "-8/25",
+        "b": "6/17",
+        "c": "311/425"
+      }
+    },
+    {
+      "id": "C0l",
+      "vertices": [
+        [
+          "1",
+          "-4"
+        ],
+        [
+          "21/8",
+          "-4"
+        ],
+        [
+          "21/8",
+          "-7/6"
+        ]
+      ],
+      "roof": {
+        "a": "8/13",
+        "b": "-6/17",
+        "c": "-448/221"
+      }
+    },
+    {
+      "id": "C0u",
+      "vertices": [
+        [
+          "1",
+          "-4"
+        ],
+        [
+          "21/8",
+          "-7/6"
+        ],
+        [
+          "1",
+          "-7/6"
+        ]
+      ],
+      "roof": {
+        "a": "0",
+        "b": "0",
+        "c": "0"
+      }
+    },
+    {
+      "id": "D0l",
+      "vertices": [
+        [
+          "21/8",
+          "-4"
+        ],
+        [
+          "4",
+          "-4"
+        ],
+        [
+          "4",
+          "-7/6"
+        ]
+      ],
+      "roof": {
+        "a": "0",
+        "b": "0",
+        "c": "1"
+      }
+    },
+    {
+      "id": "D0u",
+      "vertices": [
+        [
+          "21/8",
+          "-4"
+        ],
+        [
+          "4",
+          "-7/6"
+        ],
+        [
+          "21/8",
+          "-7/6"
+        ]
+      ],
+      "roof": {
+        "a": "8/11",
+        "b": "-6/17",
+        "c": "-434/187"
+      }
+    },
+    {
+      "id": "A1l",
+      "vertices": [
+        [
+          "-4",
+          "-7/6"
+        ],
+        [
+          "-17/8",
+          "-7/6"
+        ],
+        [
+          "-17/8",
+          "1"
+        ]
+      ],
+      "roof": {
+        "a": "8/15",
+        "b": "-6/13",
+        "c": "311/195"
+      }
+    },
+    {
+      "id": "A1u",
+      "vertices": [
+        [
+          "-4",
+          "-7/6"
+        ],
+        [
+          "-17/8",
+          "1"
+        ],
+        [
+          "-4",
+          "1"
+        ]
+      ],
+      "roof": {
+        "a": "0",
+        "b": "0",
+        "c": "0"
+      }
+    },
+    {
+      "id": "B1l",
+      "vertices": [
+        [
+          "-17/8",
+          "-7/6"
+        ],
+        [
+          "1",
+          "-7/6"
+        ],
+        [
+          "1",
+          "1"
+        ]
+      ],
+      "roof": {
+        "a": "-8/25",
+        "b": "0",
+        "c": "8/25"
+      }
+    },
+    {
+      "id": "B1u",
+      "vertices": [
+        [
+          "-17/8",
+          "-7/6"
+        ],
+        [
+          "1",
+          "1"
+        ],
+        [
+          "-17/8",
+          "1"
+        ]
+      ],
+      "roof": {
+        "a": "0",
+        "b": "-6/13",
+        "c": "6/13"
+      }
+    },
+    {
+      "id": "C1l",
+      "vertices": [
+        [
+          "1",
+          "-7/6"
+        ],
+        [
+          "21/8",
+          "-7/6"
+        ],
+        [
+          "21/8",
+          "1"
+        ]
+      ],
+      "roof": {
+        "a": "0",
+        "b": "6/13",
+        "c": "7/13"
+      }
+    },
+    {
+      "id": "C1u",
+      "vertices": [
+        [
+          "1",
+          "-7/6"
+        ],
+        [
+          "21/8",
+          "1"
+        ],
+        [
+          "1",
+          "1"
+        ]
+      ],
+      "roof": {
+        "a": "8/13",
+        "b": "0",
+        "c": "-8/13"
+      }
+    },
+    {
+      "id": "D1l",
+      "vertices": [
+        [
+          "21/8",
+          "-7/6"
+        ],
+        [
+          "4",
+          "-7/6"
+        ],
+        [
+          "4",
+          "1"
+        ]
+      ],
+      "roof": {
+        "a": "8/11",
+        "b": "-6/13",
+        "c": "-350/143"
+      }
+    },
+    {
+      "id": "D1u",
+      "vertices": [
+        [
+          "21/8",
+          "-7/6"
+        ],
+        [
+          "4",
+          "1"
+        ],
+        [
+          "21/8",
+          "1"
+        ]
+      ],
+      "roof": {
+        "a": "-8/11",
+        "b": "6/13",
+        "c": "350/143"
+      }
+    },
+    {
+      "id": "A2l",
+      "vertices": [
+        [
+          "-4",
+          "1"
+        ],
+        [
+          "-17/8",
+          "1"
+        ],
+        [
+          "-17/8",
+          "4"
+        ]
+      ],
+      "roof": {
+        "a": "0",
+        "b": "0",
+        "c": "0"
+      }
+    },
+    {
+      "id": "A2u",
+      "vertices": [
+        [
+          "-4",
+          "1"
+        ],
+        [
+          "-17/8",
+          "4"
+        ],
+        [
+          "-4",
+          "4"
+        ]
+      ],
+      "roof": {
+        "a": "-8/15",
+        "b": "1/3",
+        "c": "-37/15"
+      }
+    },
+    {
+      "id": "B2l",
+      "vertices": [
+        [
+          "-17/8",
+          "1"
+        ],
+        [
+          "1",
+          "1"
+        ],
+        [
+          "1",
+          "4"
+        ]
+      ],
+      "roof": {
+        "a": "0",
+        "b": "1/3",
+        "c": "-1/3"
+      }
+    },
+    {
+      "id": "B2u",
+      "vertices": [
+        [
+          "-17/8",
+          "1"
+        ],
+        [
+          "1",
+          "4"
+        ],
+        [
+          "-17/8",
+          "4"
+        ]
+      ],
+      "roof": {
+        "a": "8/25",
+        "b": "0",
+        "c": "17/25"
+      }
+    },
+    {
+      "id": "C2l",
+      "vertices": [
+        [
+          "1",
+          "1"
+        ],
+        [
+          "21/8",
+          "1"
+        ],
+        [
+          "21/8",
+          "4"
+        ]
+      ],
+      "roof": {
+        "a": "8/13",
+        "b": "0",
+        "c": "-8/13"
+      }
+    },
+    {
+      "id": "C2u",
+      "vertices": [
+        [
+          "1",
+          "1"
+        ],
+        [
+          "21/8",
+          "4"
+        ],
+        [
+          "1",
+          "4"
+        ]
+      ],
+      "roof": {
+        "a": "0",
+        "b": "1/3",
+        "c": "-1/3"
+      }
+    },
+    {
+      "id": "D2l",
+      "vertices": [
+        [
+          "21/8",
+          "1"
+        ],
+        [
+          "4",
+          "1"
+        ],
+        [
+          "4",
+          "4"
+        ]
+      ],
+      "roof": {
+        "a": "-8/11",
+        "b": "0",
+        "c": "32/11"
+      }
+    },
+    {
+      "id": "D2u",
+      "vertices": [
+        [
+          "21/8",
+          "1"
+        ],
+        [
+          "4",
+          "4"
+        ],
+        [
+          "21/8",
+          "4"
+        ]
+      ],
+      "roof": {
+        "a": "-8/11",
+        "b": "0",
+        "c": "32/11"
+      }
+    }
+  ],
+  "variants": [
+    {
+      "id": "plt5",
+      "variant": "relief",
+      "description": "Twenty-four triangles under a faceted roof whose corners stand at just two heights. Fill the square tray so the roof forms one continuous surface.",
+      "notes": [
+        "Lifted subdivision: a grid of rectangles over x, y in [-4, 4], each cut along a diagonal into two triangles, with one affine roof per triangle (see docs/puzzle-format.md, Lifted recipes).",
+        "Every grid corner stands at one of two heights and each triangle's roof is the plane through its corners, so the same edge profiles recur across the tray, as in an edge-matching puzzle.",
+        "Pieces come in congruent pairs, the two halves of one rectangle; their roofs tell them apart unless the rectangle is level.",
+        "Built by generator/scripts/lifted_search.py to be hard for a search with its roofs on. Exploratory puzzle under evaluation."
+      ]
+    },
+    {
+      "id": "plt5-flat",
+      "variant": "tiling",
+      "description": "The Pleat 24e footprints with the relief removed. Fill the square tray; heights give no clues.",
+      "flatThicknessMm": "12",
+      "notes": [
+        "Lifted subdivision: a grid of rectangles over x, y in [-4, 4], each cut along a diagonal into two triangles, with one affine roof per triangle (see docs/puzzle-format.md, Lifted recipes).",
+        "Roof relief removed: every piece has the same uniform thickness.",
+        "Flat, the triangles fit together in a huge number of ways: the search found 95 344 assemblies before it stopped. Any of them completes the puzzle."
+      ]
+    }
+  ],
+  "validation": {
+    "contactNoise": 1e-06,
+    "overlapDepth": 0.006,
+    "outsideDepth": 0.006,
+    "areaError": 0.012,
+    "roofMismatch": 0.05,
+    "edgeAngleDeg": 3,
+    "edgeMinOverlap": 0.02
+  },
+  "scramble": {
+    "algorithm": "v1",
+    "defaultSeed": 20261116
+  },
+  "source": {
+    "search": "generator/scripts/lifted_search.py vertex --screen --levels 0 1 --seed 7 --node-limit 300000 --columns 4 --rows 3 --samples 300, sample 234"
+  }
+}

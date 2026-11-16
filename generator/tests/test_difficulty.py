@@ -118,6 +118,8 @@ def test_calibration_goals():
     ratings = {e["id"]: e["difficulty"]["rating"] for e in build_index(PUZZLES)["puzzles"]}
     assert ratings["new5"] == ratings["new5-flat"] == 1
     assert ratings["cor1-flat"] == 5
+    # Pleat 32a was designed so that its roofs give little away: 21 973 nodes, rating 4 (10^4 to 10^5).
+    assert ratings["plt1"] == 4
 
 
 def test_unfinished_search_rates_at_least_its_lower_bound():
