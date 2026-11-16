@@ -42,11 +42,11 @@ Working:
 - Saving progress and resuming after a reload.
 - An optional solution outline whose use is recorded.
 - Optional sticky-edges and wall-match assists, also recorded.
-- An experimental 1–5 difficulty rating on each card, computed from the pieces' shapes (Leinster–Cobbold diversity of their intrinsic volumes); the "How is this calculated?" link explains it.
+- An experimental 1–5 difficulty rating on each card: how much a computer search ([tiling-solvers](https://github.com/maxpluslab/tiling-solvers)) has to try to find every assembly. The link on the rating explains it.
 - A page on [the mathematics behind the puzzles](https://maxpluslab.github.io/tropical-puzzle-lab/?page=math): tropical arithmetic, polynomials and their graphs, rational functions and Corrugated 27a, with interactive figures. It shows the solution to Hill 6a.
 - A page on [making a physical puzzle](https://maxpluslab.github.io/tropical-puzzle-lab/?page=print): generating STL files for any puzzle, the print settings we used, and links to the puzzles published on Printables.
 
-Planned: more puzzles and parametric families, an explode/illustration mode, session export, mobile input, automated solvers and difficulty studies. Difficulty is a research question; the rating above is a first heuristic, not a validated measure.
+Planned: more puzzles and parametric families, an explode/illustration mode, session export, mobile input, automated solvers and difficulty studies. Difficulty is a research question; the rating above measures search effort, not people, and is not a validated measure of human difficulty.
 
 ## Printing
 

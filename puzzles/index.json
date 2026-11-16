@@ -1,16 +1,25 @@
 {
   "formatVersion": 1,
   "difficulty": {
-    "method": "leinster-cobbold-intrinsic-volumes",
-    "u": 10.0,
-    "q": 2.0,
-    "direction": "lower-diversity-is-harder",
+    "method": "search-effort-log-nodes",
+    "solver": {
+      "id": "rust.contact_dfs",
+      "version": "0.1.0",
+      "repository": "https://github.com/maxpluslab/tiling-solvers",
+      "commit": "2c2cd7c5d491e1f454d429435d40b1e635ab256a",
+      "nodeLimit": 1500000
+    },
     "thresholds": [
-      0.25,
-      0.3,
-      0.45,
-      0.62
-    ]
+      2.0,
+      3.0,
+      4.0,
+      5.5
+    ],
+    "diversity": {
+      "method": "leinster-cobbold-intrinsic-volumes",
+      "u": 10.0,
+      "q": 2.0
+    }
   },
   "puzzles": [
     {
@@ -24,9 +33,12 @@
       "pieceCount": 27,
       "path": "cor1/puzzle.json",
       "difficulty": {
-        "diversity": 3.998651,
-        "x": 0.115333,
-        "rating": 5
+        "rating": 3,
+        "x": 3.184407,
+        "nodes": 1529,
+        "exhaustive": true,
+        "solutions": 1,
+        "diversity": 3.998651
       },
       "printables": "https://www.printables.com/model/1914628-tropical-puzzle-corrugated-27a-r-27-piece-relief-t"
     },
@@ -41,9 +53,12 @@
       "pieceCount": 27,
       "path": "cor1-flat/puzzle.json",
       "difficulty": {
-        "diversity": 4.09575,
-        "x": 0.119067,
-        "rating": 5
+        "rating": 5,
+        "x": 6.176091,
+        "nodes": 1500000,
+        "exhaustive": false,
+        "solutions": 0,
+        "diversity": 4.09575
       }
     },
     {
@@ -57,9 +72,12 @@
       "pieceCount": 16,
       "path": "new1/puzzle.json",
       "difficulty": {
-        "diversity": 5.446444,
-        "x": 0.29643,
-        "rating": 4
+        "rating": 1,
+        "x": 1.832509,
+        "nodes": 68,
+        "exhaustive": true,
+        "solutions": 1,
+        "diversity": 5.446444
       }
     },
     {
@@ -73,9 +91,12 @@
       "pieceCount": 16,
       "path": "new1-flat/puzzle.json",
       "difficulty": {
-        "diversity": 6.426513,
-        "x": 0.361768,
-        "rating": 3
+        "rating": 5,
+        "x": 6.0273,
+        "nodes": 1064878,
+        "exhaustive": true,
+        "solutions": 1,
+        "diversity": 6.426513
       }
     },
     {
@@ -89,9 +110,12 @@
       "pieceCount": 16,
       "path": "new2/puzzle.json",
       "difficulty": {
-        "diversity": 4.496934,
-        "x": 0.233129,
-        "rating": 5
+        "rating": 1,
+        "x": 1.832509,
+        "nodes": 68,
+        "exhaustive": true,
+        "solutions": 1,
+        "diversity": 4.496934
       },
       "printables": "https://www.printables.com/model/1914257-tropical-puzzle-hill-16b-r-16-piece-relief-tiling"
     },
@@ -106,9 +130,12 @@
       "pieceCount": 16,
       "path": "new2-flat/puzzle.json",
       "difficulty": {
-        "diversity": 4.78389,
-        "x": 0.252259,
-        "rating": 4
+        "rating": 5,
+        "x": 5.958922,
+        "nodes": 909750,
+        "exhaustive": true,
+        "solutions": 1,
+        "diversity": 4.78389
       }
     },
     {
@@ -122,9 +149,12 @@
       "pieceCount": 9,
       "path": "new3/puzzle.json",
       "difficulty": {
-        "diversity": 5.681002,
-        "x": 0.585125,
-        "rating": 2
+        "rating": 1,
+        "x": 1.643453,
+        "nodes": 44,
+        "exhaustive": true,
+        "solutions": 1,
+        "diversity": 5.681002
       }
     },
     {
@@ -138,9 +168,12 @@
       "pieceCount": 9,
       "path": "new3-flat/puzzle.json",
       "difficulty": {
-        "diversity": 6.633686,
-        "x": 0.704211,
-        "rating": 1
+        "rating": 3,
+        "x": 3.785615,
+        "nodes": 6104,
+        "exhaustive": true,
+        "solutions": 1,
+        "diversity": 6.633686
       }
     },
     {
@@ -154,9 +187,12 @@
       "pieceCount": 9,
       "path": "new4/puzzle.json",
       "difficulty": {
-        "diversity": 3.500216,
-        "x": 0.312527,
-        "rating": 3
+        "rating": 1,
+        "x": 1.653213,
+        "nodes": 45,
+        "exhaustive": true,
+        "solutions": 1,
+        "diversity": 3.500216
       }
     },
     {
@@ -170,9 +206,12 @@
       "pieceCount": 9,
       "path": "new4-flat/puzzle.json",
       "difficulty": {
-        "diversity": 3.939849,
-        "x": 0.367481,
-        "rating": 3
+        "rating": 2,
+        "x": 2.70757,
+        "nodes": 510,
+        "exhaustive": true,
+        "solutions": 1,
+        "diversity": 3.939849
       }
     },
     {
@@ -186,9 +225,12 @@
       "pieceCount": 6,
       "path": "new5/puzzle.json",
       "difficulty": {
-        "diversity": 4.466807,
-        "x": 0.693361,
-        "rating": 1
+        "rating": 1,
+        "x": 1.414973,
+        "nodes": 26,
+        "exhaustive": true,
+        "solutions": 1,
+        "diversity": 4.466807
       }
     },
     {
@@ -202,9 +244,12 @@
       "pieceCount": 6,
       "path": "new5-flat/puzzle.json",
       "difficulty": {
-        "diversity": 4.186563,
-        "x": 0.637313,
-        "rating": 1
+        "rating": 1,
+        "x": 1.954243,
+        "nodes": 90,
+        "exhaustive": true,
+        "solutions": 1,
+        "diversity": 4.186563
       }
     },
     {
@@ -218,9 +263,12 @@
       "pieceCount": 11,
       "path": "rat1/puzzle.json",
       "difficulty": {
-        "diversity": 4.891978,
-        "x": 0.389198,
-        "rating": 3
+        "rating": 1,
+        "x": 1.954243,
+        "nodes": 90,
+        "exhaustive": true,
+        "solutions": 1,
+        "diversity": 4.891978
       }
     },
     {
@@ -234,9 +282,12 @@
       "pieceCount": 11,
       "path": "rat1-flat/puzzle.json",
       "difficulty": {
-        "diversity": 4.538006,
-        "x": 0.353801,
-        "rating": 3
+        "rating": 4,
+        "x": 4.241173,
+        "nodes": 17425,
+        "exhaustive": true,
+        "solutions": 101,
+        "diversity": 4.538006
       }
     },
     {
@@ -250,9 +301,12 @@
       "pieceCount": 20,
       "path": "rat2/puzzle.json",
       "difficulty": {
-        "diversity": 5.709562,
-        "x": 0.247872,
-        "rating": 5
+        "rating": 1,
+        "x": 1.973128,
+        "nodes": 94,
+        "exhaustive": true,
+        "solutions": 1,
+        "diversity": 5.709562
       },
       "printables": "https://www.printables.com/model/1914271-tropical-puzzle-terrain-20a-r-20-piece-relief-tili"
     },
@@ -267,9 +321,12 @@
       "pieceCount": 20,
       "path": "rat2-flat/puzzle.json",
       "difficulty": {
-        "diversity": 6.063062,
-        "x": 0.266477,
-        "rating": 4
+        "rating": 4,
+        "x": 5.10799,
+        "nodes": 128230,
+        "exhaustive": true,
+        "solutions": 2,
+        "diversity": 6.063062
       }
     },
     {
@@ -283,9 +340,12 @@
       "pieceCount": 9,
       "path": "rev2/puzzle.json",
       "difficulty": {
-        "diversity": 5.09878,
-        "x": 0.512348,
-        "rating": 2
+        "rating": 1,
+        "x": 1.414973,
+        "nodes": 26,
+        "exhaustive": true,
+        "solutions": 1,
+        "diversity": 5.09878
       }
     },
     {
@@ -299,9 +359,12 @@
       "pieceCount": 9,
       "path": "rev2-flat/puzzle.json",
       "difficulty": {
-        "diversity": 4.482502,
-        "x": 0.435313,
-        "rating": 3
+        "rating": 1,
+        "x": 1.653213,
+        "nodes": 45,
+        "exhaustive": true,
+        "solutions": 1,
+        "diversity": 4.482502
       }
     }
   ]

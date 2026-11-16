@@ -5,7 +5,8 @@ from pathlib import Path
 import pytest
 
 from tropical_puzzle_lab.difficulty import (
-    RATING_THRESHOLDS, diversity, intrinsic_volumes, piece_solid, puzzle_difficulty, rating, shape_vectors,
+    RATING_THRESHOLDS, StaleMetrics, diversity, intrinsic_volumes, load_metrics, piece_solid, puzzle_difficulty,
+    rating, shape_vectors,
 )
 from tropical_puzzle_lab.export import build_index, dump
 
@@ -103,26 +104,57 @@ def test_relief_piece_volume_is_area_times_centroid_height():
         assert intrinsic_volumes(piece_solid(piece)).v3 == pytest.approx(area * piece["roof"]["z0"], rel=1e-9)
 
 
-def test_mapping_steps_down_at_each_threshold():
-    xs = [i / 400 for i in range(401)]
+def test_mapping_steps_up_at_each_threshold():
+    xs = [i / 100 for i in range(801)]
     ratings = [rating(x) for x in xs]
-    assert ratings == sorted(ratings, reverse=True)  # lower diversity is harder
-    assert rating(0) == 5 and rating(1) == 1
+    assert ratings == sorted(ratings)  # more search is harder
+    assert rating(0) == 1 and rating(8) == 5
     for k, t in enumerate(RATING_THRESHOLDS):
-        assert rating(t - 1e-9) == 5 - k and rating(t) == 4 - k
+        assert rating(t - 1e-9) == 1 + k and rating(t) == 2 + k
 
 
 def test_calibration_goals():
-    # The intro puzzle is the easiest rating, and the gallery uses the hardest one.
+    # The intro puzzle is the easiest rating, and the unfinished search the hardest.
     ratings = {e["id"]: e["difficulty"]["rating"] for e in build_index(PUZZLES)["puzzles"]}
     assert ratings["new5"] == ratings["new5-flat"] == 1
-    assert 5 in ratings.values()
+    assert ratings["cor1-flat"] == 5
+
+
+def test_unfinished_search_rates_at_least_its_lower_bound():
+    metrics = load_metrics(PUZZLES)
+    limit = metrics["solver"]["nodeLimit"]
+    for entry in build_index(PUZZLES)["puzzles"]:
+        d = entry["difficulty"]
+        if not d["exhaustive"]:
+            assert d["nodes"] >= limit and d["rating"] >= rating(math.log10(limit))
 
 
 def test_ratings_are_in_range():
+    metrics = load_metrics(PUZZLES)
     for entry in build_index(PUZZLES)["puzzles"]:
-        d = puzzle_difficulty(load(entry["id"]))
-        assert 1 <= d.diversity <= d.n and 1 <= d.rating <= 5
+        d = puzzle_difficulty(load(entry["id"]), metrics)
+        assert 1 <= d.diversity <= d.n and 1 <= d.rating <= 5 and d.nodes >= 1
+
+
+def test_solver_metrics_are_current():
+    # Every variant was searched on its present geometry; otherwise rerun scripts/solver_metrics.py.
+    metrics = load_metrics(PUZZLES)
+    ids = {path.parent.name for path in PUZZLES.glob("*/puzzle.json")}
+    assert set(metrics["puzzles"]) == ids
+    for pid in ids:
+        puzzle = load(pid)
+        entry = metrics["puzzles"][pid]
+        assert entry["geometryHash"] == puzzle["geometryHash"], pid
+        assert entry["mode"] == ("relief" if puzzle["variant"] == "relief" else "footprint"), pid
+
+
+def test_stale_metrics_are_refused():
+    metrics = load_metrics(PUZZLES)
+    puzzle = dict(load("new5"), geometryHash="0" * 64)
+    with pytest.raises(StaleMetrics):
+        puzzle_difficulty(puzzle, metrics)
+    with pytest.raises(StaleMetrics):
+        puzzle_difficulty(dict(load("new5"), id="missing"), metrics)
 
 
 def test_variants_of_a_construction_share_footprints():

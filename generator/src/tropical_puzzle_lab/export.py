@@ -7,7 +7,7 @@ from fractions import Fraction
 from pathlib import Path
 
 from . import __version__
-from .difficulty import config as difficulty_config, puzzle_difficulty
+from .difficulty import config as difficulty_config, load_metrics, puzzle_difficulty
 from .geometry import Polygon, area, centroid, intersect, square
 from .naming import construction_name, variant_code
 from .tropical import RoofTransform, Term, refine, regions, roof_transform
@@ -195,9 +195,10 @@ def export_recipe(recipe_path: Path, puzzles_dir: Path) -> list[dict]:
 
 def build_index(puzzles_dir: Path) -> dict:
     entries = []
+    metrics = load_metrics(puzzles_dir)
     for path in sorted(puzzles_dir.glob("*/puzzle.json")):
         p = json.loads(path.read_text(encoding="utf-8"))
-        d = puzzle_difficulty(p)
+        d = puzzle_difficulty(p, metrics)
         entries.append({
             "id": p["id"],
             # The recipe the variant was built from; the gallery shows one card per construction.
@@ -210,7 +211,10 @@ def build_index(puzzles_dir: Path) -> dict:
             "pieceCount": len(p["pieces"]),
             "path": f"{p['id']}/puzzle.json",
             # Rounded so the committed index does not depend on the last bits of the platform's libm.
-            "difficulty": {"diversity": round(d.diversity, 6), "x": round(d.x, 6), "rating": d.rating},
+            "difficulty": {
+                "rating": d.rating, "x": round(d.x, 6), "nodes": d.nodes, "exhaustive": d.exhaustive,
+                "solutions": d.solutions, "diversity": round(d.diversity, 6),
+            },
         })
         if "printables" in p:
             entries[-1]["printables"] = p["printables"]
@@ -222,7 +226,7 @@ def build_index(puzzles_dir: Path) -> dict:
             raise ValueError(f"{e['construction']} and {other} are both named {e['name']}; give one a new letter")
     order = {"relief": 0, "tiling": 1}
     entries.sort(key=lambda e: (e["construction"], order.get(e["variant"], 9), e["id"]))
-    return {"formatVersion": FORMAT_VERSION, "difficulty": difficulty_config(), "puzzles": entries}
+    return {"formatVersion": FORMAT_VERSION, "difficulty": difficulty_config(metrics), "puzzles": entries}
 
 
 def write_index(puzzles_dir: Path) -> dict:

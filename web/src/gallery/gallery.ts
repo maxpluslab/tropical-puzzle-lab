@@ -3,7 +3,7 @@ import { bounds, transform } from '../geometry/polygon';
 import { scramble } from '../geometry/scramble';
 import { escapeHtml } from '../player/player';
 import { browserStore, loadSession } from '../sessions/session';
-import { bindDifficulty, difficultyHtml, fetchIndex } from '../difficulty/rating';
+import { bindDifficulty, DIFFICULTY_PAGE, difficultyHtml, fetchIndex } from '../difficulty/rating';
 import { constructions, MODES, puzzleHref } from './modes';
 import type { Puzzle, Variant, Vec2 } from '../types';
 
@@ -68,6 +68,9 @@ export async function renderGallery(root: HTMLElement): Promise<void> {
         Fill the square tray with every piece. Pieces can be moved and turned, but not flipped, and nothing snaps into place.</p>
         <p>New to tropical geometry? <a href="${base}?page=math">The mathematics behind the puzzles</a> explains, with interactive examples, how a tropical polynomial becomes a puzzle.</p>
         <p>Every puzzle can be played in relief or flat, with the heights removed. Choose a mode on the card or switch inside the puzzle; each mode keeps its own progress.</p>
+        <p>The difficulty on each card, from 1 to 5, is how much a computer search has to try before it has found every way to assemble the puzzle.
+        Matching heights give most of the answer away, so most relief puzzles rate 1 while their flat versions rate much higher.
+        It measures the search, not people: <a href="${DIFFICULTY_PAGE}">how difficulty is rated</a>.</p>
         <p>Prefer pieces in your hand? <a href="${base}?page=print">Make a physical puzzle</a>: 3D-print files for every puzzle, and ready-made ones for a few.</p>
       </header>
       <div class="filter" role="group" aria-label="Open puzzles in">

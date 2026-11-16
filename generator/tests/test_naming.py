@@ -52,6 +52,7 @@ def test_index_rejects_a_reused_letter(tmp_path):
         p["name"] = "Hill 16a"
         (tmp_path / pid).mkdir()
         (tmp_path / pid / "puzzle.json").write_text(json.dumps(p), encoding="utf-8")
+    (tmp_path / "solver-metrics.json").write_bytes((PUZZLES / "solver-metrics.json").read_bytes())
     with pytest.raises(ValueError, match="new letter"):
         build_index(tmp_path)
 

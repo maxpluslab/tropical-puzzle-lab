@@ -37,9 +37,18 @@ import math
 import random
 from fractions import Fraction
 
-from tropical_puzzle_lab.difficulty import diversity, intrinsic_volumes, rating, shape_vectors
+from tropical_puzzle_lab.difficulty import diversity, intrinsic_volumes, shape_vectors
 from tropical_puzzle_lab.geometry import area, clip, square
 from tropical_puzzle_lab.tropical import Term, refine, regions, roof_transform
+
+#: The gallery's former rating (until 2026-11): cut points on normalised diversity
+#: x = (D - 1) / (n - 1), lower diversity rated harder. The gallery now rates search effort
+#: (tropical_puzzle_lab.difficulty); this search still scores candidates by shape diversity.
+DIVERSITY_THRESHOLDS = (0.25, 0.30, 0.45, 0.62)
+
+
+def diversity_rating(x: float) -> int:
+    return 5 - sum(1 for t in DIVERSITY_THRESHOLDS if x >= t)
 
 DOMAIN = Fraction(4)
 XY = 18
@@ -201,7 +210,7 @@ def hardness(numerator: list[Term], denominator: list[Term]) -> dict:
     ) / len(walls)
     peaks, pits, saddles = roof_features(numerator, denominator, cells)
     x = (diversity(shape_vectors(solids)) - 1) / (len(cells) - 1)
-    return {"peaks": peaks, "pits": pits, "saddles": saddles, "wallAmbiguity": ambiguity, "x": x, "rating": rating(x)}
+    return {"peaks": peaks, "pits": pits, "saddles": saddles, "wallAmbiguity": ambiguity, "x": x, "rating": diversity_rating(x)}
 
 
 def draw_climb_terms(rng: random.Random, count: int, letters: str) -> list[Term]:

@@ -1,7 +1,22 @@
-"""Computed difficulty rating: Leinster-Cobbold diversity of the pieces' intrinsic volumes.
+"""Computed difficulty rating: how much a computer search has to try to assemble the puzzle.
 
-Each piece is treated as the convex solid the player draws: its footprint polygon
-extruded from z = 0 up to its roof plane (relief) or its uniform thickness (tiling).
+The rating comes from the exhaustive contact search of the sibling repository tiling-solvers
+(`rust.contact_dfs`), run on each variant in its own regime: a relief variant with its roofs,
+which must agree along shared edges, and a flat variant as footprints only. The search gets
+a sanitized instance (pieces turned, shuffled and renamed, no reference). Its counts are
+committed in puzzles/solver-metrics.json by generator/scripts/solver_metrics.py, because the
+search is not a dependency of the generator.
+
+1. nodes = placements the search tries to find every assembly and show there is no other.
+   A search stopped at the node limit gives a lower bound.
+2. x = log10(nodes), mapped to a 1-5 rating by RATING_THRESHOLDS below (5 = hardest).
+
+This is search effort, not measured human difficulty. Roofs give the matching away, so most
+relief variants rate 1.
+
+A secondary statistic is published next to the rating without driving it: the
+Leinster-Cobbold diversity of the pieces' intrinsic volumes, each piece taken as the convex
+solid the player draws (footprint extruded from z = 0 to its roof plane or thickness).
 
 1. Intrinsic volumes of each convex piece P (from the convex hull of its vertices):
        V0 = 1
@@ -13,38 +28,37 @@ extruded from z = 0 up to its roof plane (relief) or its uniform thickness (tili
 3. Distances d_ij = |d(P_i) - d(P_j)| (Euclidean), similarities Z_ij = exp(-u * d_ij).
 4. Leinster-Cobbold diversity of order q = DIVERSITY_ORDER (default 2) with uniform weights 1/n:
        D = n^2 / sum_ij Z_ij,  1 <= D <= n  (the effective number of distinct pieces).
-5. x = (D - 1) / (n - 1) in [0, 1], mapped to a 1-5 rating by RATING_THRESHOLDS and
-   RATING_DIRECTION below.
 
 The parameters below are the only definition of the method's constants. `tpl-export`
 copies them into puzzles/index.json, and the explanation page reads them from there.
 """
 from __future__ import annotations
 
+import json
 import math
 from dataclasses import dataclass
+from pathlib import Path
 from typing import Sequence
 
 # ---------------------------------------------------------------------------
 # CONFIGURATION: tune the rating here and rerun `tpl-export`.
 # ---------------------------------------------------------------------------
 
-#: Similarity sharpness u in Z_ij = exp(-u * d_ij).
+#: Four increasing cut points on x = log10(nodes of the whole search). k = number of cut
+#: points <= x (0..4); the rating is 1 + k. Calibrated (2026-11) on the gallery: one shared
+#: scale for relief and flat variants, so a rating means the same search effort on both.
+#: Nodes run from 26 (Hill 6a-r, Bowl 9a-r) to over 1.5 million (Corrugated 27a-f, unfinished).
+RATING_THRESHOLDS = (2.0, 3.0, 4.0, 5.5)
+
+#: Secondary statistic only. Similarity sharpness u in Z_ij = exp(-u * d_ij).
 SIMILARITY_U = 10.0
 
-#: Order q of the Leinster-Cobbold diversity used for the rating (q >= 0; math.inf allowed).
+#: Secondary statistic only. Order q of the Leinster-Cobbold diversity (q >= 0; math.inf allowed).
 #: q = 2 gives D = n^2 / sum_ij Z_ij.
 DIVERSITY_ORDER = 2.0
 
-#: "lower-diversity-is-harder": few distinct piece shapes => high rating (5 = hardest).
-#: "higher-diversity-is-harder": many distinct piece shapes => high rating.
-RATING_DIRECTION = "lower-diversity-is-harder"
-
-#: Four increasing cut points on x = (D - 1) / (n - 1). k = number of cut points <= x
-#: (0..4); the rating is 5 - k for lower-diversity-is-harder, else 1 + k.
-#: Calibrated (2026-11) on the gallery so Hill 6a (new5) rates 1 and the hardest puzzles rate 5;
-#: current x values run from 0.23 to 0.70.
-RATING_THRESHOLDS = (0.25, 0.30, 0.45, 0.62)
+#: Where solver_metrics.py writes the search counts, relative to the puzzles directory.
+METRICS_FILE = "solver-metrics.json"
 
 # ---------------------------------------------------------------------------
 
@@ -211,14 +225,10 @@ def diversity(vectors: Sequence[Sequence[float]], u: float = SIMILARITY_U, q: fl
 
 
 def rating(x: float) -> int:
-    """Map normalised diversity x in [0, 1] to a 1-5 rating (see the configuration above)."""
+    """Map x = log10(nodes) to a 1-5 rating (see the configuration above)."""
     if len(RATING_THRESHOLDS) != 4 or list(RATING_THRESHOLDS) != sorted(RATING_THRESHOLDS):
         raise ValueError("RATING_THRESHOLDS must be four increasing cut points")
-    if RATING_DIRECTION not in ("lower-diversity-is-harder", "higher-diversity-is-harder"):
-        raise ValueError(f"unknown RATING_DIRECTION {RATING_DIRECTION!r}")
-    k = sum(1 for t in RATING_THRESHOLDS if x >= t)
-    value = 5 - k if RATING_DIRECTION == "lower-diversity-is-harder" else 1 + k
-    return max(1, min(5, value))
+    return 1 + sum(1 for t in RATING_THRESHOLDS if x >= t)
 
 
 def piece_solid(piece: dict) -> list[Vec3]:
@@ -235,29 +245,60 @@ def piece_solid(piece: dict) -> list[Vec3]:
 @dataclass(frozen=True)
 class Difficulty:
     n: int
-    diversity: float
-    x: float
+    nodes: int  # a lower bound when not exhaustive
+    exhaustive: bool
+    solutions: int
+    x: float  # log10(nodes)
     rating: int
+    diversity: float  # secondary statistic
+
+
+class StaleMetrics(ValueError):
+    """solver-metrics.json lacks a variant or was measured on other geometry."""
+
+
+def load_metrics(puzzles_dir: Path) -> dict:
+    return json.loads((Path(puzzles_dir) / METRICS_FILE).read_text(encoding="utf-8"))
+
+
+def search_metrics(puzzle: dict, metrics: dict) -> dict:
+    """The committed search counts of this variant, refused when its geometry has changed since."""
+    entry = metrics["puzzles"].get(puzzle["id"])
+    rerun = "rerun generator/scripts/solver_metrics.py (see its docstring)"
+    if entry is None:
+        raise StaleMetrics(f"{puzzle['id']} has no entry in {METRICS_FILE}; {rerun}")
+    if entry["geometryHash"] != puzzle["geometryHash"]:
+        raise StaleMetrics(f"{puzzle['id']} changed geometry since it was searched; {rerun}")
+    return entry
 
 
 def puzzle_vectors(puzzle: dict) -> list[tuple[float, float, float, float]]:
     return shape_vectors([intrinsic_volumes(piece_solid(p)) for p in puzzle["pieces"]])
 
 
-def puzzle_difficulty(puzzle: dict, u: float = SIMILARITY_U, q: float = DIVERSITY_ORDER) -> Difficulty:
-    vectors = puzzle_vectors(puzzle)
-    n = len(vectors)
-    d = diversity(vectors, u, q)
-    x = (d - 1) / (n - 1) if n > 1 else 0.0  # a single piece has nothing to tell apart
-    return Difficulty(n, d, x, rating(x))
+def puzzle_diversity(puzzle: dict, u: float = SIMILARITY_U, q: float = DIVERSITY_ORDER) -> float:
+    return diversity(puzzle_vectors(puzzle), u, q)
 
 
-def config() -> dict:
+def puzzle_difficulty(puzzle: dict, metrics: dict) -> Difficulty:
+    entry = search_metrics(puzzle, metrics)
+    x = math.log10(max(1, entry["nodes"]))
+    return Difficulty(
+        n=len(puzzle["pieces"]), nodes=entry["nodes"], exhaustive=entry["exhaustive"],
+        solutions=entry["solutions"], x=x, rating=rating(x), diversity=puzzle_diversity(puzzle),
+    )
+
+
+def config(metrics: dict) -> dict:
     """The parameters as published in index.json for the explanation page."""
+    solver = metrics["solver"]
     return {
-        "method": "leinster-cobbold-intrinsic-volumes",
-        "u": SIMILARITY_U,
-        "q": "infinity" if DIVERSITY_ORDER == math.inf else DIVERSITY_ORDER,
-        "direction": RATING_DIRECTION,
+        "method": "search-effort-log-nodes",
+        "solver": {k: solver[k] for k in ("id", "version", "repository", "commit", "nodeLimit")},
         "thresholds": list(RATING_THRESHOLDS),
+        "diversity": {
+            "method": "leinster-cobbold-intrinsic-volumes",
+            "u": SIMILARITY_U,
+            "q": "infinity" if DIVERSITY_ORDER == math.inf else DIVERSITY_ORDER,
+        },
     }

@@ -85,25 +85,35 @@ export interface PuzzleIndexEntry {
   difficulty: DifficultyRating;
 }
 
-/** Precomputed by the generator (`tropical_puzzle_lab/difficulty.py`). */
+/** Precomputed by the generator (`tropical_puzzle_lab/difficulty.py`) from tiling-solvers search counts. */
 export interface DifficultyRating {
-  /** Leinster–Cobbold diversity D of the pieces, in [1, n]. */
-  diversity: number;
-  /** (D − 1) / (n − 1), in [0, 1]. */
-  x: number;
   /** 1 (easiest) to 5 (hardest). */
   rating: number;
+  /** log10(nodes). */
+  x: number;
+  /** Placements the search tried; a lower bound when `exhaustive` is false. */
+  nodes: number;
+  /** The search ran to its end (otherwise it stopped at the node limit). */
+  exhaustive: boolean;
+  /** Assemblies the search found, up to turning the tray. */
+  solutions: number;
+  /** Secondary statistic: Leinster–Cobbold diversity D of the pieces, in [1, n]. */
+  diversity: number;
 }
 
 /** The rating parameters, copied from the generator's single configuration block. */
 export interface DifficultyConfig {
   method: string;
-  u: number;
-  /** Order of the Leinster–Cobbold diversity. */
-  q: number | 'infinity';
-  direction: 'lower-diversity-is-harder' | 'higher-diversity-is-harder';
-  /** Four increasing cut points on x. */
+  solver: { id: string; version: string; repository: string; commit: string; nodeLimit: number };
+  /** Four increasing cut points on x = log10(nodes). */
   thresholds: number[];
+  /** The secondary statistic's parameters. */
+  diversity: {
+    method: string;
+    u: number;
+    /** Order of the Leinster–Cobbold diversity. */
+    q: number | 'infinity';
+  };
 }
 
 export interface PuzzleIndex {
