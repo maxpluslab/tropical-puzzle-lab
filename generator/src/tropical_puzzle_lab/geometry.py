@@ -53,6 +53,17 @@ def clip(poly: Polygon, normal: Sequence[Fraction], threshold: Fraction) -> Poly
     return clean(result)
 
 
+def is_convex(poly: Polygon) -> bool:
+    """Strictly convex and counter-clockwise: every turn is to the left."""
+    n = len(poly)
+    return n >= 3 and all(
+        (poly[(k + 1) % n][0] - poly[k][0]) * (poly[(k + 2) % n][1] - poly[(k + 1) % n][1])
+        - (poly[(k + 1) % n][1] - poly[k][1]) * (poly[(k + 2) % n][0] - poly[(k + 1) % n][0])
+        > 0
+        for k in range(n)
+    )
+
+
 def area(poly: Polygon) -> Fraction:
     if len(poly) < 3:
         return Fraction(0)

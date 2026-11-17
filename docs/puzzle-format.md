@@ -43,6 +43,16 @@ A tropical rational function F = P ⊘ Q, which is P − Q classically, replaces
 
 The pieces are the two-dimensional cells of the common refinement: the cell of P's term p intersected with the cell of Q's term q, in numerator-major order. On that cell F is the affine function p − q, so the piece's id is `p.id + q.id` (for example `Bc`). Its slopes may be zero or negative. In max convention P's tropical curve becomes valleys of the roof and Q's becomes ridges.
 
+### Lifted recipes (`lifted`)
+
+A subdivision of the square and a lifting of it, given cell by cell rather than computed from tropical terms. `family` is `"lifted"`, there is no `convention`, and `cells[]` replaces the terms. Everything else is as above.
+
+| Field | Meaning |
+| --- | --- |
+| `cells[]` | `{id, vertices, roof}`. `vertices` are the cell's corners in domain units, as pairs of exact decimal or fraction strings, convex and counter-clockwise. `roof` is the affine function `{a, b, c}`, height a·x + b·y + c in domain units, with any fractions as slopes |
+
+`Construction.check` refuses a recipe whose cells do not tile the domain exactly, or whose roofs are not continuous along every shared stretch of boundary (`tropical_puzzle_lab/lifting.py`). Continuous roofs on a subdivision are its *liftings*. By the Maxwell–Cremona correspondence they are, up to a global plane, its self-stresses: across every edge the gradient jumps normally to it, and the jumps balance at every interior vertex. A tropical rational function is a lifting with integer slopes and no T-junctions. A lifted recipe may have rational slopes and, where a crease meets a straight line, T-junctions, which `lifting.edge_to_edge` reports. The puzzle documents carry `lifting` instead of `tropical` (see below).
+
 ### Names
 
 A construction is named `<Shape> <pieces><letter>`, for example **Hill 16b**, and each variant has a code with `-r` (relief) or `-f` (flat) added: **Hill 16b-r**, **Hill 16b-f**. The recipe stores only `shape` and `letter`; the piece count comes from the construction. The generator builds the strings (`tropical_puzzle_lab/naming.py`) and rejects anything that breaks these rules:
@@ -53,6 +63,7 @@ A construction is named `<Shape> <pieces><letter>`, for example **Hill 16b**, an
 | `Hill` | concave, rises to ridges | min-convention polynomial |
 | `Terrain` | ridges and valleys | rational P ⊘ Q |
 | `Corrugated` | repeated ridges and valleys that look alike | rational P ⊘ Q |
+| `Pleat` | facets whose corners stand at a few heights, so that edges look alike | lifted recipe |
 
 - Every construction gets a letter from the start, even when it is the only one of its shape and size, so a published name never changes.
 - Letters are one lower-case letter, given in the order constructions are added within a shape and piece count, and are never reused, even after a construction is retired. `tpl-export` fails if two recipes claim the same name.
@@ -71,7 +82,7 @@ A construction is named `<Shape> <pieces><letter>`, for example **Hill 16b**, an
 | Validation | Scale-relative tolerances (see the rules document) |
 | Starting state | `scramble: {algorithm: "v1", defaultSeed}` |
 | Provenance | `recipe`, `recipeHash` (SHA-256 of the canonical recipe JSON), `generator`, `source`, `notes[]` |
-| Tropical data | `tropical: {convention, domain, xyMmPerUnit, terms, center?}` for solvers and research; rational puzzles have `numerator` and `denominator` instead of `terms` |
+| Tropical data | `tropical: {convention, domain, xyMmPerUnit, terms, center?}` for solvers and research; rational puzzles have `numerator` and `denominator` instead of `terms`. Lifted puzzles have `lifting: {domain, xyMmPerUnit, cells, center?}` instead, with `cells` as in the recipe |
 | `geometryHash` | SHA-256 of the canonical `{variant, target, pieces}`. Sessions are bound to it |
 
 A pose `{id, x, y, theta}` places a piece by rotating its local polygon counter-clockwise by `theta` radians about the origin, then translating it by (x, y).

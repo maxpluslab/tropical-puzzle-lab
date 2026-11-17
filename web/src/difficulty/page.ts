@@ -5,7 +5,7 @@ import katex from 'katex';
 import 'katex/dist/katex.min.css';
 import { escapeHtml } from '../player/player';
 import type { DifficultyConfig, PuzzleIndex } from '../types';
-import { fetchIndex, pips } from './rating';
+import { assemblies, fetchIndex, pips } from './rating';
 
 const base = import.meta.env.BASE_URL;
 
@@ -58,7 +58,7 @@ function puzzleRows(index: PuzzleIndex): string {
       <td>${e.variant === 'relief' ? 'relief' : 'flat tiling'}</td>
       <td class="num">${e.pieceCount}</td>
       <td class="num">${formatNodes(e.difficulty.nodes, e.difficulty.exhaustive)}</td>
-      <td class="num">${e.difficulty.exhaustive ? e.difficulty.solutions : '?'}</td>
+      <td class="num">${assemblies(e.difficulty)}</td>
       <td>${pips(e.difficulty.rating)} ${e.difficulty.rating}</td>
       <td class="num">${e.difficulty.diversity.toFixed(2)}</td>
     </tr>`)
@@ -98,6 +98,11 @@ function content(index: PuzzleIndex): string {
     against by shape, only a handful also continue the surface, so the search makes few wrong turns.
     This is the same wall matching you do by eye. Without the roofs, the flat version of the same pieces can take hundreds of
     thousands of tries.</p>
+    <p><b>Many solutions.</b> The rating counts the effort to find <i>every</i> assembly, so a puzzle with very many of them can rate
+    high and still be easy to finish: any one of its solutions completes it. The flat Pleat puzzles are the extreme case. Their
+    triangles fit together in tens of thousands of ways, so the search stops at its limit while still finding more, and they rate 5.
+    In relief, the same pieces have exactly one solution. The gallery and the puzzle page show the number of solutions whenever there
+    is more than one; it has a ≥ when the search stopped before it could count them all.</p>
 
     <h2>Ratings of the current puzzles</h2>
     <p>Assemblies are counted up to turning the tray. Diversity is explained below.</p>

@@ -13,6 +13,7 @@ SHAPES = {
     "Hill": "min polynomial",
     "Terrain": "rational",
     "Corrugated": "rational",
+    "Pleat": "lifting",
 }
 
 #: Variant -> code suffix.
@@ -22,6 +23,8 @@ LETTER = re.compile(r"[a-z]")
 
 
 def function_kind(recipe: dict) -> str:
+    if recipe.get("family") == "lifted":
+        return "lifting"
     if "numerator" in recipe:
         return "rational"
     return f"{recipe.get('convention', 'max')} polynomial"

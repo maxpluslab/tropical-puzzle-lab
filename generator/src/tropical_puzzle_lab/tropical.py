@@ -9,11 +9,11 @@ from .geometry import Polygon, area, clip, intersect, square
 
 @dataclass(frozen=True)
 class Term:
-    """Affine term a*x + b*y + c with integer slopes."""
+    """Affine term a*x + b*y + c. Tropical terms have integer slopes; a lifted cell's may be any fraction."""
 
     id: str
-    a: int
-    b: int
+    a: int | Fraction
+    b: int | Fraction
     c: Fraction
 
     def value(self, p) -> Fraction:

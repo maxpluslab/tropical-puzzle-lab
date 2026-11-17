@@ -8,7 +8,8 @@ from pathlib import Path
 
 from . import __version__
 from .difficulty import config as difficulty_config, load_metrics, puzzle_difficulty
-from .geometry import Polygon, area, centroid, intersect, square
+from .geometry import Polygon, area, centroid, intersect, is_convex, square
+from .lifting import continuity_rows, satisfies
 from .naming import construction_name, variant_code
 from .tropical import RoofTransform, Term, refine, regions, roof_transform
 
@@ -26,6 +27,21 @@ def canonical_hash(obj) -> str:
 
 def terms_of(recipe: dict, key: str = "terms") -> list[Term]:
     return [Term(t["id"], int(t["a"]), int(t["b"]), Fraction(t["c"])) for t in recipe[key]]
+
+
+def is_lifted(recipe: dict) -> bool:
+    """A subdivision with a lifting given cell by cell (`family: "lifted"`), not a tropical function."""
+    return recipe.get("family") == "lifted"
+
+
+def lifted_cells(recipe: dict) -> tuple[list[Term], list[Polygon]]:
+    """The affine roofs and cells of a lifted recipe, exactly as written."""
+    terms, cells = [], []
+    for cell in recipe["cells"]:
+        roof = cell["roof"]
+        terms.append(Term(cell["id"], Fraction(roof["a"]), Fraction(roof["b"]), Fraction(roof["c"])))
+        cells.append([(Fraction(x), Fraction(y)) for x, y in cell["vertices"]])
+    return terms, cells
 
 
 def is_rational(recipe: dict) -> bool:
@@ -46,7 +62,10 @@ class Construction:
         self.center = tuple(Fraction(v) for v in recipe.get("center", ("0", "0")))
         self.convention = recipe.get("convention", "max")
         self.xy = Fraction(recipe["xyMmPerUnit"])
-        if is_rational(recipe):
+        if is_lifted(recipe):
+            # A subdivision and its lifting, given cell by cell (lifting.py has the theory).
+            self.terms, self.cells = lifted_cells(recipe)
+        elif is_rational(recipe):
             # One affine piece (numerator term minus denominator term) per cell of the common refinement.
             self.terms, self.cells = refine(
                 terms_of(recipe, "numerator"), terms_of(recipe, "denominator"), self.domain, self.center, self.convention
@@ -76,6 +95,7 @@ class Construction:
         assert sum(area(p) for p in self.pieces) == area(self.target), "pieces do not cover the target"
         for i, p in enumerate(self.pieces):
             assert area(p) > 0, f"piece {self.terms[i].id} is degenerate"
+            assert is_convex(p), f"piece {self.terms[i].id} is not convex and counter-clockwise"
             for j in range(i):
                 assert intersection_area(p, self.pieces[j]) == 0, "reference pieces overlap"
             for v in p:
@@ -85,6 +105,9 @@ class Construction:
             for j, q in enumerate(self.pieces):
                 for v in set(p) & set(q):
                     assert self.height(self.terms[i], v) == self.height(self.terms[j], v), "roof discontinuity"
+        # And along every shared stretch, which also covers a vertex inside another cell's edge.
+        v = [x for t in self.terms for x in (Fraction(t.a), Fraction(t.b), t.c)]
+        assert satisfies(continuity_rows(self.cells), v), "roof discontinuity along a shared edge"
 
 
 PRINTABLES = "https://www.printables.com/model/"
@@ -156,21 +179,23 @@ def build_puzzle(recipe: dict, variant: dict, construction: Construction | None 
             "source": source,
             "notes": variant["notes"],
         },
-        "tropical": {
-            "convention": c.convention,
-            "domain": recipe["domain"],
-            "xyMmPerUnit": recipe["xyMmPerUnit"],
-        },
     }
+    # The function behind the roof: tropical terms, or a lifting given cell by cell.
+    block = "lifting" if is_lifted(recipe) else "tropical"
+    puzzle[block] = {"domain": recipe["domain"], "xyMmPerUnit": recipe["xyMmPerUnit"]}
+    if is_lifted(recipe):
+        puzzle["lifting"]["cells"] = recipe["cells"]
+    else:
+        puzzle["tropical"] = {"convention": c.convention, **puzzle["tropical"]}
+        if is_rational(recipe):
+            puzzle["tropical"]["numerator"] = recipe["numerator"]
+            puzzle["tropical"]["denominator"] = recipe["denominator"]
+        else:
+            puzzle["tropical"]["terms"] = recipe["terms"]
+    if "center" in recipe:
+        puzzle[block]["center"] = recipe["center"]
     if "printables" in variant:
         puzzle["printables"] = printables_url(variant)
-    if is_rational(recipe):
-        puzzle["tropical"]["numerator"] = recipe["numerator"]
-        puzzle["tropical"]["denominator"] = recipe["denominator"]
-    else:
-        puzzle["tropical"]["terms"] = recipe["terms"]
-    if "center" in recipe:
-        puzzle["tropical"]["center"] = recipe["center"]
     puzzle["geometryHash"] = canonical_hash({"variant": puzzle["variant"], "target": target, "pieces": pieces})
     return puzzle
 

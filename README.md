@@ -34,7 +34,7 @@ Progress is saved in your browser. **Copy report line** gives a line like `puzzl
 
 Working:
 
-- Gallery with one card per puzzle (Bowl 9a, Hill 6a, 9a, 9b, 16a and 16b, Terrain 11a and 20a, and Corrugated 27a), each playable in relief or flat mode. Names follow the convention in [docs/puzzle-format.md](docs/puzzle-format.md#names).
+- Gallery with one card per puzzle (Bowl 9a, Hill 6a, 9a, 9b, 16a and 16b, Terrain 11a and 20a, Corrugated 27a, and Pleat 32a, 32b, 32c, 32d and 24e), each playable in relief or flat mode. Names follow the convention in [docs/puzzle-format.md](docs/puzzle-format.md#names).
 - Seeded scrambles, with direct links such as `?puzzle=rev2&seed=123`.
 - Moving, turning and nudging pieces.
 - Overlap colouring and tolerance-based completion (including roof continuity for relief).

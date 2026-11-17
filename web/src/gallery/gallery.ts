@@ -3,7 +3,7 @@ import { bounds, transform } from '../geometry/polygon';
 import { scramble } from '../geometry/scramble';
 import { escapeHtml } from '../player/player';
 import { browserStore, loadSession } from '../sessions/session';
-import { bindDifficulty, DIFFICULTY_PAGE, difficultyHtml, fetchIndex } from '../difficulty/rating';
+import { bindDifficulty, DIFFICULTY_PAGE, difficultyHtml, fetchIndex, solutionsHtml } from '../difficulty/rating';
 import { constructions, MODES, puzzleHref } from './modes';
 import type { Puzzle, Variant, Vec2 } from '../types';
 
@@ -65,11 +65,14 @@ export async function renderGallery(root: HTMLElement): Promise<void> {
         <h1>Tropical Puzzle Lab</h1>
         <p>Each piece is one region of a tropical polynomial: the maximum, or in some puzzles the minimum, of a few affine functions. In a rational puzzle it is a region of the difference of two such.
         In the relief puzzles a piece's sloped top is its affine function, so a finished assembly forms one continuous roof: bowl-shaped for a maximum, rising to ridges for a minimum, with both valleys and ridges for a difference.
+        The Pleat puzzles are not tropical: a grid of triangles whose corners stand at just two heights, with a flat roof on each triangle.
+        In relief a Pleat has exactly one solution; flat, its triangles fit together in tens of thousands of ways, and any of them counts.
         Fill the square tray with every piece. Pieces can be moved and turned, but not flipped, and nothing snaps into place.</p>
         <p>New to tropical geometry? <a href="${base}?page=math">The mathematics behind the puzzles</a> explains, with interactive examples, how a tropical polynomial becomes a puzzle.</p>
         <p>Every puzzle can be played in relief or flat, with the heights removed. Choose a mode on the card or switch inside the puzzle; each mode keeps its own progress.</p>
         <p>The difficulty on each card, from 1 to 5, is how much a computer search has to try before it has found every way to assemble the puzzle.
         Matching heights give most of the answer away, so most relief puzzles rate 1 while their flat versions rate much higher.
+        A high rating can also mean many solutions: the search must list them all, so a card shows how many there are when there is more than one.
         It measures the search, not people: <a href="${DIFFICULTY_PAGE}">how difficulty is rated</a>.</p>
         <p>Prefer pieces in your hand? <a href="${base}?page=print">Make a physical puzzle</a>: 3D-print files for every puzzle, and ready-made ones for a few.</p>
       </header>
@@ -119,7 +122,7 @@ export async function renderGallery(root: HTMLElement): Promise<void> {
               ${present.map(([m, label]) => `
                 <li data-mode="${m}">
                   <a class="mode-link" href="${puzzleHref(modes[m]!.id)}">${label}</a>
-                  ${difficultyHtml(modes[m]!.difficulty)}${progress(puzzles.get(modes[m]!.id)!)}
+                  ${difficultyHtml(modes[m]!.difficulty)}${solutionsHtml(modes[m]!.difficulty)}${progress(puzzles.get(modes[m]!.id)!)}
                 </li>`).join('')}
             </ul>
           </div>
