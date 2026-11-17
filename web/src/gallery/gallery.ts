@@ -5,6 +5,7 @@ import { escapeHtml } from '../player/player';
 import { browserStore, loadSession } from '../sessions/session';
 import { bindDifficulty, DIFFICULTY_PAGE, difficultyHtml, fetchIndex, solutionsHtml } from '../difficulty/rating';
 import { constructions, MODES, puzzleHref } from './modes';
+import { footerHtml } from '../footer';
 import type { Puzzle, Variant, Vec2 } from '../types';
 
 const base = import.meta.env.BASE_URL;
@@ -63,28 +64,32 @@ export async function renderGallery(root: HTMLElement): Promise<void> {
     <div class="gallery">
       <header class="intro">
         <h1>Tropical Puzzle Lab</h1>
-        <p>Each piece is one region of a tropical polynomial: the maximum, or in some puzzles the minimum, of a few affine functions. In a rational puzzle it is a region of the difference of two such.
-        In the relief puzzles a piece's sloped top is its affine function, so a finished assembly forms one continuous roof: bowl-shaped for a maximum, rising to ridges for a minimum, with both valleys and ridges for a difference.
-        The Pleat puzzles are not tropical: a grid of triangles whose corners stand at just two heights, with a flat roof on each triangle.
-        In relief a Pleat has exactly one solution; flat, its triangles fit together in tens of thousands of ways, and any of them counts.
-        Fill the square tray with every piece. Pieces can be moved and turned, but not flipped, and nothing snaps into place.</p>
-        <p>New to tropical geometry? <a href="${base}?page=math">The mathematics behind the puzzles</a> explains, with interactive examples, how a tropical polynomial becomes a puzzle.</p>
-        <p>Every puzzle can be played in relief or flat, with the heights removed. Choose a mode on the card or switch inside the puzzle; each mode keeps its own progress.</p>
-        <p>The difficulty on each card, from 1 to 5, is how much a computer search has to try before it has found every way to assemble the puzzle.
-        Matching heights give most of the answer away, so most relief puzzles rate 1 while their flat versions rate much higher.
-        A high rating can also mean many solutions: the search must list them all, so a card shows how many there are when there is more than one.
-        It measures the search, not people: <a href="${DIFFICULTY_PAGE}">how difficulty is rated</a>.</p>
-        <p>Prefer pieces in your hand? <a href="${base}?page=print">Make a physical puzzle</a>: 3D-print files for every puzzle, and ready-made ones for a few.</p>
+        <p class="challenge">Fill the square tray with every piece. In relief puzzles the sloped tops must also join into one continuous roof.</p>
+        <p class="start-row" data-start hidden></p>
+        <p class="intro-links"><a href="${base}?page=math">How the puzzles are made</a> · <a href="${base}?page=print">Make a physical puzzle</a></p>
       </header>
       <div class="filter" role="group" aria-label="Open puzzles in">
         <span class="filter-label">Open in</span>
         ${MODES.map(([m, label]) => `<button type="button" data-open-in="${m}">${label}</button>`).join('')}
       </div>
       <div class="cards" data-cards><p class="loading">Loading puzzles…</p></div>
-      <footer class="foot">An experimental tool for studying puzzle construction and difficulty.
-        <a href="${base}?page=math">The mathematics</a> ·
-        <a href="${base}?page=print">Make a physical puzzle</a> ·
-        <a href="https://github.com/maxpluslab/tropical-puzzle-lab">Source on GitHub</a></footer>
+      <section class="about" aria-labelledby="about-heading">
+        <h2 id="about-heading">About the puzzles</h2>
+        <p>Pieces can be moved and turned, but not flipped, and nothing snaps into place.
+        Every puzzle can be played in <b>relief</b>, with sloped tops, or <b>flat</b>, with the heights removed. Choose a mode above or on a card, or switch inside the puzzle; each mode keeps its own progress.</p>
+        <p>Most pieces are regions of a tropical polynomial: the maximum, or in some puzzles the minimum, of a few affine functions.
+        In a rational puzzle they are the regions of a tropical quotient of two such polynomials, which is their ordinary difference.
+        In relief, a piece's sloped top is its affine function, so a finished assembly forms one continuous roof: bowl-shaped for a maximum, rising to ridges for a minimum, with both valleys and ridges for a quotient.
+        <a href="${base}?page=math">The mathematics behind the puzzles</a> explains this with interactive examples.</p>
+        <p><b>Pleat puzzles are not tropical.</b> They are a related geometry and search experiment: a grid of triangles whose corners stand at just two heights,
+        picked because a computer search finds them hard even with roofs. In relief, the search found just one assembly of each Pleat;
+        flat, it found tens of thousands before it stopped, and any of them counts.</p>
+        <p>The difficulty on each card, from 1 to 5, is an experimental rating of how much a computer search has to try before it has found every assembly among the placements it considers.
+        Matching heights give most of the answer away, so most relief puzzles rate 1 while their flat versions rate much higher.
+        A high rating can also mean many solutions, so a card shows how many the search found when there is more than one.
+        It measures the search, not people: <a href="${DIFFICULTY_PAGE}">how difficulty is rated</a>.</p>
+      </section>
+      ${footerHtml()}
     </div>`;
   const cards = root.querySelector<HTMLElement>('[data-cards]')!;
   let mode = savedMode();
@@ -106,7 +111,17 @@ export async function renderGallery(root: HTMLElement): Promise<void> {
       await Promise.all(index.puzzles.map(async (e) => [e.id, await fetchJson<Puzzle>(e.path)] as const)),
     );
     // The title link stretches over the whole card, so the mode links and difficulty buttons sit on top of it.
-    cards.innerHTML = constructions(index)
+    // The starter puzzle (index.json `starter`, set in its recipe) leads the intro and the cards.
+    const starter = index.puzzles.find((e) => e.starter);
+    if (starter) {
+      const start = root.querySelector<HTMLElement>('[data-start]')!;
+      start.innerHTML = `<a class="start" href="${puzzleHref(starter.id)}">Start here: ${escapeHtml(starter.name)}</a>
+        <span class="start-note">${starter.pieceCount} pieces, a gentle first puzzle</span>`;
+      start.hidden = false;
+    }
+    const groups = constructions(index);
+    if (starter) groups.sort((a, b) => Number(Object.values(b).some((e) => e?.starter)) - Number(Object.values(a).some((e) => e?.starter)));
+    cards.innerHTML = groups
       .map((modes) => {
         const present = MODES.filter(([m]) => modes[m]);
         const main = modes[present[0][0]]!;
@@ -115,6 +130,7 @@ export async function renderGallery(root: HTMLElement): Promise<void> {
         <article class="card" data-only="${present[0][0]}">
           ${thumbnail(first)}
           <div class="card-body">
+            ${present.some(([m]) => modes[m]!.starter) ? '<p class="badge-start">Start here</p>' : ''}
             <h2><a class="card-link" href="${puzzleHref(main.id)}">${escapeHtml(main.name)}</a></h2>
             ${present.map(([m]) => `<p data-description="${m}">${escapeHtml(modes[m]!.description)}</p>`).join('')}
             <p class="meta">${first.pieces.length} pieces · ${escapeHtml(main.construction)} rev ${main.revision}</p>

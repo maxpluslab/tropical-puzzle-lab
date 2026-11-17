@@ -24,6 +24,7 @@
     {
       "id": "new5",
       "variant": "relief",
+      "starter": true,
       "description": "Six large pieces with sloped tops: a gentle first puzzle. Fill the square tray so the roof forms one continuous surface.",
       "notes": [
         "Min-convention tropical polynomial over x, y in [-7, -1]; each piece is the region where one term attains the minimum.",

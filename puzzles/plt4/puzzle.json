@@ -4,7 +4,7 @@
   "revision": 1,
   "name": "Pleat 32d",
   "code": "Pleat 32d-r",
-  "description": "Thirty-two triangles under a faceted roof whose corners stand at just two heights. Fill the square tray so the roof forms one continuous surface.",
+  "description": "Not tropical: thirty-two triangles under a faceted roof whose corners stand at just two heights. Fill the square tray so the roof forms one continuous surface.",
   "variant": "relief",
   "geometry": {
     "model": "planar",
@@ -958,7 +958,7 @@
   },
   "provenance": {
     "recipe": "puzzles/plt4/recipe.json",
-    "recipeHash": "12991b09f2b57aac28b02ccdfab07d2e94c7f78524381ecd34bad24da1a1292b",
+    "recipeHash": "5e8a811dc107af88dde8f29534ee84093af86a152922bd4df7d751ac6429b404",
     "generator": "tropical-puzzle-lab 0.1.0",
     "source": {
       "search": "generator/scripts/lifted_search.py vertex --screen --levels 0 1 --seed 7 --node-limit 300000 --columns 4 --rows 4 --samples 600, sample 30"

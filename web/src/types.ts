@@ -47,6 +47,8 @@ export interface Puzzle {
   code: string;
   /** Published print listing on Printables, when there is one. */
   printables?: string;
+  /** The gallery's "Start here" puzzle; see PuzzleIndexEntry. */
+  starter?: boolean;
   description: string;
   variant: Variant;
   geometry: {
@@ -78,6 +80,8 @@ export interface PuzzleIndexEntry {
   code: string;
   /** Published print listing on Printables, when there is one. */
   printables?: string;
+  /** The gallery's "Start here" puzzle (at most one variant, set in its recipe). */
+  starter?: boolean;
   description: string;
   variant: Variant;
   pieceCount: number;

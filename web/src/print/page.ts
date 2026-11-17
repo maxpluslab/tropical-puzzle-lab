@@ -4,9 +4,10 @@
 import { pips, fetchIndex } from '../difficulty/rating';
 import { escapeHtml } from '../player/player';
 import type { PuzzleIndex, PuzzleIndexEntry } from '../types';
+import { footerHtml, REPOSITORY } from '../footer';
 
 const base = import.meta.env.BASE_URL;
-const REPO = 'https://github.com/maxpluslab/tropical-puzzle-lab';
+const REPO = REPOSITORY;
 /** All published listings (docs/printables.md). */
 export const COLLECTION = 'https://www.printables.com/@Igor_2829688/collections/3919682';
 
@@ -106,6 +107,7 @@ export async function renderPrintPage(root: HTMLElement): Promise<void> {
       <a class="back" href="${base}">← Gallery</a>
       <header class="intro"><h1>Make a physical puzzle</h1></header>
       <div data-doc><p class="loading">Loading…</p></div>
+      ${footerHtml()}
     </div>`;
   const doc = root.querySelector<HTMLElement>('[data-doc]')!;
   try {

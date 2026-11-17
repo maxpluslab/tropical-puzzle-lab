@@ -85,4 +85,4 @@ There are three concerns, connected only by JSON:
 - **Names are generated, and a published name never changes.** A recipe's `name` is `{shape, letter}`; `naming.py` builds `Hill 16b` and the codes `Hill 16b-r` / `-f` (rules in `docs/puzzle-format.md`). Never reuse a letter or rename a construction; a new function gets the next letter. Ids are separate and also never change.
 - **The scramble algorithm is versioned.** Changing `scramble.ts` changes every seed's layout, so give it a new version name. Changing geometry changes `geometryHash`, which makes saved sessions incompatible; that is intended.
 - **rev2 uses the ideal polygons** (no 0.15 mm print inset). Heights are measured from the piece underside, while the source adds a 3 mm tray floor. Tolerances in `recipe.json` are first guesses, documented as experimental.
-- **Attribution text in the README** needs the collaborators' agreement before it is filled in.
+- **Credits** (README, `LICENSE`, the site footer in `web/src/footer.ts`) name Igor Kuvychko and Madeline V. Brandt. Changing them needs both collaborators' agreement.

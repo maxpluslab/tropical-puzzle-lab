@@ -9,6 +9,7 @@ import type { Puzzle, Vec2 } from '../types';
 import { graphSvg, regionsSvg } from './figures';
 import { Linker } from './linker';
 import { createRelief, type ReliefScale } from './relief';
+import { footerHtml } from '../footer';
 import {
   evaluate, formatNumber, intervals, parseCoefficient, parseTerms, polynomialCells,
   rationalCells, square, type Cell, type Convention, type Term,
@@ -135,7 +136,11 @@ function arithmeticSection(): string {
     <p>So ${tex('3 \\oplus 5 = 3')} and ${tex('3 \\odot 5 = 8')}. Both operations are commutative and associative, and ${tex('\\odot')} distributes over ${tex('\\oplus')}:
     for example, ${tex('1 \\odot (3 \\oplus 5) = 1 \\odot 3 \\oplus 1 \\odot 5 = 4')}.
     The tropical zero is ${tex('\\infty')}, since ${tex('a \\oplus \\infty = a')}, and the tropical one is ${tex('0')}, since ${tex('a \\odot 0 = a')}.
-    Tropical division ${tex('a \\oslash b = a - b')} always works, but there is no tropical subtraction: no ${tex('b')} gives ${tex('3 \\oplus b = \\infty')}, since ${tex('\\min(3, b) \\le 3')}.</p>
+    Tropical division ${tex('a \\oslash b = a - b')} always works for a finite ${tex('b')}, since ordinary subtraction undoes ordinary addition.
+    But there is no tropical subtraction. Subtracting ${tex('3')} would mean finding a ${tex('b')} with ${tex('3 \\oplus b = \\infty')}, the tropical zero,
+    and none exists, since ${tex('\\min(3, b) \\le 3')}. The reason is that ${tex('\\oplus')} is idempotent, ${tex('a \\oplus a = a')}:
+    once a number has been tropically added, nothing can take it away again. So the tropical numbers form a <i>semiring</i>, not a ring,
+    and the classical ${tex('a - b')} is tropical <i>division</i>, not subtraction.</p>
     <p>Everything works equally well with the maximum in place of the minimum and ${tex('-\\infty')} as zero; negating every number turns one convention into the other.
     The Hill puzzles use the minimum; <i>Bowl 9a</i> and the Terrain and Corrugated puzzles use the maximum. Try both:</p>
     <div class="calc" data-calc>
@@ -281,7 +286,11 @@ function rationalSection(): string {
   if (missing.join() !== 'Bb,Ca') throw new Error(`rational example: missing cells ${missing.join()}`);
   return `
     <h2 id="rational">5. Tropical rational functions</h2>
-    <p>A <b>tropical rational function</b> is a tropical quotient of two tropical polynomials, ${tex('F = P \\oslash Q = P - Q')}.
+    <p>A <b>tropical rational function</b> is a tropical quotient of two tropical polynomials, ${tex('F = P \\oslash Q')}.
+    A tropical polynomial with finite coefficients takes a finite value at every point, so the quotient makes sense point by point:
+    ${tex('F(x, y) = P(x, y) - Q(x, y)')}, the ordinary difference of two piecewise-linear functions. This is division, which is always
+    available, not the missing tropical subtraction. ${tex('F')} is continuous and piecewise linear, but in general it is not itself a tropical
+    polynomial, and different pairs ${tex('P, Q')} can give the same ${tex('F')}.
     The rational puzzles use the maximum, so ${tex('P')} is convex and ${tex('-Q')} is concave, and the graph of ${tex('F')} has both kinds of crease:
     <span class="valley-text">valleys</span> along the curve of ${tex('P')} and <span class="ridge-text">ridges</span> along the curve of ${tex('Q')}.</p>
     <p>Overlaying the regions of ${tex('P')} and ${tex('Q')} cuts the square into <b>cells</b>, which become the pieces.
@@ -409,17 +418,25 @@ function corrugatedSection(puzzle: TropicalPuzzle): string {
     <p>This is what makes the puzzle hard. The sawtooth's ${words(d.valleys.length)} valleys are at ${same ? '' : 'nearly '}the same height, and so are its ${words(d.ridges.length)} ridges,
     so the roof has the same profile, ${tex('P_y(y)')} plus a constant, along every valley line, and likewise along every ridge line.
     Matching roofs therefore cannot tell you which column goes next to which. No two pieces have the same shape, but whole columns can trade places:
-    without ${tex(d.extra[0].id)}, there would be 12 ways to fill the tray with all roofs matching.</p>
+    without ${tex(d.extra[0].id)}, a computer search finds 12 ways to fill the tray with all roofs matching.</p>
     <p>The term ${tex(`${d.extra[0].id} = ${affine(d.extra[0].c, d.extra[0].a, d.extra[0].b)}`)}, the only term of ${tex('Q')} involving ${tex('y')},
     is largest only in a small wedge along one wall of the tray, made of the cells ${wedge.join(' and ')}. It changes the shapes of the pieces around it,
-    which breaks the symmetry: with the wedge, the only way to fill the tray with matching roofs is the original one.</p>`;
+    which breaks the symmetry: with the wedge, the same search finds only the original assembly.
+    (The search tries every placement of a piece corner into a corner of the empty space; <a href="${base}?page=difficulty">how difficulty is rated</a>
+    says what its counts do and do not prove.)</p>
+    <h2 id="pleat">6. A note on the Pleat puzzles</h2>
+    <p>The Pleat puzzles in the gallery are <b>not tropical</b>. They are a related geometry and search experiment: a grid of triangles whose corners
+    stand at just two heights, picked because a computer search finds them hard even with roofs. Their roofs are still continuous, so each is a
+    <i>lifting</i> of a subdivision of the square, as the graph of a tropical rational function is. But no tropical polynomials define them,
+    and their slopes need not be integers: a tropical rational function is a special kind of lifting, with integer slopes.
+    Try <a href="${href('plt1')}">Pleat 32a</a>.</p>`;
 }
 
 function content(introPuzzle: TropicalPuzzle, corrugatedPuzzle: TropicalPuzzle): string {
   const d = intro(introPuzzle);
   return `
     <p>Here we introduce the mathematics behind the puzzles: tropical arithmetic, tropical polynomials and their graphs,
-    how a polynomial becomes a puzzle, and tropical rational functions, ending with the Corrugated 27a puzzle.</p>
+    how a polynomial becomes a puzzle, and tropical rational functions, ending with the Corrugated 27a puzzle and a note on the Pleat puzzles, which are not tropical.</p>
     <p class="spoiler-note">This page shows the solution to ${escapeHtml(introPuzzle.name)}, so you may want to <a href="${href('new5')}">solve it first</a>.
     The figures for Corrugated 27a stay covered until you open them.</p>
     ${arithmeticSection()}
@@ -519,6 +536,7 @@ export async function renderMathPage(root: HTMLElement): Promise<void> {
       <a class="back" href="${base}">← Gallery</a>
       <header class="intro"><h1>The mathematics behind the puzzles</h1></header>
       <div data-doc><p class="loading">Loading…</p></div>
+      ${footerHtml()}
     </div>`;
   const doc = root.querySelector<HTMLElement>('[data-doc]')!;
   try {

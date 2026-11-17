@@ -39,7 +39,7 @@ export function difficultyHtml(d: DifficultyRating, placement: 'above' | 'below'
     <button type="button" class="difficulty-pill" aria-expanded="false">
       <span class="difficulty-label">Difficulty</span>${pips(d.rating)}<span class="visually-hidden">${d.rating} of 5</span>
     </button>
-    <span class="difficulty-pop"><a href="${DIFFICULTY_PAGE}">Rated by computer search effort: how?</a></span>
+    <span class="difficulty-pop"><a href="${DIFFICULTY_PAGE}">Experimental: rated by computer search effort. How?</a></span>
   </span>`;
 }
 

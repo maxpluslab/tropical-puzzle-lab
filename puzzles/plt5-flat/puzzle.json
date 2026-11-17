@@ -4,7 +4,7 @@
   "revision": 1,
   "name": "Pleat 24e",
   "code": "Pleat 24e-f",
-  "description": "The Pleat 24e footprints with the relief removed. Fill the square tray; heights give no clues.",
+  "description": "Not tropical: the Pleat 24e footprints with the relief removed. Fill the square tray; heights give no clues.",
   "variant": "tiling",
   "geometry": {
     "model": "planar",
@@ -635,7 +635,7 @@
   },
   "provenance": {
     "recipe": "puzzles/plt5/recipe.json",
-    "recipeHash": "7fddd15040ccc99938d34d4a5b8ea86409fe1e166b4e2360d068abc3f80ab18c",
+    "recipeHash": "dc8d618c9345ab3dacffd4828948a964a44bb5de99df54ae7db738ae9a00ee77",
     "generator": "tropical-puzzle-lab 0.1.0",
     "source": {
       "search": "generator/scripts/lifted_search.py vertex --screen --levels 0 1 --seed 7 --node-limit 300000 --columns 4 --rows 3 --samples 300, sample 234"
