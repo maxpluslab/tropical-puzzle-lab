@@ -723,7 +723,7 @@
     {
       "id": "plt1",
       "variant": "relief",
-      "description": "Thirty-two triangles under a faceted roof whose corners stand at just two heights. Fill the square tray so the roof forms one continuous surface.",
+      "description": "Not tropical: thirty-two triangles under a faceted roof whose corners stand at just two heights. Fill the square tray so the roof forms one continuous surface.",
       "notes": [
         "Lifted subdivision: a grid of rectangles over x, y in [-4, 4], each cut along a diagonal into two triangles, with one affine roof per triangle (see docs/puzzle-format.md, Lifted recipes).",
         "Every grid corner stands at one of two heights and each triangle's roof is the plane through its corners, so the same edge profiles recur across the tray, as in an edge-matching puzzle.",
@@ -734,7 +734,7 @@
     {
       "id": "plt1-flat",
       "variant": "tiling",
-      "description": "The Pleat 32a footprints with the relief removed. Fill the square tray; heights give no clues.",
+      "description": "Not tropical: the Pleat 32a footprints with the relief removed. Fill the square tray; heights give no clues.",
       "flatThicknessMm": "12",
       "notes": [
         "Lifted subdivision: a grid of rectangles over x, y in [-4, 4], each cut along a diagonal into two triangles, with one affine roof per triangle (see docs/puzzle-format.md, Lifted recipes).",

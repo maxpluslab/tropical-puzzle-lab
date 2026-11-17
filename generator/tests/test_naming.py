@@ -68,3 +68,19 @@ def test_printables_link_must_be_a_printables_model(url):
     from tropical_puzzle_lab.export import printables_url
     with pytest.raises(ValueError):
         printables_url({"id": "x", "printables": url})
+
+
+def test_starter_is_hill_6a_in_relief_only():
+    index = json.loads((PUZZLES / "index.json").read_text(encoding="utf-8"))["puzzles"]
+    assert [e["id"] for e in index if e.get("starter")] == ["new5"]
+
+
+def test_index_rejects_two_starters(tmp_path):
+    for pid in ("new1", "new2"):
+        p = json.loads((PUZZLES / pid / "puzzle.json").read_text(encoding="utf-8"))
+        p["starter"] = True
+        (tmp_path / pid).mkdir()
+        (tmp_path / pid / "puzzle.json").write_text(json.dumps(p), encoding="utf-8")
+    (tmp_path / "solver-metrics.json").write_bytes((PUZZLES / "solver-metrics.json").read_bytes())
+    with pytest.raises(ValueError, match="only one variant"):
+        build_index(tmp_path)

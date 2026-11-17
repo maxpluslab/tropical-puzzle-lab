@@ -196,6 +196,10 @@ def build_puzzle(recipe: dict, variant: dict, construction: Construction | None 
         puzzle[block]["center"] = recipe["center"]
     if "printables" in variant:
         puzzle["printables"] = printables_url(variant)
+    if variant.get("starter") is not None:
+        if variant["starter"] is not True:
+            raise ValueError(f"{variant['id']}: starter must be true or absent, not {variant['starter']!r}")
+        puzzle["starter"] = True
     puzzle["geometryHash"] = canonical_hash({"variant": puzzle["variant"], "target": target, "pieces": pieces})
     return puzzle
 
@@ -243,6 +247,12 @@ def build_index(puzzles_dir: Path) -> dict:
         })
         if "printables" in p:
             entries[-1]["printables"] = p["printables"]
+        if p.get("starter"):
+            entries[-1]["starter"] = True
+    # The gallery's "Start here" points at one variant.
+    starters = [e["id"] for e in entries if e.get("starter")]
+    if len(starters) > 1:
+        raise ValueError(f"only one variant may be the starter, not {', '.join(starters)}")
     # A letter belongs to one construction: two recipes may not claim the same shape, count and letter.
     owners: dict[str, str] = {}
     for e in entries:

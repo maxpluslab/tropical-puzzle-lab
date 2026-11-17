@@ -4,7 +4,7 @@
   "revision": 1,
   "name": "Pleat 32c",
   "code": "Pleat 32c-f",
-  "description": "The Pleat 32c footprints with the relief removed. Fill the square tray; heights give no clues.",
+  "description": "Not tropical: the Pleat 32c footprints with the relief removed. Fill the square tray; heights give no clues.",
   "variant": "tiling",
   "geometry": {
     "model": "planar",
@@ -827,7 +827,7 @@
   },
   "provenance": {
     "recipe": "puzzles/plt3/recipe.json",
-    "recipeHash": "8e825bbc925a2b5554c943683b3cec7e2e5dfd96b37343f939cbf111f47969c3",
+    "recipeHash": "a4ac8fc9ab8110f8f3cd24edf7c1bece8e80a93fa91ddf350a7a3edcebd8cc75",
     "generator": "tropical-puzzle-lab 0.1.0",
     "source": {
       "search": "generator/scripts/lifted_search.py vertex --screen --levels 0 1 --seed 7 --node-limit 300000 --columns 4 --rows 4 --mixed --samples 600, sample 264"

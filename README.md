@@ -8,7 +8,9 @@ Generate, explore, and solve tropical geometry puzzles in the browser: a laborat
 
 A tropical polynomial in max convention is the maximum of a few affine functions, F(x, y) = max(aᵢx + bᵢy + cᵢ); in min convention it is the minimum. The plane splits into convex regions, one for each term that wins there, and the boundaries between them form a tropical curve.
 
-Each region becomes a puzzle piece. In the **relief** puzzles a piece's top is the plane of its own term, so a correct assembly forms one continuous roof: bowl-shaped for max-convention puzzles such as rev2, rising to ridges for min-convention ones such as new1–new4. A tropical **rational** function P ⊘ Q (classically P − Q) refines both subdivisions; its roof has valleys from P and ridges from Q (`rat1`, and the larger `rat2`). In the **flat** variants the heights are removed and only the outlines matter. Each puzzle has one gallery card, and you can switch between the two modes; each mode keeps its own progress.
+Each region becomes a puzzle piece. In the **relief** puzzles a piece's top is the plane of its own term, so a correct assembly forms one continuous roof: bowl-shaped for max-convention puzzles such as rev2, rising to ridges for min-convention ones such as new1–new4. A tropical **rational** function is a tropical quotient P ⊘ Q, which is the ordinary difference P − Q (tropical division always exists; tropical subtraction does not). It refines both subdivisions; its roof has valleys from P and ridges from Q (`rat1`, and the larger `rat2`). In the **flat** variants the heights are removed and only the outlines matter. Each puzzle has one gallery card, and you can switch between the two modes; each mode keeps its own progress.
+
+**Pleat puzzles are not tropical.** They are a related geometry and search experiment: a grid of triangles whose corners stand at just two heights, picked because a computer search finds them hard even with roofs. Their roofs are continuous liftings of a subdivision, of which tropical rational functions are a special case (see [docs/puzzle-format.md](docs/puzzle-format.md#lifted-recipes-lifted)).
 
 The first puzzle is **rev2**: nine pieces, four of them fully interior, which was originally designed as a 3D-printed puzzle in a 144 mm tray (see [puzzles/rev2/provenance.md](puzzles/rev2/provenance.md)).
 
@@ -34,7 +36,7 @@ Progress is saved in your browser. **Copy report line** gives a line like `puzzl
 
 Working:
 
-- Gallery with one card per puzzle (Bowl 9a, Hill 6a, 9a, 9b, 16a and 16b, Terrain 11a and 20a, Corrugated 27a, and Pleat 32a, 32b, 32c, 32d and 24e), each playable in relief or flat mode. Names follow the convention in [docs/puzzle-format.md](docs/puzzle-format.md#names).
+- Gallery with a **Start here** puzzle (Hill 6a, marked by `"starter": true` in its recipe) and one card per puzzle (Bowl 9a, Hill 6a, 9a, 9b, 16a and 16b, Terrain 11a and 20a, Corrugated 27a, and Pleat 32a, 32b, 32c, 32d and 24e), each playable in relief or flat mode. Names follow the convention in [docs/puzzle-format.md](docs/puzzle-format.md#names).
 - Seeded scrambles, with direct links such as `?puzzle=rev2&seed=123`.
 - Moving, turning and nudging pieces.
 - Overlap colouring and tolerance-based completion (including roof continuity for relief).
@@ -42,7 +44,7 @@ Working:
 - Saving progress and resuming after a reload.
 - An optional solution outline whose use is recorded.
 - Optional sticky-edges and wall-match assists, also recorded.
-- An experimental 1–5 difficulty rating on each card: how much a computer search ([tiling-solvers](https://github.com/maxpluslab/tiling-solvers)) has to try to find every assembly. The link on the rating explains it.
+- An experimental 1–5 difficulty rating on each card: how much a computer search ([tiling-solvers](https://github.com/maxpluslab/tiling-solvers)) has to try to find every assembly among the placements it considers. Solution counts are computational evidence from that search, not proofs of uniqueness. The link on the rating explains it.
 - A page on [the mathematics behind the puzzles](https://maxpluslab.github.io/tropical-puzzle-lab/?page=math): tropical arithmetic, polynomials and their graphs, rational functions and Corrugated 27a, with interactive figures. It shows the solution to Hill 6a.
 - A page on [making a physical puzzle](https://maxpluslab.github.io/tropical-puzzle-lab/?page=print): generating STL files for any puzzle, the print settings we used, and links to the puzzles published on Printables.
 
@@ -86,6 +88,6 @@ npm test && npm run build
 
 ## Credits and license
 
-<!-- TODO: attribution text to be agreed between collaborators before publishing. -->
+Tropical Puzzle Lab is a [MaxPlusLab](https://github.com/maxpluslab) project by Igor Kuvychko and Madeline V. Brandt.
 
 Released under the [MIT License](LICENSE).

@@ -6,6 +6,7 @@ import 'katex/dist/katex.min.css';
 import { escapeHtml } from '../player/player';
 import type { DifficultyConfig, PuzzleIndex } from '../types';
 import { assemblies, fetchIndex, pips } from './rating';
+import { footerHtml } from '../footer';
 
 const base = import.meta.env.BASE_URL;
 
@@ -71,8 +72,22 @@ function content(index: PuzzleIndex): string {
   const limit = formatNodes(solver.nodeLimit, true);
   return `
     <p>Every puzzle gets a rating from 1 (easiest) to 5 (hardest): <b>how much a computer search has to try</b> before it has
-    every way of assembling the puzzle. It measures the puzzle, not a person. Nobody has yet timed people solving these puzzles,
-    so it is an experimental rating, not a validated measure of how hard you will find it.</p>
+    found every assembly it can find. It is an experimental heuristic, not a validated measure of how hard you will find the puzzle.</p>
+    <div class="callout">
+      <p><b>What the rating is, and what it is not</b></p>
+      <ul>
+        <li><b>Search effort.</b> The rating is the number of placements the search tries (nodes), on a logarithmic scale. Nothing else goes into it.</li>
+        <li><b>Candidate placements.</b> The search only tries placements of one kind: a piece corner in a corner of the empty space, with an edge
+        flush against it (in relief, with the roofs continuing). For exactly fitting convex pieces this kind is known to include every assembly,
+        but the search computes in floating point and leaves out assemblies that fit only within the player's tolerances.
+        So &ldquo;every assembly&rdquo; and &ldquo;one solution&rdquo; on this site mean every assembly <i>among these placements</i>,
+        counted once up to turning the whole tray. It is computational evidence, not a proof of uniqueness.</li>
+        <li><b>Lower bounds.</b> The search stops at ${limit} nodes. A puzzle it has not finished by then gets a rating that is only a floor,
+        node and solution counts marked ≥, and &ldquo;?&rdquo; for the count when it found none.</li>
+        <li><b>Human difficulty.</b> Not measured. Nobody has yet timed people solving these puzzles, and a search that finds a
+        puzzle easy may not be how a person sees it.</li>
+      </ul>
+    </div>
 
     <h2>1. The search</h2>
     <p>The search is <code>${escapeHtml(solver.id)}</code> from
@@ -84,8 +99,10 @@ function content(index: PuzzleIndex): string {
       <li><b>Relief puzzles</b> are searched with their roofs: two pieces may only touch where their tops meet at the same height.</li>
       <li><b>Flat puzzles</b> are searched with footprints only.</li>
     </ul>
-    <p>The search runs to its end, so it finds every assembly and shows there is no other. A <i>node</i> is one placement it tries.
-    It stops at ${limit} nodes; a puzzle it has not finished by then gets a lower bound, marked ≥.</p>
+    <p>When the search runs to its end, it has found every assembly among the placements it considers (see above) and shown there is
+    no other among them. A <i>node</i> is one placement it tries. It stops at ${limit} nodes; a puzzle it has not finished by then gets
+    a lower bound, marked ≥. The details of what a result claims are in tiling-solvers'
+    <a href="${escapeHtml(solver.repository)}/blob/main/docs/solver-contract.md" target="_blank" rel="noopener">solver contract</a>.</p>
 
     <h2>2. From nodes to a rating</h2>
     <p>Effort grows by factors, so the rating uses the logarithm ${tex('x = \\log_{10}(\\text{nodes})')}, cut at
@@ -101,11 +118,11 @@ function content(index: PuzzleIndex): string {
     <p><b>Many solutions.</b> The rating counts the effort to find <i>every</i> assembly, so a puzzle with very many of them can rate
     high and still be easy to finish: any one of its solutions completes it. The flat Pleat puzzles are the extreme case. Their
     triangles fit together in tens of thousands of ways, so the search stops at its limit while still finding more, and they rate 5.
-    In relief, the same pieces have exactly one solution. The gallery and the puzzle page show the number of solutions whenever there
-    is more than one; it has a ≥ when the search stopped before it could count them all.</p>
+    In relief, the search runs to its end on the same pieces and finds just one assembly. The gallery and the puzzle page show the number
+    of solutions the search found whenever there is more than one; it has a ≥ when the search stopped before it could count them all.</p>
 
     <h2>Ratings of the current puzzles</h2>
-    <p>Assemblies are counted up to turning the tray. Diversity is explained below.</p>
+    <p>Assemblies are those the search found, counted up to turning the tray. Diversity is explained below.</p>
     <div class="table-wrap"><table class="data">
       <thead><tr><th>Puzzle</th><th>Variant</th><th class="num">Pieces</th><th class="num">Nodes</th><th class="num">Assemblies</th><th>Rating</th><th class="num">${tex('D')}</th></tr></thead>
       <tbody>${puzzleRows(index)}</tbody>
@@ -160,6 +177,7 @@ export async function renderDifficultyPage(root: HTMLElement): Promise<void> {
       <a class="back" href="${base}">← Gallery</a>
       <header class="intro"><h1>How difficulty is rated</h1></header>
       <div data-doc><p class="loading">Loading…</p></div>
+      ${footerHtml()}
     </div>`;
   const doc = root.querySelector<HTMLElement>('[data-doc]')!;
   try {

@@ -270,7 +270,7 @@
   },
   "provenance": {
     "recipe": "puzzles/new5/recipe.json",
-    "recipeHash": "05b0778c4574b55279daa574f68bb8080521aa64648247d78077c863b415fb6f",
+    "recipeHash": "721e3b037667151116430cba37602ab92ac5b683df4f71678ff98e709d8ce8c9",
     "generator": "tropical-puzzle-lab 0.1.0",
     "source": {
       "polynomial": "Min[67/25+x+y,591/100+2 x+y,21/2+3 x+y,849/100+2 x+2 y,673/50+3 x+2 y,933/50+3 x+3 y]"
@@ -327,5 +327,6 @@
       "-4"
     ]
   },
+  "starter": true,
   "geometryHash": "754f8fc1f37b130d44fde65fc85c66f0913264f64f6bfe8ac6f15e17ec05f9bc"
 }

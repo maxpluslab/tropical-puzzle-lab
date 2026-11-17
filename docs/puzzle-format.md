@@ -27,7 +27,7 @@
 | `minThicknessMm`, `reliefMm` | Roof scaling: height = min + relief·(F − Fmin)/(Fmax − Fmin) |
 | `trayRimMm` | Height of the tray walls (display only) |
 | `terms[]` | `{id, a, b, c}`: integer slopes, with `c` as a decimal or fraction string (`"109/50"`). Evaluated exactly |
-| `variants[]` | `{id, variant: "relief" \| "tiling", description, notes[], flatThicknessMm?, printables?}`. `printables` is the URL of the variant's published print listing (`https://www.printables.com/model/<number>-…`; see [printables.md](printables.md)) |
+| `variants[]` | `{id, variant: "relief" \| "tiling", description, notes[], flatThicknessMm?, printables?, starter?}`. `starter: true` marks the gallery's "Start here" puzzle; at most one variant may have it. `printables` is the URL of the variant's published print listing (`https://www.printables.com/model/<number>-…`; see [printables.md](printables.md)) |
 | `validation` | Tolerances, copied into each puzzle (see [puzzle-rules.md](puzzle-rules.md)) |
 | `scramble` | `{algorithm, defaultSeed}` |
 | `source` | Pointers into `source/` |
@@ -74,7 +74,7 @@ A construction is named `<Shape> <pieces><letter>`, for example **Hill 16b**, an
 
 | Field group | Contents |
 | --- | --- |
-| Identity | `formatVersion`, `id`, `revision`, `name` (shared by both variants, e.g. `Hill 16b`), `code` (this variant, e.g. `Hill 16b-r`), `description`, `variant`, and `printables` when the variant has a print listing |
+| Identity | `formatVersion`, `id`, `revision`, `name` (shared by both variants, e.g. `Hill 16b`), `code` (this variant, e.g. `Hill 16b-r`), `description`, `variant`, `printables` when the variant has a print listing, and `starter: true` on the gallery's starter |
 | Geometry | `geometry.model = "planar"`, `units = "mm"`, `spanMm`, `target: {type: "polygon", vertices}` (convex, CCW), `trayRimMm`. Relief variants also have `reliefMm` and `minThicknessMm` |
 | Pieces | `pieces[]`: `{id, polygon, roof}` for relief, `{id, polygon, thickness}` for tiling. `polygon` is convex and CCW, in mm, relative to the piece origin (its area centroid). `roof` is the top plane z = z0 + gx·u + gy·v in local coordinates, in mm above the underside |
 | Reference | `reference.poses[]`: `{id, x, y, theta}`. Used for construction checks and the explicit reveal only; completion never compares against it |
@@ -102,7 +102,7 @@ The **v1 scramble** is a seeded mulberry32 PRNG (`web/src/geometry/scramble.ts`)
 | Field | Contents |
 | --- | --- |
 | `difficulty` | The rating parameters `{method, solver: {id, version, repository, commit, nodeLimit}, thresholds, diversity: {method, u, q}}`, copied from the configuration block at the top of `generator/src/tropical_puzzle_lab/difficulty.py` and from `solver-metrics.json`. The explanation page (`?page=difficulty`) reads them from here |
-| `puzzles[]` | `{id, construction, revision, name, code, description, variant, pieceCount, path, difficulty, printables?}`, where `construction` is the recipe id the variant was built from (the gallery shows one card per construction), and `difficulty` is `{rating, x, nodes, exhaustive, solutions, diversity}`: the 1–5 rating, x = log10(nodes), the search's nodes (a lower bound when `exhaustive` is false), its assemblies, and the secondary Leinster–Cobbold diversity D. x and D are rounded to 6 decimals |
+| `puzzles[]` | `{id, construction, revision, name, code, description, variant, pieceCount, path, difficulty, printables?, starter?}`, where `construction` is the recipe id the variant was built from (the gallery shows one card per construction), and `difficulty` is `{rating, x, nodes, exhaustive, solutions, diversity}`: the 1–5 rating, x = log10(nodes), the search's nodes (a lower bound when `exhaustive` is false), its assemblies, and the secondary Leinster–Cobbold diversity D. x and D are rounded to 6 decimals |
 
 The rating is computed by `tpl-export` from the search counts in `solver-metrics.json`; diversity is computed from each piece's solid (its footprint extruded to its roof or thickness). To change the mapping, edit the configuration block and rerun `tpl-export`.
 
