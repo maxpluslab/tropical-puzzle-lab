@@ -124,9 +124,16 @@ button:disabled { opacity: 0.45; cursor: default; }
 .data .pips { vertical-align: middle; margin-right: 4px; color: var(--muted); }
 
 /* Player */
-.player { position: fixed; inset: 0; display: grid; grid-template-rows: auto 1fr; }
+.player { --top: 64px; position: fixed; inset: 0; display: grid; grid-template-rows: auto 1fr; grid-template-columns: minmax(0, 1fr); }
+/* The top bar can be hidden (a view preference); the stage keeps its own row so the layout holds. */
+.player.bar-hidden { --top: 12px; grid-template-rows: 0 1fr; }
+.player.bar-hidden .bar { display: none; }
+.player button { touch-action: manipulation; }
 .bar { display: flex; align-items: center; gap: 12px; padding: 8px 16px; border-bottom: 1px solid var(--line); background: var(--surface); }
 .bar h1 { font-size: 18px; font-weight: 600; margin: 0; }
+.bar .short { display: none; }
+button.icon { display: inline-grid; place-items: center; padding: 0; width: 32px; height: 32px; }
+.bar-show { position: absolute; left: 8px; top: 8px; z-index: 2; background: color-mix(in srgb, var(--surface) 92%, transparent); }
 .bar .spacer { flex: 1; }
 /* Relief | Flat switch: each mode is its own puzzle with its own saved attempt. */
 .modes { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; overflow: hidden; font-size: 12px; }
@@ -135,20 +142,25 @@ button:disabled { opacity: 0.45; cursor: default; }
 .modes a:hover { color: var(--accent); }
 .modes a[aria-current] { background: var(--accent); color: var(--surface); font-weight: 600; }
 .back { text-decoration: none; }
-.stage { position: relative; min-height: 0; overflow: hidden; }
+.stage { grid-row: 2; position: relative; min-height: 0; overflow: hidden; }
 .stage canvas { display: block; touch-action: none; }
 .panel {
-  position: absolute; right: 16px; top: 64px; width: 250px; padding: 12px;
+  position: absolute; right: 16px; top: var(--top); width: 280px; padding: 12px;
   background: color-mix(in srgb, var(--surface) 92%, transparent); border: 1px solid var(--line); border-radius: 10px;
   display: grid; gap: 10px;
 }
 .panel .row { display: flex; flex-wrap: wrap; gap: 6px; }
+.panel-body { display: grid; gap: 10px; }
+.panel .strip { flex-wrap: nowrap; }
+.panel .strip button { padding: 6px 8px; }
+.panel-toggle { margin-left: auto; white-space: nowrap; }
+.panel-collapsed .panel { width: auto; }
 .panel .wide { width: 100%; }
 .facts { display: grid; grid-template-columns: auto 1fr; gap: 2px 12px; margin: 0; font-size: 13px; }
 .facts dt { color: var(--muted); }
 .facts dd { margin: 0; font-variant-numeric: tabular-nums; }
 .status {
-  position: absolute; left: 50%; top: 64px; transform: translateX(-50%); padding: 6px 14px; border-radius: 999px;
+  position: absolute; left: 50%; top: var(--top); transform: translateX(-50%); padding: 6px 14px; border-radius: 999px;
   background: var(--surface); border: 1px solid var(--line); font-weight: 500; pointer-events: none;
 }
 .status.solved { color: var(--good); border-color: var(--good); }
@@ -167,8 +179,23 @@ button:disabled { opacity: 0.45; cursor: default; }
 [hidden] { display: none !important; }
 
 @media (max-width: 700px) {
-  .panel { position: static; width: auto; margin: 0; border-radius: 0; border-width: 1px 0 0; }
-  .player { grid-template-rows: auto 1fr auto; }
+  .player { --top: 52px; grid-template-rows: auto 1fr auto; }
+  .player.bar-hidden { --top: 12px; grid-template-rows: 0 1fr auto; }
+  .panel { grid-row: 3; position: static; width: auto; margin: 0; padding: 8px 12px; border-radius: 0; border-width: 1px 0 0; }
+  .panel-collapsed .panel { width: auto; }
+  .panel-body { max-height: 45vh; overflow-y: auto; }
+  /* One line: short labels, the name ellipsized. */
+  .bar { gap: 8px; padding: 6px 10px; }
+  .bar h1 { font-size: 16px; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .bar .spacer { flex: 0 1 0; min-width: 0; margin-left: auto; }
+  .bar .long { display: none; }
+  .bar .short { display: inline; }
+  .bar > * { flex-shrink: 0; }
+  .bar > h1 { flex-shrink: 1; }
+  /* The pips say it; the word stays for screen readers. */
+  .bar .difficulty-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .status { white-space: nowrap; max-width: calc(100% - 96px); overflow: hidden; text-overflow: ellipsis; font-size: 14px; }
+  .notice { top: calc(var(--top) + 44px); bottom: auto; left: 12px; }
 }
 .toggle { display: flex; align-items: center; gap: 8px; font-size: 14px; cursor: pointer; }
 .toggle input { margin: 0; }
