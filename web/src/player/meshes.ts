@@ -140,14 +140,17 @@ export function makeTray(puzzle: Puzzle, colors: Palette): THREE.Group {
   return group;
 }
 
-/** Rotation ring drawn above the selected piece; the wide invisible torus is the hit area. */
-export function makeRotateHandle(colors: Palette): { group: THREE.Group; hit: THREE.Mesh; setRadius: (r: number) => void } {
+/**
+ * Rotation ring drawn above the selected piece; the wide invisible torus is the hit area. `hitTube`
+ * is its thickness relative to the ring radius (thicker for fingers than for a mouse).
+ */
+export function makeRotateHandle(colors: Palette, hitTube = 0.07): { group: THREE.Group; hit: THREE.Mesh; setRadius: (r: number) => void } {
   const group = new THREE.Group();
   const material = new THREE.MeshBasicMaterial({ color: colors.selected, transparent: true, opacity: 0.85 });
   const ring = new THREE.Mesh(new THREE.TorusGeometry(1, 0.012, 8, 96), material);
   const knob = new THREE.Mesh(new THREE.SphereGeometry(0.045, 16, 12), material);
   knob.position.set(1, 0, 0);
-  const hit = new THREE.Mesh(new THREE.TorusGeometry(1, 0.07, 6, 48), new THREE.MeshBasicMaterial({ visible: false }));
+  const hit = new THREE.Mesh(new THREE.TorusGeometry(1, hitTube, 6, 48), new THREE.MeshBasicMaterial({ visible: false }));
   const scaled = new THREE.Group();
   scaled.add(ring, knob, hit);
   group.add(scaled);

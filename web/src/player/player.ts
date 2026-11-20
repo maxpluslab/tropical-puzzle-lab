@@ -24,6 +24,17 @@ const FINE_NUDGE_MM = 0.1;
 const TURN_RAD = Math.PI / 180;
 const FINE_TURN_RAD = Math.PI / 1800;
 const RULES_SEEN_KEY = 'tpl:rules-seen';
+// Per-viewer layout preferences: they hide controls, never change poses or the camera.
+const PANEL_COLLAPSED_KEY = 'tpl:panel-collapsed';
+const BAR_HIDDEN_KEY = 'tpl:bar-hidden';
+const NARROW_QUERY = '(max-width: 700px)';
+// The rotate ring's invisible hit torus, relative to the ring radius: wider for fingers.
+const HIT_TUBE_FINE = 0.07;
+const HIT_TUBE_COARSE = 0.18;
+const chevron = (d: string) =>
+  `<svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="${d}" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+const CHEVRON_UP = chevron('M3 9l4-4 4 4');
+const CHEVRON_DOWN = chevron('M3 5l4 4 4-4');
 
 // Camera presets as [polar from vertical, azimuth from the front], degrees. Keys follow PrusaSlicer
 // (2, the bottom view, is omitted: the camera goes down to table level, never below it). The side
@@ -43,8 +54,8 @@ const DOUBLE_CLICK_MS = 400;
 
 // `group` is the dragged piece and everything glued to it, moved rigidly from their `poses0`.
 type Drag =
-  | { kind: 'move'; index: number; group: number[]; poses0: Pose[]; plane: THREE.Plane; offset: THREE.Vector2; changed: boolean }
-  | { kind: 'rotate'; index: number; group: number[]; poses0: Pose[]; plane: THREE.Plane; start: number; changed: boolean };
+  | { kind: 'move'; pointerId: number; index: number; group: number[]; poses0: Pose[]; plane: THREE.Plane; offset: THREE.Vector2; changed: boolean }
+  | { kind: 'rotate'; pointerId: number; index: number; group: number[]; poses0: Pose[]; plane: THREE.Plane; start: number; changed: boolean };
 
 export async function startPlayer(root: HTMLElement, puzzleId: string, params: URLSearchParams): Promise<void> {
   root.innerHTML = `<p class="loading">Loading ${escapeHtml(puzzleId)}…</p>`;
@@ -105,6 +116,8 @@ class Player {
   private glued: Pair[] = [];
   private groupOf: number[] = [];
   private emptyPress: { x: number; y: number } | null = null;
+  /** Pointers currently down on the canvas, so a second finger can be told apart from the first. */
+  private pointersDown = new Set<number>();
   private wallPress: (WallRef & { x: number; y: number }) | null = null;
   private activeWall: WallRef | null = null;
   private wallCandidates: WallRef[] = [];
@@ -131,7 +144,7 @@ class Player {
 
     this.pieces = puzzle.pieces.map((p, i) => makePiece(p, i, this.colors));
     this.pieces.forEach((p) => this.scene.add(p.group));
-    this.handle = makeRotateHandle(this.colors);
+    this.handle = makeRotateHandle(this.colors, matchMedia('(pointer: coarse)').matches ? HIT_TUBE_COARSE : HIT_TUBE_FINE);
     this.scene.add(this.handle.group);
     this.ghost = makeGhost(puzzle, this.colors);
     this.ghost.traverse((o) => {
@@ -152,6 +165,9 @@ class Player {
     this.controls.addEventListener('change', () => (this.dirty = true));
 
     this.initSession(params);
+    const collapsed = storageFlag(PANEL_COLLAPSED_KEY);
+    this.setPanelCollapsed(collapsed == null ? matchMedia(NARROW_QUERY).matches : collapsed === '1', false);
+    this.setBarHidden(storageFlag(BAR_HIDDEN_KEY) === '1', false);
     this.bindEvents();
     this.resize();
     this.setView('iso');
@@ -167,26 +183,32 @@ class Player {
     return `
       <div class="player">
         <header class="bar">
-          <a class="back" href="${base}">← Gallery</a>
+          <a class="back" href="${base}"><span aria-hidden="true">←</span><span class="long"> Gallery</span><span class="visually-hidden short">Gallery</span></a>
           <h1>${escapeHtml(p.name)}</h1>
           <span data-ui="mode"><span class="badge">${relief ? 'relief' : 'flat tiling'}</span></span>
           <span data-ui="difficulty"></span>
           <span class="spacer"></span>
-          <button data-ui="rulesButton" type="button">Rules &amp; controls</button>
+          <button data-ui="rulesButton" type="button" aria-label="Rules and controls"><span class="long">Rules &amp; controls</span><span class="short" aria-hidden="true">?</span></button>
+          <button data-ui="barHide" class="icon" type="button" title="Hide the top bar" aria-label="Hide the top bar">${CHEVRON_UP}</button>
         </header>
         <div class="stage" data-ui="stage"></div>
+        <button data-ui="barShow" class="bar-show icon" type="button" title="Show the top bar" aria-label="Show the top bar">${CHEVRON_DOWN}</button>
         <div class="notice" data-ui="notice" hidden></div>
         <div class="status" data-ui="status"></div>
         <aside class="panel">
-          <div class="row">
+          <div class="row strip">
             <button data-ui="undo" type="button" title="Undo (Ctrl+Z)">Undo</button>
             <button data-ui="redo" type="button" title="Redo (Ctrl+Shift+Z)">Redo</button>
+            <button data-ui="fit" type="button" title="Zoom to fit (Z)">Fit</button>
+            <button data-ui="panelToggle" class="panel-toggle" type="button" aria-controls="panel-body"></button>
+          </div>
+          <div class="panel-body" id="panel-body" data-ui="panelBody">
+          <div class="row">
             <button data-ui="restart" type="button" title="Back to the start of this scramble">Restart</button>
             <button data-ui="newScramble" type="button" title="New random scramble">New scramble</button>
           </div>
           <div class="row">
             ${VIEW_BUTTONS.map(([view, label, key]) => `<button class="small" data-view="${view}" type="button" title="${label} view (${key})">${label}</button>`).join('')}
-            <button class="small" data-ui="fit" type="button" title="Zoom to fit (Z)">Fit</button>
           </div>
           <div class="row">
             <button data-ui="reveal" type="button" title="Show the reference outlines (recorded in the report)">Show solution</button>
@@ -213,6 +235,7 @@ class Player {
             ${p.printables ? `<dt>Print</dt><dd><a href="${escapeHtml(p.printables)}" target="_blank" rel="noopener">${escapeHtml(p.code)} on Printables</a></dd>` : ''}
           </dl>
           <button data-ui="copyReport" type="button" class="wide">Copy report line</button>
+          </div>
         </aside>
         <div class="rules" data-ui="rules" hidden>
           <div class="card">
@@ -236,6 +259,7 @@ class Player {
               <li>Camera as in PrusaSlicer: <b>left-drag</b> empty space to orbit, <b>right-</b> or <b>middle-drag</b> to pan, the <b>wheel</b> zooms.</li>
               <li>Views: <b>0</b> iso, <b>1</b> top, <b>3</b> front, <b>4</b> rear, <b>5</b> left, <b>6</b> right (side views at table level, to compare heights), <b>Z</b> zoom to fit. <b>S</b> turns sticky edges on or off, <b>G</b> glue.${relief ? ' <b>M</b> turns wall match on or off.' : ''}</li>
               <li><b>Ctrl+Z</b> undo, <b>Ctrl+Shift+Z</b> redo. Progress is saved in this browser.</li>
+              <li>On a touch screen: one finger moves a piece or orbits, two fingers pinch to zoom and pan. <b>Settings ▾</b> folds the side panel and the <b>arrow</b> at the right of the top bar hides it, to give the puzzle more room.</li>
             </ul>
             <button data-ui="closeRules" type="button">Start</button>
           </div>
@@ -487,6 +511,9 @@ class Player {
     on('reveal', () => this.toggleReveal());
     on('copyReport', () => this.copyReport());
     on('rulesButton', () => this.toggleRules(true));
+    on('panelToggle', () => this.setPanelCollapsed(!this.root.firstElementChild!.classList.contains('panel-collapsed')));
+    on('barHide', () => this.setBarHidden(true));
+    on('barShow', () => this.setBarHidden(false));
     on('closeRules', () => this.toggleRules(false));
     const sticky = this.ui.sticky as HTMLInputElement;
     sticky.addEventListener('change', () => {
@@ -523,6 +550,19 @@ class Player {
   }
 
   private onPointerDown = (e: PointerEvent): void => {
+    // The primary pointer starts a new gesture, so a release that was never delivered can't linger.
+    if (e.isPrimary) this.pointersDown.clear();
+    const another = this.pointersDown.size > 0;
+    this.pointersDown.add(e.pointerId);
+    if (another) {
+      // A second finger: during a piece drag it is ignored (OrbitControls stays disabled); otherwise
+      // the first finger is orbiting and OrbitControls turns the pair into pinch zoom and pan. Either
+      // way it never selects or grabs a piece, and the gesture does not deselect on release.
+      this.emptyPress = null;
+      this.wallPress = null;
+      this.lastClick = null;
+      return;
+    }
     this.controls.enabled = true;
     this.emptyPress = null;
     this.wallPress = null;
@@ -538,7 +578,7 @@ class Player {
       if (!p) return;
       this.controls.enabled = false;
       this.drag = {
-        kind: 'rotate', index, group: this.groupOfPiece(index), poses0: this.session.poses.map((q) => ({ ...q })),
+        kind: 'rotate', pointerId: e.pointerId, index, group: this.groupOfPiece(index), poses0: this.session.poses.map((q) => ({ ...q })),
         plane, start: Math.atan2(p.y - pose.y, p.x - pose.x), changed: false,
       };
       this.renderer.domElement.setPointerCapture(e.pointerId);
@@ -586,7 +626,7 @@ class Player {
     const plane = new THREE.Plane(new THREE.Vector3(0, 0, 1), -choice.point.z);
     if (!this.pointOnPlane(e, plane)) return;
     this.drag = {
-      kind: 'move', index: choice.index, group: this.groupOfPiece(choice.index), poses0: this.session.poses.map((q) => ({ ...q })),
+      kind: 'move', pointerId: e.pointerId, index: choice.index, group: this.groupOfPiece(choice.index), poses0: this.session.poses.map((q) => ({ ...q })),
       plane, offset: new THREE.Vector2(pose.x - choice.point.x, pose.y - choice.point.y), changed: false,
     };
     this.renderer.domElement.setPointerCapture(e.pointerId);
@@ -595,9 +635,10 @@ class Player {
   private onPointerMove = (e: PointerEvent): void => {
     const drag = this.drag;
     if (!drag) {
-      this.updateCursor(e);
+      if (e.pointerType === 'mouse') this.updateCursor(e);
       return;
     }
+    if (e.pointerId !== drag.pointerId) return;
     // A little jitter while clicking a wall must not move the piece.
     if (this.wallPress) {
       if (Math.hypot(e.clientX - this.wallPress.x, e.clientY - this.wallPress.y) < CLICK_SLOP_PX) return;
@@ -621,6 +662,9 @@ class Player {
   };
 
   private onPointerUp = (e: PointerEvent): void => {
+    this.pointersDown.delete(e.pointerId);
+    // Lifting the second finger of a drag leaves the drag (and the disabled controls) alone.
+    if (this.drag && e.pointerId !== this.drag.pointerId) return;
     this.controls.enabled = true;
     const press = this.emptyPress;
     this.emptyPress = null;
@@ -830,6 +874,24 @@ class Player {
     }
     this.updateHud();
     this.dirty = true;
+  }
+
+  /** Fold the panel to its Undo / Redo / Fit strip. A layout preference only, kept per browser. */
+  private setPanelCollapsed(collapsed: boolean, remember = true): void {
+    this.root.firstElementChild!.classList.toggle('panel-collapsed', collapsed);
+    this.ui.panelBody.hidden = collapsed;
+    const toggle = this.ui.panelToggle;
+    toggle.textContent = collapsed ? 'Settings ▾' : 'Settings ▴';
+    toggle.setAttribute('aria-expanded', String(!collapsed));
+    toggle.title = collapsed ? 'Show all settings' : 'Fold the settings';
+    if (remember) storageFlag(PANEL_COLLAPSED_KEY, collapsed ? '1' : '0');
+  }
+
+  /** Hide the top bar; a small button on the stage brings it back. */
+  private setBarHidden(hidden: boolean, remember = true): void {
+    this.root.firstElementChild!.classList.toggle('bar-hidden', hidden);
+    this.ui.barShow.hidden = !hidden;
+    if (remember) storageFlag(BAR_HIDDEN_KEY, hidden ? '1' : '0');
   }
 
   private toggleRules(show: boolean): void {
